@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <link rel="stylesheet" type="text/css" href="main.css">
+    <script src="./node_modules/web3/dist/web3.js"></script>
+    <script src="info_abi.js"></script>
+
+</head>
+<body>
+    <script>
+       var userAccount;
+       var info;
+       function getInfo() {
+          info.getInfo(function(error, result){
+             if(!error) {
+                $("#info").html(result[0]+' ('+result[1]+' years old)');
+                console.log(result);
+             }
+          });
+       }
+
+       function startApp() {
+          var InfoContract = web3js.eth.contract(infoABI);
+          info = InfoContract.at("0xf0ae95a4e47ebfe369300a0e2dc3b23e0ef3aeec");
+          var accountInterval = setInterval(function() {
+             //userAccount = web3js.eth.accounts[0];
+             getInfo();
+          }, 1000);
+
+          $("#button").click(function() {
+              info.setInfo($("#name").val(), $("#age").val()).send();
+          });
+       }
+       window.addEventListener('load', function() {
+          // Checking if Web3 has been injected by the browser (Mist/MetaMask)
+          console.log(window.dexon);
+          web3js = new Web3(window.dexon);
+          window.dexon.enable().then(startApp());
+       })
+    </script>
+
+    <div class="container">
+
+        <h1>Info Contract</h1>
+
+        <h2 id="info"></h2>
+
+        <label for="name" class="col-lg-2 control-label">Name</label>
+        <input id="name" type="text">
+
+        <label for="name" class="col-lg-2 control-label">Age</label>
+        <input id="age" type="text">
+
+        <button id="button">Update Info</button>
+
+
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+
+    <script>
+       // Our future code here..
+    </script>
+
+</body>
+</html>
