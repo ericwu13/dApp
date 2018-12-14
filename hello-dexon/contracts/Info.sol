@@ -1,6 +1,6 @@
 pragma solidity ^0.4.23;
 
-contract InfoContract {
+contract Info {
    string fName;
    uint age;
    
