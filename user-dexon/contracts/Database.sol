@@ -30,14 +30,17 @@ contract CDatabase is CUserProfiles, CStatus, CTransaction {
         _held(_buyer, txDatabase[_txId]._value);
         txDatabase[_txId]._status = Status.BUYING;
     }
+        
     function setPendTx(uint32 _txId, address _driver) internal{
         txDatabase[_txId]._driver = _driver;
         txDatabase[_txId]._status = Status.PENDING;
     }
+        
     function setDeliverTx(uint32 _txId) internal{
         _held(txDatabase[_txId]._driver, txDatabase[_txId]._value * depositRatio);
         txDatabase[_txId]._status = Status.DELIVERING;
     }
+        
     function setSuccessTx(uint32 _txId) internal{
         _unheld(txDatabase[_txId]._buyer, txDatabase[_txId]._value);
         _transfer(txDatabase[_txId]._buyer, txDatabase[_txId]._seller, txDatabase[_txId]._value);
@@ -45,8 +48,6 @@ contract CDatabase is CUserProfiles, CStatus, CTransaction {
         _transfer(txDatabase[_txId]._buyer, txDatabase[_txId]._driver, deliverFee);
         txDatabase[_txId]._status = Status.SUCCESS;
     }
-
-    
 
 
 }
