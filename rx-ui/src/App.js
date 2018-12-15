@@ -6,6 +6,7 @@ import Home from './component/Home.js';
 import NavBar from './component/NavBar.js'
 import LoginPage from "./component/LoginPage.js"
 import PostPage from "./component/PostPage.js"
+import AccountPage from "./component/AccountPage.js"
 import PlatformABI from './platform_abi.js'
 import Web3 from 'web3';
 
@@ -13,12 +14,16 @@ class App extends Component {
   constructor(props){
     super(props);
     this.state = {
-      login: true,
-      account:'',
-      manage:'',
+      login: false,
+      name:"",
+      balance: 10,
+      held_balance: 0,
+      reputation: 0
     };
     this.handleLogin = this.handleLogin.bind(this);
     this.handleLogout = this.handleLogout.bind(this);
+    this.handleCreateUser = this.handleCreateUser.bind(this);
+    this.handleListProfile = this.handleListProfile.bind(this);
     window.dexon.enable()
     const dexonProvider = window.dexon
     this.web3 = new Web3(dexonProvider)
@@ -29,16 +34,12 @@ class App extends Component {
   }
   handleLogin(e){
     this.setState({
-      login: e.login,
-      account: e.account,
-      manage: e.manage,
+      login: e.login
     });
   }
   handleLogout(){
     this.setState({
-      login:false,
-      account:'',
-      manage:'',
+      login:false
     });
   }
   handleCreateUser() {
@@ -61,13 +62,17 @@ class App extends Component {
   }
 
   handleListProfile() {
+    console.log(this.dexonAccount)
     var listProfile = this.platformContract.methods['listProfile']()
     listProfile.call({from: this.dexonAccount}).then((response) => {
       const [name, balance, held_balance, reputation] = response;
-      this.state.name = name
-      this.state.balance = balance
-      this.state.held_balance = held_balance 
-      this.state.reputation = reputation 
+      console.log(balance)
+      this.setState ({
+        name: name,
+        balance: balance,
+        held_balance: held_balance,
+        reputation: reputation
+      }) 
     })
   }
   
@@ -114,12 +119,17 @@ class App extends Component {
     };
     const MyLoginPage = (props)=>{
       return(
-        <LoginPage handleLogin={this.handleLogin}/>
+        <LoginPage handleLogin={this.handleLogin} handleCreateUser={this.handleCreateUser}/>
       )
     };
     const MyPostPage = (props)=>{
       return(
-        <PostPage account={this.state.account} id={props.match.params.order}/>
+        <PostPage name={this.state.name} id={props.match.params.order}/>
+      )
+    }
+    const MyAccountPage = (props)=>{
+      return(
+        <AccountPage name={this.state.name} balance={this.state.balance} held_balance={this.held_balance} reputation={this.reputation} handleListProfile={this.handleListProfile}/>
       )
     }
     return (
@@ -129,6 +139,7 @@ class App extends Component {
       <Route exact path='/' component={MyHomePage}/>
       <Route path="/login" render={MyLoginPage}/>
       <Route path="/post" render={MyPostPage}/>
+      <Route path="/account" render={MyAccountPage}/>
       </div>
       </BrowserRouter>
     );
