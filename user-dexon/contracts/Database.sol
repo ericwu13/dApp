@@ -63,7 +63,7 @@ contract Database is UserProfile {
         txDatabase[_txId]._status = Status.PENDING;
     }
     function setDeliverTx(uint32 _txId) internal{
-        held(txDatabase[_txId]._driver, txDatabase[_txId].value * depositRatio);
+        held(txDatabase[_txId]._driver, txDatabase[_txId]._value * depositRatio);
         txDatabase[_txId]._status = Status.DELIVERING;
 
     }
