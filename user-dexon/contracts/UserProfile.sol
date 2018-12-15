@@ -13,15 +13,15 @@ contract CUserProfiles is Ownable, IERC20{
         uint256 _balance;
         uint32 _held_balance; // deposit
         uint32 _reputation;
-        address _address;
+        // address _address;
         mapping (address => uint256) _allowed;
     }
 
     // data
 
-    uint256 private _totalSupply;
+    uint256 internal _totalSupply;
 
-    mapping(address => User) private _userProfiles;
+    mapping(address => User) internal _userProfiles;
 
     //functions of User
     function totalSupply() public view returns (uint256) {
@@ -67,38 +67,38 @@ contract CUserProfiles is Ownable, IERC20{
         emit Approval(msg.sender, spender, _userProfiles[msg.sender]._allowed[spender]);
         return true;
     }
-    function _held(address target, uint32 value) internal{
+    function _held(address target, uint32 value) public onlyOwner{
         _userProfiles[target]._balance -= value;               
         _userProfiles[target]._held_balance += value;               
     } 
-    function _unheld(address target, uint32 value) internal{
+    function _unheld(address target, uint32 value) public onlyOwner{
         _userProfiles[target]._held_balance -= value;
         _userProfiles[target]._balance += value;
     }
-    function _transfer(address from, address to, uint256 value) internal {
+    function _transfer(address from, address to, uint256 value) public onlyOwner {
         require(to != address(0));
 
         _userProfiles[from]._balance = _userProfiles[from]._balance.sub(value);
         _userProfiles[to]._balance = _userProfiles[to]._balance.add(value);
         emit Transfer(from, to, value);
     }
-    function _addReputation(address to) internal{
+    function _addReputation(address to) public onlyOwner{
         require(to != address(0));
         _userProfiles[to]._reputation += 1;
     }
-    function _mint(address account, uint256 value) internal {
+    function _mint(address account, uint256 value) public onlyOwner {
         require(account != address(0));
         _totalSupply = _totalSupply.add(value);
         _userProfiles[account]._balance = _userProfiles[account]._balance.add(value);
         emit Transfer(address(0), account, value);
     }
-    function _burn(address account, uint256 value) internal {
+    function _burn(address account, uint256 value) public onlyOwner {
         require(account != address(0));
         _totalSupply = _totalSupply.sub(value);
         _userProfiles[account]._balance = _userProfiles[account]._balance.sub(value);
         emit Transfer(account, address(0), value);
     }
-    function _burnFrom(address account, uint256 value) internal {
+    function _burnFrom(address account, uint256 value) public onlyOwner {
         _userProfiles[account]._allowed[msg.sender] = _userProfiles[account]._allowed[msg.sender].sub(value);
         _burn(account, value);
         emit Approval(account, msg.sender, _userProfiles[account]._allowed[msg.sender]);
