@@ -28,24 +28,28 @@ contract CDatabase is CUserProfiles, CStatus, CTransaction {
     }
         
     function setBuyTx(uint256 _txId, address _buyer) internal{
+        require(txDatabase[_txId]._status == Status.POSTING);
         txDatabase[_txId]._buyer = _buyer;
         _held(_buyer, txDatabase[_txId]._value);
         txDatabase[_txId]._status = Status.BUYING;
     }
         
     function setPendTx(uint256 _txId, address _driver) internal{
+        require(txDatabase[_txId]._status == Status.BUYING);
         txDatabase[_txId]._driver = _driver;
         txDatabase[_txId]._status = Status.PENDING;
         
     }
         
     function setDeliverTx(uint256 _txId) internal{
+        require(txDatabase[_txId]._status == Status.PENDING);
         _held(txDatabase[_txId]._driver, txDatabase[_txId]._value * depositRatio);
         txDatabase[_txId]._status = Status.DELIVERING;
         txDatabase[_txId]._timestamp = now;
     }
         
     function setSuccessTx(uint256 _txId) internal{
+        require(txDatabase[_txId]._status == Status.DELIVERING);
         _unheld(txDatabase[_txId]._buyer, txDatabase[_txId]._value);
         _transfer(txDatabase[_txId]._buyer, txDatabase[_txId]._seller, txDatabase[_txId]._value);
         _unheld(txDatabase[_txId]._driver, txDatabase[_txId]._value * depositRatio);
@@ -54,6 +58,7 @@ contract CDatabase is CUserProfiles, CStatus, CTransaction {
         txDatabase[_txId]._timestamp = now - txDatabase[_txId]._timestamp;
     }
     function setRatingTx(uint256 _txId, uint32 seller_score, uint32 driver_score) internal{
+        require(txDatabase[_txId]._status == Status.SUCCESS);
         _scoreSeller(txDatabase[_txId]._seller, seller_score);
         _scoreDriver(txDatabase[_txId]._driver, driver_score);
         txDatabase[_txId]._status = Status.AFTERRATING;

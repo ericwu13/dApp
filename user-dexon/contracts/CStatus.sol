@@ -22,4 +22,8 @@ contract CStatus is Ownable {
     function isFail(Status status) external view onlyOwner returns (bool){
         return status == Status.SUCCESS;
     }
+    function isAfterRating(Status status) external view onlyOwner returns (bool){
+        return status == Status.AFTERRATING;
+    }
+    
 }
