@@ -11,7 +11,7 @@ contract CPlatform is Ownable, CDatabase, Restricted{
                    uint256 _balance,
                    uint32 _held_balance, // deposit
                    uint32 _reputation);
-    event posting(address _userAddress, uint32 _value);
+    event posting(address _userAddress, uint32 _value, uint256 _txId);
     event buying(address _userAddress, uint256 _txId);
     event pending(address _userAddress, uint256 _txId);
     event delivering(uint256 _txId);
@@ -26,8 +26,7 @@ contract CPlatform is Ownable, CDatabase, Restricted{
        emit newUser(msg.sender, name);
     }
 
-    function listProfile() external {
-        //require(_userProfiles[userAddress] != 0);
+    function listProfile() external view {
         emit listUser(_userProfiles[msg.sender]._name, 
                       _userProfiles[msg.sender]._balance, 
                       _userProfiles[msg.sender]._held_balance, 
@@ -35,8 +34,8 @@ contract CPlatform is Ownable, CDatabase, Restricted{
     }
 
     function post(uint32 value) external  {
-        setPostTx(msg.sender, value);
-        emit posting(msg.sender, value);
+        uint id = setPostTx(msg.sender, value);
+        emit posting(msg.sender, value, id);
     }
 
     function buy(uint256 txId) external onlyPositiveBalance(_userProfiles[msg.sender]._balance, txDatabase[txId]._value) {

@@ -4,7 +4,7 @@ contract Restricted{
 
     event insufficientBalanceError();
     modifier onlyPositiveBalance(uint256 currentBalance, uint32 value) {
-         require(currentBalance >= value);
+         require(currentBalance >= value, "Insufficient Balance!!!");
          emit insufficientBalanceError();
         _;
 
