@@ -21,7 +21,7 @@ contract CUserProfiles is Ownable, IERC20{
 
     uint256 private _totalSupply;
 
-    mapping(address => User) private _userProfiles;
+    mapping(address => User) internal _userProfiles;
 
     //functions of User
     function totalSupply() public view returns (uint256) {
