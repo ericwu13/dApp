@@ -12,51 +12,45 @@ class HomePage extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            shops: '',
+            items: this.props.items,
+            productName:this.props.productName
         };
-        axios.get('/api/home')
-            .then(res => {
-                this.setState({ shops: res.data });
-            })
-            .catch(function (err) {
-                console.log(err);
-            });
-
     }
     
     
     render() {
+        console.log(this.props.productName)
         var deck_1 = [];
-        for(let i=0; i<this.state.shops.length; ++i){
+        for(let i=0; i<this.state.items.length; ++i){
             if(i<3){
-                let shops = 
+                let itemCard = 
                 <div class="card">
-                    <Link to={'/shop/'+this.state.shops[i].name}><img class="card-img-top"  src={this.state.shops[i].img}/></Link>
+                    <Link to={'/shop/'+this.state.items[i][0]}><img class="card-img-top"  src={this.state.items[i].img}/></Link>
                     <div class="card-body">
-                        <h5 class="card-title">{this.state.shops[i].name}</h5>
+                        <h5 class="card-title">{this.state.items[i][0]}</h5>
                     </div>
                     <div class="card-footer">
-                        <small class="text-muted">Rate: {this.state.shops[i].rate}</small>
+                        <small class="text-muted">Price: {this.state.items[i][2]}</small>
                     </div>
                 
                 </div>;
-                deck_1.push(shops);}}
+                deck_1.push(itemCard);}}
 
         var deck_2 = [];
-        for(let i=3; i<this.state.shops.length; ++i){
+        for(let i=3; i<this.state.items.length; ++i){
             if(i<6){
-                let shops = 
+                let itemCard = 
                 <div class="card">
-                    <Link to={'/shop/'+this.state.shops[i].name}><img class="card-img-top"  src={this.state.shops[i].img}/></Link>
+                    <Link to={'/shop/'+this.state.items[i][0]}><img class="card-img-top"  src={this.state.items[i]}/></Link>
                     <div class="card-body">
-                        <h5 class="card-title">{this.state.shops[i].name}</h5>
+                        <h5 class="card-title">{this.state.items[i][0]}</h5>
                     </div>
                     <div class="card-footer">
-                        <small class="text-muted">Rate: {this.state.shops[i].rate}</small>
+                        <small class="text-muted">Price: {this.state.items[i][1]}</small>
                     </div>
                 
                 </div>;
-                deck_2.push(shops);}}
+                deck_2.push(itemCard);}}
         
 
         return (
