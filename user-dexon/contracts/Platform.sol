@@ -21,7 +21,7 @@ contract CPlatform is Ownable, CDatabase, Restricted{
     //function
     function createUser() external payable {
         require(msg.value >= guaranteedDeposit, "Insufficient deposit");
-        require(bytes(_userProfiles[msg.sender]._name).length == 0, "The address has been created");
+        //require(bytes(_userProfiles[msg.sender]._name).length == 0, "The address has been created");
 
         _userProfiles[msg.sender] = User("[empty name]", 0 ,0, 200);
         emit newUser(msg.sender);
