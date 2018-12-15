@@ -17,9 +17,9 @@ contract CPlatform is Ownable, CDatabase, Restricted{
     event delivering(uint256 _txId);
     event success(uint256 _txId);
     //function
-    function createUser(address userAddress, string name) external onlyOwner{
-       _userProfiles[userAddress] = User(name, 0 ,0, 0);
-       emit newUser(userAddress, name);
+    function createUser(string name) external onlyOwner{
+       _userProfiles[msg.sender] = User(name, 0 ,0, 0);
+       emit newUser(msg.sender, name);
     }
 
     function listProfile(address userAddress) external {
