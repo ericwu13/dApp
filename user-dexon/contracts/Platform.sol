@@ -10,7 +10,7 @@ contract CPlatform is Ownable, CDatabase, Restricted{
     event listUser(string _name,
                    uint256 _balance,
                    uint32 _held_balance, // deposit
-                   uint32 _reputation);
+                   int32 _reputation);
     event posting(address _userAddress, uint32 _value, uint256 _txId);
     event buying(address _userAddress, uint256 _txId);
     event pending(address _userAddress, uint256 _txId);
@@ -22,7 +22,7 @@ contract CPlatform is Ownable, CDatabase, Restricted{
        require(msg.value >= guaranteedDeposit, "Insufficient deposit");
        require(bytes(_userProfiles[msg.sender]._name).length == 0, "The address has been created");
 
-       _userProfiles[msg.sender] = User(name, 0 ,0, 0);
+       _userProfiles[msg.sender] = User(name, 0 ,0, 200);
        emit newUser(msg.sender, name);
     }
 

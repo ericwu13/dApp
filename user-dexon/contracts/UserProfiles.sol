@@ -12,7 +12,7 @@ contract CUserProfiles is Ownable, IERC20{
         string _name;
         uint256 _balance;
         uint32 _held_balance; // deposit
-        uint32 _reputation;
+        int32 _reputation;
         // address _address;
         mapping (address => uint256) _allowed;
     }
