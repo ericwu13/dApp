@@ -2,7 +2,7 @@ pragma solidity ^0.4.25;
 import "./Ownable.sol";
 import "./Database.sol";
 import "./UserProfiles.sol";
-import "./restricted.sol";
+import "./Restricted.sol";
 contract CPlatform is Ownable, CDatabase, Restricted{
        
     //event
