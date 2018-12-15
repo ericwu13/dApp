@@ -26,7 +26,7 @@ contract CPlatform is Ownable, CDatabase, Restricted{
        emit newUser(msg.sender, name);
     }
 
-    function listProfile() external view {
+    function listProfile() external {
         emit listUser(_userProfiles[msg.sender]._name, 
                       _userProfiles[msg.sender]._balance, 
                       _userProfiles[msg.sender]._held_balance, 
@@ -48,7 +48,7 @@ contract CPlatform is Ownable, CDatabase, Restricted{
         emit pending(msg.sender, txId);
     }
 
-    function confirmDeliver(uint256 txId) external {
+    function confirmDeliver(uint256 txId) external onlyPositiveBalance(_userProfiles[msg.sender]._balance, txDatabase[txId]._value * depositRatio){
         setDeliverTx(txId);
         emit delivering(txId);
     }
