@@ -1,4 +1,4 @@
-tags
+tags*
 *.swp
 */tags
 */*.swp
@@ -7,5 +7,6 @@ tags
 */*/*/node_modules
 */build
 */*/build
+*/*/*/build
 */secret.js
 */.cache-loader
