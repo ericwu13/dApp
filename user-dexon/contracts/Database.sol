@@ -3,10 +3,12 @@ import "./UserProfile.sol";
 contract Database is UserProfile {
     
     //define Status
+    /*
     struct Status{
         uint8 _status; //posting, buying, pending, delievering, success, fail
     }
-
+    */
+    enum Status {POSTING, BUYING, PENDING, DELIVERING, SUCCESS, FAIL}
     //define Transation
     struct Transaction{
         uint256 _txId;
@@ -25,25 +27,25 @@ contract Database is UserProfile {
     uint32 depositRatio;
 
     //function for status
-    function isPosting(uint8 _status) view returns (bool){
-        return _status == 0;
+    function isPosting(Status _status) view returns (bool){
+        return _status == Status.POSTING;
     }
-    function isBuying(uint8 _status) view returns (bool){
-        return _status == 1;
+    function isBuying(Status _status) view returns (bool){
+        return _status == Status.BUYING;
     }
-    function isDelievering(uint8 _status) view returns (bool){
-        return _status == 2;
+    function isDelievering(Status _status) view returns (bool){
+        return _status == Status.PENDING;
     }
-    function isSuccess(uint8 _status) view returns (bool){
-        return _status == 3;
+    function isSuccess(Status _status) view returns (bool){
+        return _status == Status.DELIVERING;
     }
-    function isFail(uint8 _status) view returns (bool){
-        return _status == 4;
+    function isFail(Status _status) view returns (bool){
+        return _status == Status.SUCCESS;
     }
 
     //function for tx
     function setPostTx(address _seller) internal{
-    
+           
     }
     function setBuyTx(uint32 _txId, address _buyer) internal{
     
