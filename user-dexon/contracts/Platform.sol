@@ -2,7 +2,8 @@ pragma solidity ^0.4.25;
 import "./Ownable.sol";
 import "./Database.sol";
 import "./UserProfile.sol";
-contract CPlatform is Ownable, CDatabase{
+import "./restricted.sol";
+contract CPlatform is Ownable, CDatabase, Restricted{
     
     //event
     event newUser(address _userAddress, string _name);
@@ -13,15 +14,17 @@ contract CPlatform is Ownable, CDatabase{
     event posting(address _userAddress, uint32 _value);
     event buying(address _userAddress, uint256 _txId);
     //function
-    function createUser(address userAddress, string name) external{
+    function createUser(address userAddress, string name) external onlyOwner{
        _userProfiles[userAddress] = User(name, 0 ,0, 0);
        emit newUser(userAddress, name);
     }
 
     function listProfile(address userAddress) external {
         //require(_userProfiles[userAddress] != 0);
-        User u = _userProfiles[userAddress];
-        emit listUser(u._name, u._balance, u._held_balance, u._reputation);
+        emit listUser(_userProfiles[userAddress]._name, 
+                      _userProfiles[userAddress]._balance, 
+                      _userProfiles[userAddress]._held_balance, 
+                      _userProfiles[userAddress]._reputation);
     }
 
     function post(address userAddress, uint32 value) external {
@@ -29,7 +32,7 @@ contract CPlatform is Ownable, CDatabase{
         emit posting(userAddress, value);
     }
 
-    function buy(address userAddress, uint256 txId) external {
+    function buy(address userAddress, uint256 txId) external onlyPositiveBalance(_userProfiles[userAddress]._balance, txDatabase[txId]._value) {
         setBuyTx(txId, userAddress);
         emit buying(userAddress, txId);
     }
