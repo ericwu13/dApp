@@ -1,5 +1,5 @@
 pragma solidity ^0.4.25;
-import "./UserProfile.sol";
+import "./UserProfiles.sol";
 import "./Status.sol";
 import "./Transaction.sol";
 contract CDatabase is CUserProfiles, CStatus, CTransaction {
@@ -25,7 +25,7 @@ contract CDatabase is CUserProfiles, CStatus, CTransaction {
         return txDatabaseSize;
     }
         
-    function setBuyTx(uint32 _txId, address _buyer) internal{
+    function setBuyTx(uint256 _txId, address _buyer) internal{
         txDatabase[_txId]._buyer = _buyer;
         _held(_buyer, txDatabase[_txId]._value);
         txDatabase[_txId]._status = Status.BUYING;
