@@ -6,7 +6,8 @@ import "./restricted.sol";
 contract CPlatform is Ownable, CDatabase, Restricted{
        
     //event
-    event newUser(address _userAddress, string _name);
+    event newUser(address _userAddress);
+    event editUserName(address _userAddress, string _name);
     event listUser(string _name,
                    uint256 _balance,
                    uint32 _held_balance, // deposit
@@ -18,12 +19,17 @@ contract CPlatform is Ownable, CDatabase, Restricted{
     event success(uint256 _txId);
     uint public guaranteedDeposit = 1000000000000000000;
     //function
-    function createUser(string name) external payable {
-       require(msg.value >= guaranteedDeposit, "Insufficient deposit");
-       require(bytes(_userProfiles[msg.sender]._name).length == 0, "The address has been created");
+    function createUser() external payable {
+        require(msg.value >= guaranteedDeposit, "Insufficient deposit");
+        require(bytes(_userProfiles[msg.sender]._name).length == 0, "The address has been created");
 
-       _userProfiles[msg.sender] = User(name, 0 ,0, 200);
-       emit newUser(msg.sender, name);
+        _userProfiles[msg.sender] = User("[empty name]", 0 ,0, 200);
+        emit newUser(msg.sender);
+    }
+
+    function editUserName(string name) external {
+        _editName(msg.sender, name);
+        emit editUserName(msg.sender, name);
     }
 
     function listProfile() external {
