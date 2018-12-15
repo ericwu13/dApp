@@ -72,6 +72,10 @@ contract CUserProfiles is Ownable, IERC20{
         emit Approval(msg.sender, spender, _userProfiles[msg.sender]._allowed[spender]);
         return true;
     }
+
+    function _newUser(address seller) internal {
+        _userProfiles[seller] = User("[empty name]", 0 ,0, 0, 0, 0, 0);
+    }
     function _editName(address target, string name) internal {
         _userProfiles[target]._name = name;               
     } 
@@ -96,7 +100,7 @@ contract CUserProfiles is Ownable, IERC20{
         _userProfiles[account]._sellerReputation += score;
         _userProfiles[account]._sellerNumber++;
     }
-    function _sellReutation(address account) internal returns(uint32) {
+    function _sellerReputation(address account) internal view returns(uint32) {
         require(account != address(0));
         return _userProfiles[account]._sellerReputation / _userProfiles[account]._sellerNumber;
     }
@@ -106,7 +110,7 @@ contract CUserProfiles is Ownable, IERC20{
         _userProfiles[account]._driverReputation += score;
         _userProfiles[account]._driverNumber++;
     }
-    function _drivReutation(address account) internal returns(uint32) {
+    function _driverReputation(address account) internal view returns(uint32) {
         require(account != address(0));
         return _userProfiles[account]._driverReputation / _userProfiles[account]._driverNumber;
     }
@@ -127,5 +131,13 @@ contract CUserProfiles is Ownable, IERC20{
         _burn(account, value);
         emit Approval(account, msg.sender, _userProfiles[account]._allowed[msg.sender]);
     }
-
+    function _listUser(address account) internal view returns(string, uint256, uint32, uint32, uint32, uint32, uint32) {
+        return( _userProfiles[account]._name,
+                _userProfiles[account]._balance,
+                _userProfiles[account]._held_balance,
+                _userProfiles[account]._sellerReputation,
+                _userProfiles[account]._sellerNumber,
+                _userProfiles[account]._driverReputation,
+                _userProfiles[account]._driverNumber);
+    }
 }
