@@ -34,8 +34,8 @@ contract CPlatform is CDatabase, Restricted{
         _editName(msg.sender, name);
     }
 
-    function listProfile(address account) external view returns(string, uint256, uint32, uint32, uint32) {
-        return(_listUser(account));
+    function listProfile() external view returns(string, uint256, uint32, uint32, uint32) {
+        return(_listUser(msg.sender));
     }
 
     function post(uint32 value) external returns(uint256) {
