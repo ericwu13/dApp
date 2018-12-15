@@ -27,7 +27,7 @@ contract CPlatform is Ownable, CDatabase, Restricted{
                       _userProfiles[userAddress]._reputation);
     }
 
-    function post(address userAddress, uint32 value) external {
+    function post(address userAddress, uint32 value) external  {
         setPostTx(userAddress, value);
         emit posting(userAddress, value);
     }
