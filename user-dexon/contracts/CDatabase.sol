@@ -45,13 +45,16 @@ contract CDatabase is CUserProfiles, CStatus, CTransaction {
         txDatabase[_txId]._timestamp = now;
     }
         
-    function setSuccessTx(uint256 _txId) internal{
+    function setSuccessTx(uint256 _txId, uint32 seller_score, uint32 driver_score) internal{
         _unheld(txDatabase[_txId]._buyer, txDatabase[_txId]._value);
         _transfer(txDatabase[_txId]._buyer, txDatabase[_txId]._seller, txDatabase[_txId]._value);
         _unheld(txDatabase[_txId]._driver, txDatabase[_txId]._value * depositRatio);
         _transfer(txDatabase[_txId]._buyer, txDatabase[_txId]._driver, deliverFee);
         txDatabase[_txId]._status = Status.SUCCESS;
         txDatabase[_txId]._timestamp = now - txDatabase[_txId]._timestamp;
+        _scoreSeller(txDatabase[_txId]._seller, seller_score);
+        _scoreDriver(txDatabase[_txId]._driver, driver_score);
+
     }
 
     
