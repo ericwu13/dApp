@@ -45,6 +45,8 @@ contract Database is UserProfile {
     function setBuyTx(uint32 _txId, address _buyer) internal{
         txDatabase[_txId]._buyer = _buyer;
         txDatabase[_txId]._status = Status.BUYING;
+        held(_buyer, txDatabase[_txId]._value);
+
     }
     function setPendTx(uint32 _txId, address _driver) internal{
         txDatabase[_txId]._driver = _driver;
@@ -52,9 +54,13 @@ contract Database is UserProfile {
     }
     function setDeliverTx(uint32 _txId) internal{
         txDatabase[_txId]._status = Status.DELIVERING;
+
     }
     function setSuccessTx(uint32 _txId) internal{
-        txDatabase[_txId]._status = Status.SUCCESS;   
+        txDatabase[_txId]._status = Status.SUCCESS;
+        unheld(txDatabase[_txId]._buyer, txDatabase[_txId]._value);
+        transport(txDatabase[_txId]._buyer, txDatabase[_txId]._sender, txDatabase[_txId]._value);
+        unheld(txDatabase[_txId]._driver, txDatabase[_txId]._value * depositRatio);
     }
     
 
