@@ -32,9 +32,9 @@ class App extends Component {
     const dexonProvider = window.dexon
     this.web3 = new Web3(dexonProvider)
     this.web3.eth.getAccounts().then(accounts => this.dexonAccount = accounts[0])
-    let platformABI = PlatformABI;
-    let platformAddress = '0x4a19e199d035066933a412fd58f1a2021c900287';
-    this.platformContract = new this.web3.eth.Contract(platformABI, platformAddress);
+    this.platformABI = PlatformABI;
+    this.platformAddress = '0x4a19e199d035066933a412fd58f1a2021c900287';
+    this.platformContract = new this.web3.eth.Contract(this.platformABI, this.platformAddress);
   }
   handleLogin(e){
     this.setState({
@@ -67,7 +67,9 @@ class App extends Component {
 
   handleListProfile() {
     console.log(this.dexonAccount)
-    var listProfile = this.platformContract.methods['listProfile'](this.dexonAccount)
+    const httpWeb3 = new Web3(new Web3.providers.HttpProvider('http://testnet.dexon.org:8545'));
+    const localContract = new httpWeb3.eth.Contract(this.platformABI, this.platformAddress); 
+    var listProfile = localContract.methods['listProfile'](this.dexonAccount)
     listProfile.call()
     .then((response) => {
       console.log(response[1])
