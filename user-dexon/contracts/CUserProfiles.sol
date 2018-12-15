@@ -131,13 +131,11 @@ contract CUserProfiles is Ownable, IERC20{
         _burn(account, value);
         emit Approval(account, msg.sender, _userProfiles[account]._allowed[msg.sender]);
     }
-    function _listUser(address account) internal view returns(string, uint256, uint32, uint32, uint32, uint32, uint32) {
+    function _listUser(address account) internal view returns(string, uint256, uint32, uint32, uint32) {
         return( _userProfiles[account]._name,
                 _userProfiles[account]._balance,
                 _userProfiles[account]._held_balance,
-                _userProfiles[account]._sellerReputation,
-                _userProfiles[account]._sellerNumber,
-                _userProfiles[account]._driverReputation,
-                _userProfiles[account]._driverNumber);
+                _sellerReputation(account),
+                _driverReputation(account));
     }
 }
