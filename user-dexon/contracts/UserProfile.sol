@@ -10,6 +10,7 @@ contract UserProfile {
         uint32 _reputation;
         address _address;
     }
+
     //mapping
     mapping(address => User) UserProfiles;
 
