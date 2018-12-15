@@ -100,7 +100,7 @@ contract CUserProfiles is Ownable, IERC20{
         _userProfiles[account]._sellerReputation += score;
         _userProfiles[account]._sellerNumber++;
     }
-    function _sellerReputation(address account) internal view returns(uint32) {
+    function _sellerReputation(address account) public view returns(uint32) {
         require(account != address(0));
         return _userProfiles[account]._sellerReputation / _userProfiles[account]._sellerNumber;
     }
@@ -110,7 +110,7 @@ contract CUserProfiles is Ownable, IERC20{
         _userProfiles[account]._driverReputation += score;
         _userProfiles[account]._driverNumber++;
     }
-    function _driverReputation(address account) internal view returns(uint32) {
+    function _driverReputation(address account) public view returns(uint32) {
         require(account != address(0));
         return _userProfiles[account]._driverReputation / _userProfiles[account]._driverNumber;
     }
