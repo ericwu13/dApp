@@ -9,10 +9,10 @@ contract CUserProfiles is Ownable, IERC20{
 
     //define User
     struct User{
-        string _name;
-        uint256 _balance;
-        uint32 _held_balance; // deposit
-        int32 _reputation;
+        string      _name;
+        uint256     _balance;
+        uint32      _held_balance; // deposit
+        int32       _reputation;
         // address _address;
         mapping (address => uint256) _allowed;
     }
