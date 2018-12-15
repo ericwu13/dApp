@@ -52,20 +52,20 @@ contract Database is UserProfile {
         return txDatabaseSize;
     }
         
-    
-           
-    }
     function setBuyTx(uint32 _txId, address _buyer) internal{
-    
+        txDatabase[_txId]._buyer = _buyer;
+        txDatabase[_txId]._status = Status.BUYING;
     }
     function setPendTx(uint32 _txId, address _driver) internal{
-    
+        txDatabase[_txId]._driver = _driver;
+        txDatabase[_txId]._status = Status.PENDING;
     }
     function setDeliverTx(uint32 _txId) internal{
-    
+        held(txDatabase[_txId]._driver, txDatabase[_txId].value * depositRatio);
+        txDatabase[_txId]._status = Status.DELIVERING;
     }
     function setSuccessTx(uint32 _txId) internal{
-    
+        txDatabase[_txId]._status = Status.SUCCESS;   
     }
 
     
