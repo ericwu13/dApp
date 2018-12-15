@@ -70,8 +70,9 @@ contract Database is UserProfile {
     function setSuccessTx(uint32 _txId) internal{
         txDatabase[_txId]._status = Status.SUCCESS;
         unheld(txDatabase[_txId]._buyer, txDatabase[_txId]._value);
-        transport(txDatabase[_txId]._buyer, txDatabase[_txId]._sender, txDatabase[_txId]._value);
+        transport(txDatabase[_txId]._buyer, txDatabase[_txId]._seller, txDatabase[_txId]._value);
         unheld(txDatabase[_txId]._driver, txDatabase[_txId]._value * depositRatio);
+        transport(txDatabase[_txId]._buyer, txDatabase[_txId]._driver, deliverFee);
     }
 
     
