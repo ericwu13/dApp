@@ -1,6 +1,6 @@
 pragma solidity ^0.4.25;
-import "./Database.sol";
-import "./UserProfiles.sol";
+import "./CDatabase.sol";
+import "./CUserProfiles.sol";
 import "./Restricted.sol";
 contract CPlatform is CDatabase, Restricted{
        
