@@ -1,5 +1,5 @@
 pragma solidity ^0.4.25;
-
+import "./UserProfile.sol";
 contract Database is UserProfile {
     
     //define Status
@@ -18,26 +18,26 @@ contract Database is UserProfile {
     }
 
     //mapping
-    mapping(address => Transaction);
+    mapping(address => Transaction) txDatabase;
 
     //constant
     uint32 deliverFee;
     uint32 depositRatio;
 
     //function for status
-    function isPosting(Status _status) view returns (bool){
+    function isPosting(uint8 _status) view returns (bool){
         return _status == 0;
     }
-    function isBuying(Status _status) view returns (bool){
+    function isBuying(uint8 _status) view returns (bool){
         return _status == 1;
     }
-    function isDelievering(Status _status) view returns (bool){
+    function isDelievering(uint8 _status) view returns (bool){
         return _status == 2;
     }
-    function isSuccess(Status _status) view returns (bool){
+    function isSuccess(uint8 _status) view returns (bool){
         return _status == 3;
     }
-    function isFail(Status _status) view returns (bool){
+    function isFail(uint8 _status) view returns (bool){
         return _status == 4;
     }
 

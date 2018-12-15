@@ -1,4 +1,4 @@
-const mnemonic = 'thank seven universe conduct over arena gospel bonus cup notable cloud tail';
+const mnemonic = 'eternal nose faculty walnut loop boost pupil tattoo figure morning glass glide';
 
 module.exports = {
   mnemonic: mnemonic,

@@ -24,8 +24,8 @@ contract UserProfile {
         UserProfiles[_target]._balance += _value;
     }
     function transport(address _from, address _to, uint32 _value) internal{
-        UserProfile[_from]._balance -= _value;
-        UserProfile[_to]._balance += _value;
+        UserProfiles[_from]._balance -= _value;
+        UserProfiles[_to]._balance += _value;
     }
     function addReputation(address _address) internal{
         UserProfiles[_address]._reputation += 1;
