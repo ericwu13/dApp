@@ -23,7 +23,6 @@ contract CPlatform is CDatabase, Restricted{
         // require(bytes(_userProfiles[msg.sender]._name).length == 0, "The address has been created");
 
         _userProfiles[msg.sender] = User("[empty name]", 0 ,0, 200);
-        // emit eCreateUser(msg.sender);
     }
 
     function editUserName(string name) external {
