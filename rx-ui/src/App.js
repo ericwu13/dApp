@@ -71,6 +71,34 @@ class App extends Component {
     })
   }
   
+  handlePost(value) {
+    var post = this.platformContract.methods['post'](txId)
+    post.send({from: this.dexonAccount}).then((reponse) => {
+      const [txId] = response
+      this.state.txId = txId
+    })
+  }
+
+  handleBuy(txId) {
+    var buy = this.platformContract.methods['buy'](txId)
+    buy.send({from: this.dexonAccount})
+  }
+
+  handlePend(txId) {
+    var pend = this.platformContract.methods['pend'](txId)
+    buy.send({from: this.dexonAccount})
+  }
+
+  handleConfirmDeliever(txId) {
+    var confirmDeliever = this.platformContract.methods['confirmDeliever'](txId)
+    confirmDeliever.send({from: this.dexonAccount})
+  }
+
+  handleConfirmTx(txId) {
+    var confirmTx = this.platformContract.methods['confirmTx'](txId)
+    confirmTx.send({from: this.dexonAccount})
+  }
+  
   render() {
     const MyHomePage = (props) => {
       return (
