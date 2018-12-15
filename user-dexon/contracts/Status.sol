@@ -1,24 +1,25 @@
 pragma solidity ^0.4.25;
+import "./Ownable.sol";
 
-contract CStatus {
+contract CStatus is Ownable {
     
     //define Status
     enum Status {POSTING, BUYING, PENDING, DELIVERING, SUCCESS, FAIL}
 
     //function for status
-    function isPosting(Status _status) internal pure returns (bool){
-        return _status == Status.POSTING;
+    function isPosting(Status status) external view onlyOwner returns (bool){
+        return status == Status.POSTING;
     }
-    function isBuying(Status _status) internal pure returns (bool){
-        return _status == Status.BUYING;
+    function isBuying(Status status) external view onlyOwner returns (bool){
+        return status == Status.BUYING;
     }
-    function isDelievering(Status _status) internal pure returns (bool){
-        return _status == Status.PENDING;
+    function isDelievering(Status status) external view onlyOwner returns (bool){
+        return status == Status.PENDING;
     }
-    function isSuccess(Status _status) internal pure returns (bool){
-        return _status == Status.DELIVERING;
+    function isSuccess(Status status) external view onlyOwner returns (bool){
+        return status == Status.DELIVERING;
     }
-    function isFail(Status _status) internal pure returns (bool){
-        return _status == Status.SUCCESS;
+    function isFail(Status status) external view onlyOwner returns (bool){
+        return status == Status.SUCCESS;
     }
 }
