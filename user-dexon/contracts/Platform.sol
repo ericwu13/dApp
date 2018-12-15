@@ -1,44 +1,66 @@
 pragma solidity ^0.4.25;
-import "./Ownable.sol";
 import "./Database.sol";
-import "./UserProfile.sol";
-contract CPlatform is Ownable, CDatabase{
-    
+import "./UserProfiles.sol";
+import "./Restricted.sol";
+contract CPlatform is CDatabase, Restricted{
+       
     //event
-    event newUser(address _userAddress, string _name);
-    event listUser(string _name,
+    event eCreateUser(address _userAddress);
+    event eEditUserName(address _userAddress, string _name);
+    event eListProfile(string _name,
                    uint256 _balance,
                    uint32 _held_balance, // deposit
-                   uint32 _reputation);
-    event posting(address _userAddress, uint32 _value);
-    event buying(address _userAddress, uint256 _txId);
+                   int32 _reputation);
+    event ePost(address _userAddress, uint32 _value, uint256 _txId);
+    event eBuy(address _userAddress, uint256 _txId);
+    event ePend(address _userAddress, uint256 _txId);
+    event eConfirmDeliver(uint256 _txId);
+    event eConfirmTx(uint256 _txId);
+    uint public guaranteedDeposit = 1000000000000000000;
     //function
-    function createUser(address userAddress, string name) external{
-       _userProfiles[userAddress] = User(name, 0 ,0, 0);
-       emit newUser(userAddress, name);
+    function createUser() external payable {
+        require(msg.value >= guaranteedDeposit, "Insufficient deposit");
+        // require(bytes(_userProfiles[msg.sender]._name).length == 0, "The address has been created");
+
+        _userProfiles[msg.sender] = User("[empty name]", 0 ,0, 200);
+        // emit eCreateUser(msg.sender);
     }
 
-    function listProfile(address userAddress) external {
-        //require(_userProfiles[userAddress] != 0);
-        User u = _userProfiles[userAddress];
-        emit listUser(u._name, u._balance, u._held_balance, u._reputation);
+    function editUserName(string name) external {
+        _editName(msg.sender, name);
     }
 
-    function post(address userAddress, uint32 value) external {
-        setPostTx(userAddress, value);
-        emit posting(userAddress, value);
+    function listProfile() external view returns(string, uint256, uint32, int32) {
+        return( _userProfiles[msg.sender]._name,
+                _userProfiles[msg.sender]._balance,
+                _userProfiles[msg.sender]._held_balance,
+                _userProfiles[msg.sender]._reputation);
     }
 
-    function buy(address userAddress, uint256 txId) external {
-        setBuyTx(txId, userAddress);
-        emit buying(userAddress, txId);
+    function post(uint32 value) external returns(uint256) {
+        uint id = setPostTx(msg.sender, value);
+        return id;
     }
 
-    function deliver() {}
+    function buy(uint256 txId) external onlyPositiveBalance(_userProfiles[msg.sender]._balance, txDatabase[txId]._value) {
+        setBuyTx(txId, msg.sender);
+        // emit buying(msg.sender, txId);
+    }
 
-    function confirmDeliver() {}
+    function pend(uint256 txId) external {
+        setPendTx(txId, msg.sender);
+        // emit pending(msg.sender, txId);
+    }
 
-    function confirmTx() {}
+    function confirmDeliver(uint256 txId) external onlyPositiveBalance(_userProfiles[msg.sender]._balance, txDatabase[txId]._value * depositRatio){
+        setDeliverTx(txId);
+        // emit delivering(txId);
+    }
+
+    function confirmTx(uint256 txId ) external {
+        setSuccessTx(txId);
+        // emit success(txId);
+    }
 
 
 }
