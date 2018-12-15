@@ -16,16 +16,18 @@ class App extends Component {
     super(props);
     this.state = {
       login: false,
-      name:"",
-      balance: 10,
-      held_balance: 0,
-      reputation: 0,
-      item:[]
+      name : "",
+      balance : 0,
+      held_balance : 0,
+      reputation : 0,
+      items: [],
+      idList: []
     };
     this.handleLogin = this.handleLogin.bind(this);
     this.handleLogout = this.handleLogout.bind(this);
     this.handleCreateUser = this.handleCreateUser.bind(this);
     this.handleListProfile = this.handleListProfile.bind(this);
+    this.handlePost = this.handlePost.bind(this);
     window.dexon.enable()
     const dexonProvider = window.dexon
     this.web3 = new Web3(dexonProvider)
@@ -79,13 +81,14 @@ class App extends Component {
     })
   }
   
-  // handlePost(value) {
-  //   var post = this.platformContract.methods['post'](txId)
-  //   post.send({from: this.dexonAccount}).then((reponse) => {
-  //     const [txId] = response
-  //     this.state.txId = txId
-  //   })
-  // }
+  handlePost(value) {
+    var post = this.platformContract.methods['post'](value)
+    post.send({from: this.dexonAccount}).then((response) => {
+      const [txId] = response
+      this.setState({
+        idList: [...this.state.idList, txId]})
+    })
+  }
 
   handleBuy(txId) {
     var buy = this.platformContract.methods['buy'](txId)
@@ -111,13 +114,13 @@ class App extends Component {
     const MyHomePage = (props) => {
       return (
           <div>
-              <Home login={this.state.login} username={this.state.username} />
+              <Home login={this.state.login} items={this.state.items} />
           </div>
       );
     };
     const MyNavBar = (props)=>{
       return(
-        <NavBar login={this.state.login} account={this.state.account} manage={this.state.manage} handleLogout={this.handleLogout}/>
+        <NavBar login={this.state.login} handleLogout={this.handleLogout}/>
       )
     };
     const MyLoginPage = (props)=>{
@@ -127,7 +130,7 @@ class App extends Component {
     };
     const MyPostPage = (props)=>{
       return(
-        <PostPage name={this.state.name} id={props.match.params.order}/>
+        <PostPage items={this.state.items} handlePost={this.handPost}/>
       )
     }
     const MyAccountPage = (props)=>{
