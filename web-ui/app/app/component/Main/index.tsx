@@ -2,6 +2,7 @@ import * as React from 'react';
 import { observer } from 'mobx-react';
 import styled from 'styled-components';
 import Loadable from 'react-loadable';
+// contract interface
 import voteService from '@/service/voteHandler';
 import Loading from '@/component/Loading';
 import InputArea from '@/component/InputArea';
