@@ -3,6 +3,9 @@ tags
 */tags
 */*.swp
 */node_modules
+*/*/node_modules
+*/*/*/node_modules
 */build
+*/*/build
 */secret.js
 */.cache-loader

@@ -7,14 +7,14 @@ const Wrapper = styled.div`
   display: flex;
   margin: 10px 0px;
   padding: 20px;
-  background-color: rgba(255, 255, 255, 0.1);
+  background-color: rgba(200, 0, 100, 0.1);
   align-items: center;
 `;
 const StyledBtn = styled.button`
   margin: 0px 10px;
   padding: 5px 0px;
   color: violet;
-  background-color: rgba(0, 0, 0, 0);
+  background-color: rgba(0, 167, 187, 0);
   border: 1px solid violet;
   border-radius: 10px;
   min-width: 100px;
