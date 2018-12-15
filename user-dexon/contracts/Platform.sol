@@ -17,6 +17,7 @@ contract CPlatform is CDatabase, Restricted{
     event eConfirmDeliver(uint256 _txId);
     event eConfirmTx(uint256 _txId);
     uint public guaranteedDeposit = 1000000000000000000;
+    uint public deadline = 3 days;
     //function
     function createUser() external payable {
         require(msg.value >= guaranteedDeposit, "Insufficient deposit");
@@ -53,8 +54,9 @@ contract CPlatform is CDatabase, Restricted{
         // emit delivering(txId);
     }
 
-    function confirmTx(uint256 txId ) external {
+    function confirmTx(uint256 txId) external {
         setSuccessTx(txId);
+
         // emit success(txId);
     }
 
