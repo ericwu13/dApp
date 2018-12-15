@@ -13,6 +13,8 @@ contract CPlatform is Ownable, CDatabase, Restricted{
                    uint32 _reputation);
     event posting(address _userAddress, uint32 _value);
     event buying(address _userAddress, uint256 _txId);
+    event pending(address _userAddress, uint256 _txId);
+    event success(uint256 _txId);
     //function
     function createUser(address userAddress, string name) external onlyOwner{
        _userProfiles[userAddress] = User(name, 0 ,0, 0);
@@ -37,11 +39,17 @@ contract CPlatform is Ownable, CDatabase, Restricted{
         emit buying(userAddress, txId);
     }
 
-    function deliver() {}
+    function pend(address userAddress, uint256 txId) external {
+        setPendTx(txId, userAddress);
+        emit pending(userAddress, txId);
+    }
 
     function confirmDeliver() {}
 
-    function confirmTx() {}
+    function confirmTx(uint256 txId ) external {
+        setSuccess(txId);
+        emit success(txId);
+    }
 
 
 }
