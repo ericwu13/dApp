@@ -1,1 +1,5 @@
 ./fuck.sol
+*/node_modules
+*/build
+*/secret.js
+*/.cache-loader

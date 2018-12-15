@@ -1,0 +1,21 @@
+{
+  "name": "simple-election-dapp",
+  "version": "0.0.1",
+  "license": "MIT",
+  "description": "A simple election DApp",
+  "homepage": "https://dexon.org",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cobinhood/dapp-workshop-1201.git"
+  },
+  "scripts": {
+    "postinstall": "touch secret.js",
+    "compile": "dexon-truffle compile",
+    "test": "dexon-truffle test",
+    "deploy": "dexon-truffle migrate --network=testnet"
+  },
+  "dependencies": {
+    "@dexon-foundation/truffle": "^4.1.16",
+    "truffle-hdwallet-provider": "github:trufflesuite/truffle-hdwallet-provider"
+  }
+}
