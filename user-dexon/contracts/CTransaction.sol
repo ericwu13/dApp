@@ -10,6 +10,7 @@ contract CTransaction is CStatus{
         address _driver;
         Status _status;
         uint32 _value;
+        uint _timestamp;
     }
 
 }
