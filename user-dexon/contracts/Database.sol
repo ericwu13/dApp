@@ -1,4 +1,5 @@
 pragma solidity ^0.4.25;
+pragma experimental ABIEncoderV2;
 import "./UserProfile.sol";
 contract Database is UserProfile {
     
@@ -16,7 +17,6 @@ contract Database is UserProfile {
         Status _status;
         uint32 _value;
     }
-
     //mapping
     mapping(address => Transaction) txDatabase;
 
@@ -25,8 +25,8 @@ contract Database is UserProfile {
     uint32 depositRatio;
 
     //function for status
-    function isPosting(uint8 _status) view returns (bool){
-        return _status == 0;
+    function isPosting(Status _status) internal view returns (bool){
+        return _status._status == 0;
     }
     function isBuying(uint8 _status) view returns (bool){
         return _status == 1;
@@ -57,6 +57,7 @@ contract Database is UserProfile {
     function setSuccessTx(uint32 _txId) internal{
     
     }
+
     
 
 
