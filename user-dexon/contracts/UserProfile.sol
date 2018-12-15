@@ -1,8 +1,10 @@
 pragma solidity ^0.4.25;
 import "./IERC20.sol";
 import "./SafeMath.sol";
+import "./Ownable.sol";
 
-contract CUserProfiles is IERC20 {
+
+contract CUserProfiles is Ownable, IERC20{
     using SafeMath for uint256;
 
     //define User
