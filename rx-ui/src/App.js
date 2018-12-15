@@ -7,6 +7,7 @@ import NavBar from './component/NavBar.js'
 import LoginPage from "./component/LoginPage.js"
 import PostPage from "./component/PostPage.js"
 import AccountPage from "./component/AccountPage.js"
+import DeliverPage from "./component/DeliverPage.js"
 import PlatformABI from './platform_abi.js'
 import Web3 from 'web3';
 
@@ -16,9 +17,10 @@ class App extends Component {
     this.state = {
       login: false,
       name:"",
-      balance: 10,
+      balance: 0,
       held_balance: 0,
-      reputation: 0
+      reputation: 0,
+      item:[]
     };
     this.handleLogin = this.handleLogin.bind(this);
     this.handleLogout = this.handleLogout.bind(this);
@@ -104,6 +106,11 @@ class App extends Component {
         <AccountPage name={this.state.name} balance={this.state.balance} held_balance={this.held_balance} reputation={this.reputation} handleListProfile={this.handleListProfile}/>
       )
     }
+    const MyDeliverPage = (props)=>{
+      return(
+        <DeliverPage name={this.state.name}/>
+      )
+    }
     return (
       <BrowserRouter>
       <div>
@@ -112,6 +119,7 @@ class App extends Component {
       <Route path="/login" render={MyLoginPage}/>
       <Route path="/post" render={MyPostPage}/>
       <Route path="/account" render={MyAccountPage}/>
+      <Route path="/deliver" render={MyAccountPage}/>
       </div>
       </BrowserRouter>
     );

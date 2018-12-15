@@ -15,6 +15,7 @@ class NavBar extends Component {
     }
 
     render() {
+        this.handle
         let navBar_left;
         if ( this.props.manage ) {
             navBar_left = 
