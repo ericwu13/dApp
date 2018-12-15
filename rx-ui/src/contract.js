@@ -14,16 +14,21 @@ class PlatformHandler {
     }j
     handleCreateUser() {
         var createUser = this.platformContract.methods['createUser']()
-        this.platformContract.methods['userProfiles'](web3.eth.accounts[0]).call().then((user) => {
-            if(user._name)
-        })
-        this.platformContract.methods['guaranteedDeposit'].call().then((value) => {
-            createUser.send({from: web3.eth.accounts[0], value: value})
-            createUser.on('receipt', function(receipt){
-            })
+        this.platformContract.methods['_userProfiles'].call().then((users) => {
+            if(users[web3.eth.accounts[0]]._name === "") {
+                this.platformContract.methods['guaranteedDeposit'].call()
+                .on((value) => {
+                    createUser.send({from: web3.eth.accounts[0], value: value})
+                })
+                .on('error', () => console.log('unexpected error'))
+            }
         })
 
-        createUser.on('error', () => console.log('unexpected error'))
+    }
+
+    handleEditName(name) {
+        var editName = this.platformContract.methods['editName'](name)
+        editName.send({from: web3.eth.accounts[0]})
     }
     handlerlistProfile() {
         this.platformContract.methods['listProfile']()
