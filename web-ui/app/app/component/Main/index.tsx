@@ -17,7 +17,7 @@ import Refund from '@/component/Refund';
 // });
 
 const StyledBtn = styled.button`
-    background-color: black;
+    background-color:black;
     color: violet;
     border: none;
     text-align: center;

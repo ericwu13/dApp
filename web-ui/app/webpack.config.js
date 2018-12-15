@@ -86,7 +86,7 @@ module.exports = (env, options) => {
         devtool: isProduction? '' : 'inline-source-map',
         entry: {
             vendor: ['react', 'react-dom', 'react-loadable'],
-            client: './app/index.ts',
+            client: './app/index.js',
         },
         output: {
             filename: '[name].[chunkhash].js',
