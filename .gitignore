@@ -1,4 +1,7 @@
-./fuck.sol
+tags
+*.swp
+*/tags
+*/*.swp
 */node_modules
 */build
 */secret.js
