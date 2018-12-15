@@ -4,7 +4,7 @@ import "./Database.sol";
 import "./UserProfiles.sol";
 import "./restricted.sol";
 contract CPlatform is Ownable, CDatabase, Restricted{
-    
+       
     //event
     event newUser(address _userAddress, string _name);
     event listUser(string _name,
