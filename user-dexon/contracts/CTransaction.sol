@@ -1,5 +1,5 @@
 pragma solidity ^0.4.25;
-import "./Status.sol";
+import "./CStatus.sol";
 contract CTransaction is CStatus{
     
     //define Transation

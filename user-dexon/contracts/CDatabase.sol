@@ -1,7 +1,7 @@
 pragma solidity ^0.4.25;
-import "./UserProfiles.sol";
-import "./Status.sol";
-import "./Transaction.sol";
+import "./CUserProfiles.sol";
+import "./CStatus.sol";
+import "./CTransaction.sol";
 contract CDatabase is CUserProfiles, CStatus, CTransaction {
     
     //mapping
