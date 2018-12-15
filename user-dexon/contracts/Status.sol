@@ -4,7 +4,7 @@ import "./Ownable.sol";
 contract CStatus is Ownable {
     
     //define Status
-    enum Status {POSTING, BUYING, PENDING, DELIVERING, SUCCESS, FAIL}
+    enum Status {POSTING, BUYING, PENDING, DELIVERING, SUCCESS, FAIL, AFTERRATING}
 
     //function for status
     function isPosting(Status status) external view onlyOwner returns (bool){
