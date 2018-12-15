@@ -2,7 +2,7 @@ pragma solidity ^0.4.25;
 import "./UserProfile.sol";
 import "./Status.sol";
 import "./Transaction.sol";
-contract Database is UserProfile, Status, Transaction {
+contract CDatabase is CUserProfile, CStatus, CTransaction {
     
     //mapping
     mapping(uint256 => Transaction) txDatabase;

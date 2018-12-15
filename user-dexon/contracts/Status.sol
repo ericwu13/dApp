@@ -1,6 +1,6 @@
 pragma solidity ^0.4.25;
 
-contract Status {
+contract CStatus {
     
     //define Status
     enum Status {POSTING, BUYING, PENDING, DELIVERING, SUCCESS, FAIL}
