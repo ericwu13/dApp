@@ -14,13 +14,13 @@ contract CDatabase is CUserProfiles, CStatus, CTransaction {
 
 
     //function for tx
-    function setPostTx(address _seller) internal returns(uint256) {
+    function setPostTx(address _seller, uint32 _value) internal returns(uint256) {
         txDatabase[txDatabaseSize] = Transaction(txDatabaseSize,    //txId
                                                  _seller,           // seller address
                                                  address(0),        // buyer address
                                                  address(0),        // driver address
                                                  Status.POSTING,    // status
-                                                 100);              // value
+                                                 _value);              // value
         txDatabaseSize++;
         return txDatabaseSize;
     }
