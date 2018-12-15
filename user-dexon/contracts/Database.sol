@@ -43,6 +43,7 @@ contract Database is UserProfile {
 
     //function for tx
     function setPostTx(address _seller) internal{
+        
     
     }
     function setBuyTx(uint32 _txId, address _buyer) internal{
