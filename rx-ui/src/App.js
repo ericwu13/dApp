@@ -31,7 +31,7 @@ class App extends Component {
     this.web3 = new Web3(dexonProvider)
     this.web3.eth.getAccounts().then(accounts => this.dexonAccount = accounts[0])
     this.platformABI = PlatformABI;
-    this.platformAddress = '0x4a19e199d035066933a412fd58f1a2021c900287';
+    this.platformAddress = '0x1C6487142F89A76699e5194f3D49BdF1f12a82e6';
     this.platformContract = new this.web3.eth.Contract(this.platformABI, this.platformAddress);
   }
   handleLogin(e){

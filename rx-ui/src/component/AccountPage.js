@@ -1,23 +1,18 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { Redirect, Link } from 'react-router-dom';
 import axios from 'axios';
 
-class AccountPage extends Component {
-    constructor(props) {
-        super(props);
-        this.state={
-            name : this.props.name,
-            balance : this.props.balance,
-            held_balance : this.props.held_balance,
-        };
+class AccountPage extends PureComponent {
+    componentDidMount() {
+        this.props.handleListProfile()    
     }
+
     render() {
-        this.props.handleListProfile()
         let user_info =
             <div class="">
                     <h3 class="card-title" id="user">Hi! {this.props.name}.</h3>
-                    <h5 class="card-title">You've got {this.state.balance} .</h5>
-                    <h5 class="card-title">You've cost {this.state.held_balance} .</h5>
+                    <h5 class="card-title">You've got {this.props.balance} .</h5>
+                    <h5 class="card-title">You've cost {this.props.held_balance} .</h5>
             </div>;  
             
         
