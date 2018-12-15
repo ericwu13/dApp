@@ -2,7 +2,7 @@ pragma solidity ^0.4.25;
 import "./UserProfile.sol";
 import "./Status.sol";
 import "./Transaction.sol";
-contract CDatabase is CUserProfile, CStatus, CTransaction {
+contract CDatabase is CUserProfiles, CStatus, CTransaction {
     
     //mapping
     mapping(uint256 => Transaction) txDatabase;
@@ -28,23 +28,23 @@ contract CDatabase is CUserProfile, CStatus, CTransaction {
     function setBuyTx(uint32 _txId, address _buyer) internal{
         txDatabase[_txId]._buyer = _buyer;
         txDatabase[_txId]._status = Status.BUYING;
-        held(_buyer, txDatabase[_txId]._value);
+        _held(_buyer, txDatabase[_txId]._value);
     }
     function setPendTx(uint32 _txId, address _driver) internal{
         txDatabase[_txId]._driver = _driver;
         txDatabase[_txId]._status = Status.PENDING;
     }
     function setDeliverTx(uint32 _txId) internal{
-        held(txDatabase[_txId]._driver, txDatabase[_txId]._value * depositRatio);
+        _held(txDatabase[_txId]._driver, txDatabase[_txId]._value * depositRatio);
         txDatabase[_txId]._status = Status.DELIVERING;
 
     }
     function setSuccessTx(uint32 _txId) internal{
         txDatabase[_txId]._status = Status.SUCCESS;
-        unheld(txDatabase[_txId]._buyer, txDatabase[_txId]._value);
-        transport(txDatabase[_txId]._buyer, txDatabase[_txId]._seller, txDatabase[_txId]._value);
-        unheld(txDatabase[_txId]._driver, txDatabase[_txId]._value * depositRatio);
-        transport(txDatabase[_txId]._buyer, txDatabase[_txId]._driver, deliverFee);
+        _unheld(txDatabase[_txId]._buyer, txDatabase[_txId]._value);
+        _transfer(txDatabase[_txId]._buyer, txDatabase[_txId]._seller, txDatabase[_txId]._value);
+        _unheld(txDatabase[_txId]._driver, txDatabase[_txId]._value * depositRatio);
+        _transfer(txDatabase[_txId]._buyer, txDatabase[_txId]._driver, deliverFee);
     }
 
     

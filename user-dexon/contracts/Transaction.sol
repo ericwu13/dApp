@@ -1,6 +1,6 @@
 pragma solidity ^0.4.25;
 import "./Status.sol";
-contract CTransaction {
+contract CTransaction is CStatus{
     
     //define Transation
     struct Transaction{

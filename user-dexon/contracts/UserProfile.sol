@@ -8,7 +8,7 @@ contract CUserProfiles is IERC20 {
     //define User
     struct User{
         string _name;
-        uint32 _balance;
+        uint256 _balance;
         uint32 _held_balance; // deposit
         uint32 _reputation;
         address _address;
