@@ -1,6 +1,7 @@
 pragma solidity ^0.4.25;
+import "./Ownable.sol";
 
-contract UserProfile {
+contract UserProfile is Ownable {
 
     //define User
     struct User{
