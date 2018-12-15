@@ -1,4 +1,4 @@
-const Hello = artifacts.require("Hello");
+const Hello = artifacts.require("CPlatform");
 
 contract('Hello', function(accounts) {
   let HelloContract;

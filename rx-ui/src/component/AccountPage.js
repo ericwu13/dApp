@@ -9,7 +9,6 @@ class AccountPage extends Component {
             name : this.props.name,
             balance : this.props.balance,
             held_balance : this.props.held_balance,
-            reputation: this.props.reputation 
         };
     }
     render() {
@@ -18,6 +17,7 @@ class AccountPage extends Component {
             <div class="">
                     <h3 class="card-title" id="user">Hi! {this.props.name}.</h3>
                     <h5 class="card-title">You've got {this.state.balance} .</h5>
+                    <h5 class="card-title">You've cost {this.state.held_balance} .</h5>
             </div>;  
             
         

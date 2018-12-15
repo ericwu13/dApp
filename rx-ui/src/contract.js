@@ -1,40 +1,40 @@
 import Web3 from 'web3';
-import { PlatformABI } from './platform_abi.js'
+import PlatformABI from './platform_abi.js'
 
 
 class PlatformHandler {
     constructor() {
         window.dexon.enable()
         const dexonProvider = window.dexon
-        const web3 = new Web3(dexonProvider)
-        //web3.eth.defaultAccount = web3.eth.accounts[0]
+        this.web3 = new Web3(dexonProvider)
+        this.web3.eth.getAccounts().then(accounts => this.dexonAccount = accounts[0])
         let platformABI = PlatformABI;
-        let platformAddress = '0x42b9991505950cc5ac38a6557d8efcdc40235de6';
-        this.platformContract = web3.eth.contract(platformABI).at(platformAddress);
+        let platformAddress = '0x98707b826b4093d51e65c9445903d7859f7eef91';
+        this.platformContract = new this.web3.eth.Contract(platformABI, platformAddress);
     }
     handleCreateUser() {
+        console.log(this.dexonAccount)
         var createUser = this.platformContract.methods['createUser']()
-        this.platformContract.methods['_userProfiles'].call().then((users) => {
-            if(users[web3.eth.accounts[0]]._name === "") {
-                this.platformContract.methods['guaranteedDeposit'].call()
-                .on((value) => {
-                    createUser.send({from: web3.eth.accounts[0], value: value})
+        this.platformContract.methods['_userProfiles'](this.dexonAccount).call().then((user) => {
+            console.log(user[0])
+            if(user[0] === "") {
+                this.platformContract.methods['guaranteedDeposit']().call()
+                .then((value) => {
+                    createUser.send({from: this.dexonAccount, value: value})
                 })
-                .on('error', () => console.log('unexpected error'))
             }
         })
-
     }
 
     handleEditName(name) {
         var editUserName = this.platformContract.methods['editUserName'](name)
-        editUserName.send({from: web3.eth.accounts[0]})
+        editUserName.send({from: this.dexonAccount})
         this.state.name = name
     }
 
     handleListProfile() {
         var listProfile = this.platformContract.methods['listProfile']()
-        listProfile.call({from: web3.eth.accounts[0]}).then((response) => {
+        listProfile.call({from: this.dexonAccount}).then((response) => {
             const [name, balance, held_balance, reputation] = response;
             this.state.name = name
             this.state.balance = balance
@@ -45,7 +45,7 @@ class PlatformHandler {
 
     handlePost(value) {
         var post = this.platformContract.methods['post'](txId)
-        post.send({from: this.web3.eth.accounts[0]}).then((reponse) => {
+        post.send({from: this.dexonAccount}).then((reponse) => {
             const [txId] = response
             this.state.txId = txId
         })
@@ -53,22 +53,22 @@ class PlatformHandler {
    
     handleBuy(txId) {
         var buy = this.platformContract.methods['buy'](txId)
-        buy.send({from: this.web3.eth.accounts[0]})
+        buy.send({from: this.dexonAccount})
     }
 
     handlePend(txId) {
         var pend = this.platformContract.methods['pend'](txId)
-        buy.send({from: this.web3.eth.accounts[0]})
+        buy.send({from: this.dexonAccount})
     }
 
     handleConfirmDeliever(txId) {
         var confirmDeliever = this.platformContract.methods['confirmDeliever'](txId)
-        confirmDeliever.send({from: this.web3.eth.accounts[0]})
+        confirmDeliever.send({from: this.dexonAccount})
     }
 
     handleConfirmTx(txId) {
         var confirmTx = this.platformContract.methods['confirmTx'](txId)
-        confirmTx.send({from: this.web3.eth.accounts[0]})
+        confirmTx.send({from: this.dexonAccount})
     }
 }
 

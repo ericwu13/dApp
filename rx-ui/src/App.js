@@ -7,6 +7,7 @@ import NavBar from './component/NavBar.js'
 import LoginPage from "./component/LoginPage.js"
 import PostPage from "./component/PostPage.js"
 import AccountPage from "./component/AccountPage.js"
+import DeliverPage from "./component/DeliverPage.js"
 import PlatformABI from './platform_abi.js'
 import Web3 from 'web3';
 
@@ -18,7 +19,8 @@ class App extends Component {
       name:"",
       balance: 10,
       held_balance: 0,
-      reputation: 0
+      reputation: 0,
+      item:[]
     };
     this.handleLogin = this.handleLogin.bind(this);
     this.handleLogout = this.handleLogout.bind(this);
@@ -28,9 +30,9 @@ class App extends Component {
     const dexonProvider = window.dexon
     this.web3 = new Web3(dexonProvider)
     this.web3.eth.getAccounts().then(accounts => this.dexonAccount = accounts[0])
-    let platformABI = PlatformABI;
-    let platformAddress = '0x98707b826b4093d51e65c9445903d7859f7eef91';
-    this.platformContract = new this.web3.eth.Contract(platformABI, platformAddress);
+    this.platformABI = PlatformABI;
+    this.platformAddress = '0x4a19e199d035066933a412fd58f1a2021c900287';
+    this.platformContract = new this.web3.eth.Contract(this.platformABI, this.platformAddress);
   }
   handleLogin(e){
     this.setState({
@@ -63,17 +65,46 @@ class App extends Component {
 
   handleListProfile() {
     console.log(this.dexonAccount)
-    var listProfile = this.platformContract.methods['listProfile']()
-    listProfile.call({from: this.dexonAccount}).then((response) => {
-      const [name, balance, held_balance, reputation] = response;
-      console.log(balance)
+    const httpWeb3 = new Web3(new Web3.providers.HttpProvider('http://testnet.dexon.org:8545'));
+    const localContract = new httpWeb3.eth.Contract(this.platformABI, this.platformAddress); 
+    var listProfile = localContract.methods['listProfile'](this.dexonAccount)
+    listProfile.call()
+    .then((response) => {
+      console.log(response[1])
       this.setState ({
-        name: name,
-        balance: balance,
-        held_balance: held_balance,
-        reputation: reputation
+        name: response[0],
+        balance: response[1],
+        held_balance: response[2],
       }) 
     })
+  }
+  
+  // handlePost(value) {
+  //   var post = this.platformContract.methods['post'](txId)
+  //   post.send({from: this.dexonAccount}).then((reponse) => {
+  //     const [txId] = response
+  //     this.state.txId = txId
+  //   })
+  // }
+
+  handleBuy(txId) {
+    var buy = this.platformContract.methods['buy'](txId)
+    buy.send({from: this.dexonAccount})
+  }
+
+  handlePend(txId) {
+    var pend = this.platformContract.methods['pend'](txId)
+    pend.send({from: this.dexonAccount})
+  }
+
+  handleConfirmDeliever(txId) {
+    var confirmDeliever = this.platformContract.methods['confirmDeliever'](txId)
+    confirmDeliever.send({from: this.dexonAccount})
+  }
+
+  handleConfirmTx(txId) {
+    var confirmTx = this.platformContract.methods['confirmTx'](txId)
+    confirmTx.send({from: this.dexonAccount})
   }
   
   render() {
@@ -101,7 +132,12 @@ class App extends Component {
     }
     const MyAccountPage = (props)=>{
       return(
-        <AccountPage name={this.state.name} balance={this.state.balance} held_balance={this.held_balance} reputation={this.reputation} handleListProfile={this.handleListProfile}/>
+        <AccountPage name={this.state.name} balance={this.state.balance} held_balance={this.state.held_balance} reputation={this.reputation} handleListProfile={this.handleListProfile}/>
+      )
+    }
+    const MyDeliverPage = (props)=>{
+      return(
+        <DeliverPage name={this.state.name}/>
       )
     }
     return (
@@ -112,6 +148,7 @@ class App extends Component {
       <Route path="/login" render={MyLoginPage}/>
       <Route path="/post" render={MyPostPage}/>
       <Route path="/account" render={MyAccountPage}/>
+      <Route path="/deliver" render={MyAccountPage}/>
       </div>
       </BrowserRouter>
     );
