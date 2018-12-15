@@ -5,7 +5,7 @@ import "./Transaction.sol";
 contract CDatabase is CUserProfiles, CStatus, CTransaction {
     
     //mapping
-    mapping(uint256 => Transaction) txDatabase;
+    mapping(uint256 => Transaction) public txDatabase;
     uint txDatabaseSize = 0;
 
     //constant
