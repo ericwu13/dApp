@@ -1,7 +1,5 @@
 pragma solidity ^0.4.25;
-import "./UserProfile.sol";
-import "./Status.sol";
-contract Transaction is UserProfile, Status{
+contract Transaction {
     
     //define Transation
     struct Transaction{

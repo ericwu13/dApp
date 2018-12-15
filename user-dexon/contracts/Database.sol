@@ -1,6 +1,8 @@
 pragma solidity ^0.4.25;
+import "./UserProfile.sol";
+import "./Status.sol";
 import "./Transaction.sol";
-contract Database is Transaction {
+contract Database is UserProfile, Status, Transaction {
     
     //mapping
     mapping(uint256 => Transaction) txDatabase;
@@ -27,7 +29,6 @@ contract Database is Transaction {
         txDatabase[_txId]._buyer = _buyer;
         txDatabase[_txId]._status = Status.BUYING;
         held(_buyer, txDatabase[_txId]._value);
-
     }
     function setPendTx(uint32 _txId, address _driver) internal{
         txDatabase[_txId]._driver = _driver;
