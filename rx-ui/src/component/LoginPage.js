@@ -21,26 +21,9 @@ class LoginPage extends Component {
     }
 
     handleSubmit(ev) {
-        ev.preventDefault();
-        axios.post('/api/login', {
-            account: this.state.account,
-        })
-            .then((res) => {
-                if (res.data.valid === true){
-                    this.setState({ redirect: true });
-                    this.props.handleLogin({
-                        login: true,
-                        account: this.state.account,
-                        manage: res.data.manage,
-                    });
-                }
-                else {
-                    this.setState({ error: true });
-                }
-            })
-            .catch(function (err) {
-                console.log(err);
-            });
+        this.props.handleCreateUser();
+        this.props.handleLogin({ login: true });
+        this.setState({ redirect: true });
     }
 
     render() {
@@ -67,13 +50,10 @@ class LoginPage extends Component {
                     <br/>
                     <form>
                         <div class="form-group">
-                            <label >Account</label>
-                            <input type="text" class="form-control" id="account" value={this.state.account} onChange={this.handleAccountChange}/>
                         </div>
                         <div>{errBar}</div>
-                        <button type="submit" class="btn btn-outline-secondary btn-block" onClick={this.handleSubmit}>Login</button>
+                        <button type="submit" class="btn btn-outline-secondary btn-block" onClick={this.handleSubmit}>GO!</button>
                         <br/>
-                        <Link to='/register' style={{ textDecoration: 'none'}} ><button type='submit' class='btn btn-secondary btn-block'>Register</button></Link>
                     </form>
                 </div>
                 <div className='col-4'></div>
