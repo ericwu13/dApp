@@ -49,17 +49,17 @@ contract CPlatform is CDatabase, Restricted{
         // emit pending(msg.sender, txId);
     }
 
-    function confirmDeliver(uint256 txId) external onlyPositiveBalance(_userProfiles[msg.sender]._balance, txDatabase[txId]._value * depositRatio){
+    function confirmDeliver(uint256 txId) external onlyPositiveBalance(_userProfiles[msg.sender]._balance, txDatabase[txId]._value * depositRatio) onlySeller(txId){
         setDeliverTx(txId);
         // emit delivering(txId);
     }
 
-    function confirmTx(uint256 txId) external {
+    function confirmTx(uint256 txId) external onlyBuyer(txId) {
         setSuccessTx(txId);
 
         // emit success(txId);
     }
-    function ratingTx(uint256 txId, uint32 seller_score, uint32 driver_score) external{
+    function ratingTx(uint256 txId, uint32 seller_score, uint32 driver_score) external onlyBuyer(txId){
         setRatingTx(txId, seller_score, driver_score);
     }
 
