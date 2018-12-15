@@ -84,6 +84,20 @@ export default [
     },
     {
       "constant": true,
+      "inputs": [],
+      "name": "deadline",
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
       "inputs": [
         {
           "name": "status",
@@ -124,8 +138,20 @@ export default [
           "type": "uint32"
         },
         {
-          "name": "_reputation",
-          "type": "int32"
+          "name": "_sellerReputation",
+          "type": "uint32"
+        },
+        {
+          "name": "_sellerNumber",
+          "type": "uint32"
+        },
+        {
+          "name": "_driverReputation",
+          "type": "uint32"
+        },
+        {
+          "name": "_driverNumber",
+          "type": "uint32"
         }
       ],
       "payable": false,
@@ -249,6 +275,10 @@ export default [
         {
           "name": "_value",
           "type": "uint32"
+        },
+        {
+          "name": "_timestamp",
+          "type": "uint256"
         }
       ],
       "payable": false,
@@ -264,6 +294,25 @@ export default [
         }
       ],
       "name": "isSuccess",
+      "outputs": [
+        {
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "name": "status",
+          "type": "uint8"
+        }
+      ],
+      "name": "isAfterRating",
       "outputs": [
         {
           "name": "",
@@ -623,6 +672,24 @@ export default [
     },
     {
       "constant": false,
+      "inputs": [
+        {
+          "name": "account",
+          "type": "address"
+        },
+        {
+          "name": "value",
+          "type": "uint256"
+        }
+      ],
+      "name": "sponsor",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": false,
       "inputs": [],
       "name": "createUser",
       "outputs": [],
@@ -646,7 +713,12 @@ export default [
     },
     {
       "constant": true,
-      "inputs": [],
+      "inputs": [
+        {
+          "name": "account",
+          "type": "address"
+        }
+      ],
       "name": "listProfile",
       "outputs": [
         {
@@ -663,7 +735,11 @@ export default [
         },
         {
           "name": "",
-          "type": "int32"
+          "type": "uint32"
+        },
+        {
+          "name": "",
+          "type": "uint32"
         }
       ],
       "payable": false,
@@ -740,6 +816,28 @@ export default [
         }
       ],
       "name": "confirmTx",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "txId",
+          "type": "uint256"
+        },
+        {
+          "name": "seller_score",
+          "type": "uint32"
+        },
+        {
+          "name": "driver_score",
+          "type": "uint32"
+        }
+      ],
+      "name": "ratingTx",
       "outputs": [],
       "payable": false,
       "stateMutability": "nonpayable",

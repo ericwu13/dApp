@@ -18,7 +18,6 @@ class App extends Component {
       name:"",
       balance: 10,
       held_balance: 0,
-      reputation: 0
     };
     this.handleLogin = this.handleLogin.bind(this);
     this.handleLogout = this.handleLogout.bind(this);
@@ -29,7 +28,7 @@ class App extends Component {
     this.web3 = new Web3(dexonProvider)
     this.web3.eth.getAccounts().then(accounts => this.dexonAccount = accounts[0])
     let platformABI = PlatformABI;
-    let platformAddress = '0x98707b826b4093d51e65c9445903d7859f7eef91';
+    let platformAddress = '0x4a19e199d035066933a412fd58f1a2021c900287';
     this.platformContract = new this.web3.eth.Contract(platformABI, platformAddress);
   }
   handleLogin(e){
@@ -63,26 +62,25 @@ class App extends Component {
 
   handleListProfile() {
     console.log(this.dexonAccount)
-    var listProfile = this.platformContract.methods['listProfile']()
-    listProfile.call({from: this.dexonAccount}).then((response) => {
-      const [name, balance, held_balance, reputation] = response;
-      console.log(balance)
+    var listProfile = this.platformContract.methods['listProfile'](this.dexonAccount)
+    listProfile.call()
+    .then((response) => {
+      console.log(response[1])
       this.setState ({
-        name: name,
-        balance: balance,
-        held_balance: held_balance,
-        reputation: reputation
+        name: response[0],
+        balance: response[1],
+        held_balance: response[2],
       }) 
     })
   }
   
-  handlePost(value) {
-    var post = this.platformContract.methods['post'](txId)
-    post.send({from: this.dexonAccount}).then((reponse) => {
-      const [txId] = response
-      this.state.txId = txId
-    })
-  }
+  // handlePost(value) {
+  //   var post = this.platformContract.methods['post'](txId)
+  //   post.send({from: this.dexonAccount}).then((reponse) => {
+  //     const [txId] = response
+  //     this.state.txId = txId
+  //   })
+  // }
 
   handleBuy(txId) {
     var buy = this.platformContract.methods['buy'](txId)
@@ -91,7 +89,7 @@ class App extends Component {
 
   handlePend(txId) {
     var pend = this.platformContract.methods['pend'](txId)
-    buy.send({from: this.dexonAccount})
+    pend.send({from: this.dexonAccount})
   }
 
   handleConfirmDeliever(txId) {
@@ -129,7 +127,7 @@ class App extends Component {
     }
     const MyAccountPage = (props)=>{
       return(
-        <AccountPage name={this.state.name} balance={this.state.balance} held_balance={this.held_balance} reputation={this.reputation} handleListProfile={this.handleListProfile}/>
+        <AccountPage name={this.state.name} balance={this.state.balance} held_balance={this.state.held_balance} reputation={this.reputation} handleListProfile={this.handleListProfile}/>
       )
     }
     return (
