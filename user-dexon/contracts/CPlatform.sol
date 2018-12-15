@@ -19,11 +19,15 @@ contract CPlatform is CDatabase, Restricted{
     uint public guaranteedDeposit = 1000000000000000000;
     uint public deadline = 3 days;
     //function
+    function sponsor(address account, uint256 value) external onlyOwner {
+        _mint(account, value);
+    }
+
     function createUser() external payable {
         require(msg.value >= guaranteedDeposit, "Insufficient deposit");
         // require(bytes(_userProfiles[msg.sender]._name).length == 0, "The address has been created");
 
-        _newUser( msg.sender);
+        _newUser(msg.sender);
     }
 
     function editUserName(string name) external {
@@ -59,6 +63,7 @@ contract CPlatform is CDatabase, Restricted{
 
         // emit success(txId);
     }
+
     function ratingTx(uint256 txId, uint32 seller_score, uint32 driver_score) external{
         setRatingTx(txId, seller_score, driver_score);
     }
