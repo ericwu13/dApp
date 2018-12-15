@@ -1,6 +1,6 @@
 pragma solidity ^0.4.25;
-import "./Database.sol";
-import "./UserProfiles.sol";
+import "./CDatabase.sol";
+import "./CUserProfiles.sol";
 import "./Restricted.sol";
 contract CPlatform is CDatabase, Restricted{
        
@@ -22,19 +22,15 @@ contract CPlatform is CDatabase, Restricted{
         require(msg.value >= guaranteedDeposit, "Insufficient deposit");
         // require(bytes(_userProfiles[msg.sender]._name).length == 0, "The address has been created");
 
-        _userProfiles[msg.sender] = User("[empty name]", 0 ,0, 200);
-        // emit eCreateUser(msg.sender);
+        _newUser( msg.sender);
     }
 
     function editUserName(string name) external {
         _editName(msg.sender, name);
     }
 
-    function listProfile() external view returns(string, uint256, uint32, int32) {
-        return( _userProfiles[msg.sender]._name,
-                _userProfiles[msg.sender]._balance,
-                _userProfiles[msg.sender]._held_balance,
-                _userProfiles[msg.sender]._reputation);
+    function listProfile() external view returns(string, uint256, uint32, uint32, uint32, uint32, uint32) {
+        return(_listUser(msg.sender));
     }
 
     function post(uint32 value) external returns(uint256) {

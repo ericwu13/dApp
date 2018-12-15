@@ -11,8 +11,13 @@ contract CUserProfiles is Ownable, IERC20{
     struct User{
         string      _name;
         uint256     _balance;
-        uint32      _held_balance; // deposit
-        int32       _reputation;
+        // deposit
+        uint32      _held_balance;
+        // reputation
+        uint32       _sellerReputation;
+        uint32       _sellerNumber;
+        uint32       _driverReputation;
+        uint32       _driverNumber;
         // address _address;
         mapping (address => uint256) _allowed;
     }
@@ -67,6 +72,10 @@ contract CUserProfiles is Ownable, IERC20{
         emit Approval(msg.sender, spender, _userProfiles[msg.sender]._allowed[spender]);
         return true;
     }
+
+    function _newUser(address seller) internal {
+        _userProfiles[seller] = User("[empty name]", 0 ,0, 0, 0, 0, 0);
+    }
     function _editName(address target, string name) internal {
         _userProfiles[target]._name = name;               
     } 
@@ -85,9 +94,25 @@ contract CUserProfiles is Ownable, IERC20{
         _userProfiles[to]._balance = _userProfiles[to]._balance.add(value);
         emit Transfer(from, to, value);
     }
-    function _addReputation(address to) internal {
-        require(to != address(0));
-        _userProfiles[to]._reputation += 1;
+    function _scoreSeller(address account, uint32 score) internal {
+        require(account != address(0));
+        if( score > 10) { score = 10; }
+        _userProfiles[account]._sellerReputation += score;
+        _userProfiles[account]._sellerNumber++;
+    }
+    function _sellerReputation(address account) internal view returns(uint32) {
+        require(account != address(0));
+        return _userProfiles[account]._sellerReputation / _userProfiles[account]._sellerNumber;
+    }
+    function _scoreDriver(address account, uint32 score) internal {
+        require(account != address(0));
+        if( score > 10) { score = 10; }
+        _userProfiles[account]._driverReputation += score;
+        _userProfiles[account]._driverNumber++;
+    }
+    function _driverReputation(address account) internal view returns(uint32) {
+        require(account != address(0));
+        return _userProfiles[account]._driverReputation / _userProfiles[account]._driverNumber;
     }
     function _mint(address account, uint256 value) internal  {
         require(account != address(0));
@@ -106,5 +131,13 @@ contract CUserProfiles is Ownable, IERC20{
         _burn(account, value);
         emit Approval(account, msg.sender, _userProfiles[account]._allowed[msg.sender]);
     }
-
+    function _listUser(address account) internal view returns(string, uint256, uint32, uint32, uint32, uint32, uint32) {
+        return( _userProfiles[account]._name,
+                _userProfiles[account]._balance,
+                _userProfiles[account]._held_balance,
+                _userProfiles[account]._sellerReputation,
+                _userProfiles[account]._sellerNumber,
+                _userProfiles[account]._driverReputation,
+                _userProfiles[account]._driverNumber);
+    }
 }

@@ -1,5 +1,5 @@
 pragma solidity ^0.4.25;
-import "./Status.sol";
+import "./CStatus.sol";
 contract CTransaction is CStatus{
     
     //define Transation
@@ -10,6 +10,7 @@ contract CTransaction is CStatus{
         address _driver;
         Status _status;
         uint32 _value;
+        uint _timestamp;
     }
 
 }
