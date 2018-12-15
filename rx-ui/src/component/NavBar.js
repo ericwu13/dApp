@@ -26,9 +26,9 @@ class NavBar extends Component {
         else if ( this.props.login ) {
             navBar_left = 
                 <div class='navbar-nav ml-auto'>
+                    <Link to={'/account'}><a class="nav-item nav-link" >Account</a></Link> 
                     <Link to={'/deliver'}><a class="nav-item nav-link" >Deliver</a></Link> 
-                    <Link to={'/post'}><a class="nav-item nav-link" >Post</a></Link>                            
-                    <Link to={'/account'}><a class="nav-item nav-link" >{this.props.account}</a></Link>  
+                    <Link to={'/post'}><a class="nav-item nav-link" >Post</a></Link>                             
                     <Link to='/'><a class="nav-item nav-link" onClick={this.props.handleLogout} >Logout</a></Link>
                 </div>;
         } else {
