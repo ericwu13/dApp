@@ -27,7 +27,7 @@ export default class App extends React.Component {
       fileName: files[0].name
     });
 
-    //this.handleImageUpload(files[0]);
+    this.handleImageUpload(files[0]);
   }
 
   handleImageUpload(file) {
@@ -79,12 +79,12 @@ export default class App extends React.Component {
             <div>Drop an image or click to select a file to upload.</div>
           </Dropzone>
         </div>
-        <Link to='/' ><button type="submit" class="btn btn-outline-secondary btn-block" onClick={this.handleSubmit}>Upload</button></Link>
+        <Link to='/' ><button type="submit" class="btn btn-outline-secondary btn-block" onClick={this.handleSubmit}>SELL</button></Link>
 
         <div>
           {this.state.uploadedFileCloudinaryUrl === '' ? null :
           <div>
-            <p>{this.state.uploadedFile.name}</p>
+            <p>{this.state.fileName}</p>
             <img src={this.state.uploadedFileCloudinaryUrl} />
           </div>}
         </div>

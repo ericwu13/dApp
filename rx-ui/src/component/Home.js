@@ -21,7 +21,7 @@ class HomePage extends Component {
                 if(this.props.items[i].bought === false) {
                     let itemCard = 
                     <div class="card">
-                        <Link to={'/shop/'+this.props.items[i].productName}><img class="card-img-top"  src={`https://www.dropbox.com/s/48xcbl9a1640k7w/${this.props.items[i].fileName}?dl=1`} height="100" width="100"/></Link>
+                        <Link to={'/shop/'+i}><img class="card-img-top"  src={`https://www.dropbox.com/s/48xcbl9a1640k7w/${this.props.items[i].fileName}?dl=1`} height="100" width="100"/></Link>
                         <div class="card-body">
                             <h5 class="card-title">{this.props.items[i].productName}</h5>
                         </div>
