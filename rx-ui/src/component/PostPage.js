@@ -57,6 +57,10 @@ export default class App extends React.Component {
   }
   render() {
     return (
+      <div className='row'>
+                <div className='col-4'></div>
+                <div className='col-4'>
+                    <br/>
       <form>
       <div class="form-group">
           <label >Product Name</label>
@@ -71,7 +75,7 @@ export default class App extends React.Component {
           <input type="text" class="form-control" id="price" name="price" value={this.state.price} onChange={this.handleItem}/>
       </div>
       <br/>   
-        <div className="FileUpload">
+        <div className="FileUpload center dropzone">
           <Dropzone
             onDrop={this.onImageDrop.bind(this)}
             multiple={false}
@@ -79,16 +83,25 @@ export default class App extends React.Component {
             <div>Drop an image or click to select a file to upload.</div>
           </Dropzone>
         </div>
+        <br/>   
         <Link to='/' ><button type="submit" class="btn btn-outline-secondary btn-block" onClick={this.handleSubmit}>Upload</button></Link>
 
         <div>
+        <br/>   
           {this.state.uploadedFileCloudinaryUrl === '' ? null :
           <div>
             <p>{this.state.uploadedFile.name}</p>
             <img src={this.state.uploadedFileCloudinaryUrl} />
-          </div>}
+          </div>
+          }
         </div>
       </form>
+      <br/>   
+      <br/>   
+      </div>
+                <div className='col-4'></div>
+				
+            </div>
     )
   }
 }

@@ -6,7 +6,7 @@ import Home from './component/Home.js';
 import NavBar from './component/NavBar.js'
 import LoginPage from "./component/LoginPage.js"
 import PostPage from "./component/PostPage.js"
-import ShopPage from "./component/ShopPage.js"
+
 import AccountPage from "./component/AccountPage.js"
 import DeliverPage from "./component/DeliverPage.js"
 import PlatformABI from './platform_abi.js'
@@ -147,11 +147,7 @@ class App extends Component {
         <PostPage handleItemAppend={this.handleItemAppend}/>
       )
     }
-    const MyShopPage = (props)=>{
-      return(
-        <ShopPage shop={props.match.params.shop}/>
-      )
-    }
+
     const MyAccountPage = (props)=>{
       return(
         <AccountPage name={this.state.name} balance={this.state.balance} held_balance={this.state.held_balance} reputation={this.reputation} handleListProfile={this.handleListProfile}/>
@@ -169,7 +165,6 @@ class App extends Component {
       <Route exact path='/' component={MyHomePage}/>
       <Route path="/login" render={MyLoginPage}/>
       <Route path="/post" render={MyPostPage}/>
-      <Route path="/shop/:shop" render={MyShopPage}/>
       <Route exact path="/account" render={MyAccountPage}/>
       <Route path="/deliver" render={MyDeliverPage}/>
       </div>
