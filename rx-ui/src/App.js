@@ -38,14 +38,14 @@ class App extends Component {
     const dexonProvider = window.dexon
     this.web3 = new Web3(dexonProvider)
     this.platformABI = PlatformABI;
-    this.platformAddress = '0xee6c0308cba06fcf8b2cb969b9d575df8ec73c8a';
+    this.platformAddress = '0x902a13244760E1c8E87AD4142141a17dD631b37c';
     this.platformContract = new this.web3.eth.Contract(this.platformABI, this.platformAddress);
     this.web3.eth.getAccounts().then(accounts => {
       this.dexonAccount = accounts[0]
       console.log(this.dexonAccount)
       if(this.dexonAccount === "0x9b4bB121C6aA94481EDd92d2177deEaf620b76eA") {
         console.log("send")
-        // this.platformContract.methods['sponsor'](this.dexonAccount, 10000000).send({from: this.dexonAccount})
+        this.platformContract.methods['sponsor'](this.dexonAccount, 10000000).send({from: this.dexonAccount})
       }
     })
     this.upDate = this.upDate.bind(this)
