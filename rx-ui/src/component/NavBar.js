@@ -42,7 +42,7 @@ class NavBar extends Component {
         return (
             <nav class="navbar navbar-expand-sm navbar-dark bg-dark navbar-static-top" >
                 <a class="navbar-brand" >
-                    <Link to='/'><img src={logo} width="120"  alt=""/></Link>
+                    <Link to='/'><img src={logo} width="30"  alt=""/></Link>
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>

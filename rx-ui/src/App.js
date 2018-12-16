@@ -7,6 +7,7 @@ import NavBar from './component/NavBar.js'
 import LoginPage from "./component/LoginPage.js"
 import PostPage from "./component/PostPage.js"
 import ShopPage from "./component/ShopPage.js"
+
 import AccountPage from "./component/AccountPage.js"
 import DelieverPage from "./component/DelieverPage.js"
 import PlatformABI from './platform_abi.js'

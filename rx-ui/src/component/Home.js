@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
 import './Style.css';
 
 //slides
-import slide1 from '../img/mac1.png';
-import slide2 from '../img/xbox.png';
-import slide3 from '../img/ps4.png';
+import slide1 from './img/1.png';
+import slide2 from './img/2.png';
+import slide3 from './img/3.jpg';
 
 class HomePage extends Component {
     constructor(props) {
@@ -21,7 +20,7 @@ class HomePage extends Component {
                 if(this.props.items[i].bought === false) {
                     let itemCard = 
                     <div class="card">
-                        <Link to={'/shop/'+i}><img class="card-img-top"  src={`https://www.dropbox.com/s/48xcbl9a1640k7w/${this.props.items[i].fileName}?dl=1`} height="100" width="100"/></Link>
+                        <Link to={'/shop/'+i}><img class="card-img-top maximage"  src={`https://www.dropbox.com/s/48xcbl9a1640k7w/${this.props.items[i].fileName}?dl=1`}/></Link>
                         <div class="card-body">
                             <h5 class="card-title">{this.props.items[i].productName}</h5>
                         </div>
@@ -40,7 +39,7 @@ class HomePage extends Component {
                 if(this.props.items[i].bought === false) {
                     let itemCard = 
                     <div class="card">
-                        <Link to={'/shop/'+this.props.items[i].productName}><img class="card-img-top"  src={`https://www.dropbox.com/s/48xcbl9a1640k7w/${this.props.items[i].fileName}?dl=1`} height="100" width="100"/></Link>
+                        <Link to={'/shop/'+i}><img class="card-img-top maximage"  src={`https://www.dropbox.com/s/48xcbl9a1640k7w/${this.props.items[i].fileName}?dl=1`}/></Link>
                         <div class="card-body">
                             <h5 class="card-title">{this.props.items[i].productName}</h5>
                         </div>
@@ -51,6 +50,7 @@ class HomePage extends Component {
                     deck_2.push(itemCard);
                 }
             }
+        
         }
         
 
@@ -59,7 +59,7 @@ class HomePage extends Component {
                 <div id="slideControls" class="carousel slide container" data-ride="carousel">
                     <div class="carousel-inner center">
                         <div class="carousel-item active">
-                            <img src={slide1} class="img-responsive center" alt="Responsive image"/>
+                            <img src={slide1} class="img-responsive center banner" alt="Responsive image"/>
                         </div>
                         <div class="carousel-item">
                             <img src={slide2} class="img-responsive center" alt="Responsive image"/>

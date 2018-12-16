@@ -2,7 +2,6 @@ import React from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import request from 'superagent';
 import './Style.css';
-
 export default class App extends React.Component {
     constructor(props) {
         super(props);
