@@ -14,7 +14,7 @@ contract CDatabase is CUserProfiles, CStatus, CTransaction {
 
 
     //function for tx
-    function setPostTx(address _seller, uint32 _value) internal returns(uint256) {
+    function setPostTx(address _seller, uint32 _value) internal {
         txDatabase[txDatabaseSize] = Transaction(txDatabaseSize,    //txId
                                                  _seller,           // seller address
                                                  address(0),        // buyer address
@@ -24,7 +24,6 @@ contract CDatabase is CUserProfiles, CStatus, CTransaction {
                                                  0);                // timestamp
                                                           
         txDatabaseSize++;
-        return txDatabaseSize;
     }
         
     function setBuyTx(uint256 _txId, address _buyer) internal{
