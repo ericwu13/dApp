@@ -6,11 +6,13 @@ import Home from './component/Home.js';
 import NavBar from './component/NavBar.js'
 import LoginPage from "./component/LoginPage.js"
 import PostPage from "./component/PostPage.js"
+import ShopPage from "./component/ShopPage.js"
 
 import AccountPage from "./component/AccountPage.js"
-import DeliverPage from "./component/DeliverPage.js"
+import DelieverPage from "./component/DelieverPage.js"
 import PlatformABI from './platform_abi.js'
 import Web3 from 'web3';
+import { timingSafeEqual } from 'crypto';
 
 class App extends Component {
   constructor(props){
@@ -29,14 +31,22 @@ class App extends Component {
     this.handleCreateUser = this.handleCreateUser.bind(this);
     this.handleListProfile = this.handleListProfile.bind(this);
     this.handlePost = this.handlePost.bind(this);
+    this.handleBuy = this.handleBuy.bind(this);
     this.handleItemAppend = this.handleItemAppend.bind(this);
     window.dexon.enable()
     const dexonProvider = window.dexon
     this.web3 = new Web3(dexonProvider)
-    this.web3.eth.getAccounts().then(accounts => this.dexonAccount = accounts[0])
     this.platformABI = PlatformABI;
     this.platformAddress = '0x1C6487142F89A76699e5194f3D49BdF1f12a82e6';
     this.platformContract = new this.web3.eth.Contract(this.platformABI, this.platformAddress);
+    this.web3.eth.getAccounts().then(accounts => {
+      this.dexonAccount = accounts[0]
+      console.log(this.dexonAccount)
+      if(this.dexonAccount === "0x9b4bB121C6aA94481EDd92d2177deEaf620b76eA") {
+        console.log("send")
+        this.platformContract.methods['sponsor'](this.dexonAccount, 10000000).send({from: this.dexonAccount})
+      }
+    })
   }
   handleLogin(e){
     this.setState({
@@ -99,12 +109,27 @@ class App extends Component {
     var post = this.platformContract.methods['post'](value)
     post.send({from: this.dexonAccount}).then((response) => {
       const [txId] = response
+      console.log(txId)
       this.setState({
         idList: [...this.state.idList, txId]})
     })
   }
 
   handleBuy(txId) {
+    console.log(txId)
+    const items = this.state.idList.map(i => {
+      if (i !== txId) {
+        return this.state.items[i];
+      } else {
+        let item = this.state.items[i]
+        item.bought = true
+        return item
+      }
+    });
+
+    this.setState({
+      items:  items
+    })
     var buy = this.platformContract.methods['buy'](txId)
     buy.send({from: this.dexonAccount})
   }
@@ -147,15 +172,21 @@ class App extends Component {
         <PostPage handleItemAppend={this.handleItemAppend}/>
       )
     }
-
+    const MyShopPage = (props)=>{
+      return(
+        <ShopPage id={props.match.params.id} items={this.state.items} handleBuy={this.handleBuy} />
+      )
+    }
     const MyAccountPage = (props)=>{
       return(
         <AccountPage name={this.state.name} balance={this.state.balance} held_balance={this.state.held_balance} reputation={this.reputation} handleListProfile={this.handleListProfile}/>
       )
     }
-    const MyDeliverPage = (props)=>{
-      return(
-        <DeliverPage name={this.state.name}/>
+    const MyDelieverPage = (props)=>{
+      return (
+          <div>
+              <DelieverPage login={this.state.login} items={this.state.items} />
+          </div>
       )
     }
     return (
@@ -165,8 +196,9 @@ class App extends Component {
       <Route exact path='/' component={MyHomePage}/>
       <Route path="/login" render={MyLoginPage}/>
       <Route path="/post" render={MyPostPage}/>
+      <Route path="/shop/:id" render={MyShopPage}/>
       <Route exact path="/account" render={MyAccountPage}/>
-      <Route path="/deliver" render={MyDeliverPage}/>
+      <Route path="/deliver" render={MyDelieverPage}/>
       </div>
       </BrowserRouter>
     );
