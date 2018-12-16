@@ -8,7 +8,7 @@ import LoginPage from "./component/LoginPage.js"
 import PostPage from "./component/PostPage.js"
 import ShopPage from "./component/ShopPage.js"
 import AccountPage from "./component/AccountPage.js"
-import DeliverPage from "./component/DeliverPage.js"
+import DelieverPage from "./component/DelieverPage.js"
 import PlatformABI from './platform_abi.js'
 import Web3 from 'web3';
 import { timingSafeEqual } from 'crypto';
@@ -181,9 +181,11 @@ class App extends Component {
         <AccountPage name={this.state.name} balance={this.state.balance} held_balance={this.state.held_balance} reputation={this.reputation} handleListProfile={this.handleListProfile}/>
       )
     }
-    const MyDeliverPage = (props)=>{
-      return(
-        <DeliverPage name={this.state.name}/>
+    const MyDelieverPage = (props)=>{
+      return (
+          <div>
+              <DelieverPage login={this.state.login} items={this.state.items} />
+          </div>
       )
     }
     return (
@@ -195,7 +197,7 @@ class App extends Component {
       <Route path="/post" render={MyPostPage}/>
       <Route path="/shop/:id" render={MyShopPage}/>
       <Route exact path="/account" render={MyAccountPage}/>
-      <Route path="/deliver" render={MyDeliverPage}/>
+      <Route path="/deliver" render={MyDelieverPage}/>
       </div>
       </BrowserRouter>
     );
