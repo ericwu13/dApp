@@ -38,9 +38,8 @@ contract CPlatform is CDatabase, Restricted{
         return _listUser(account);
     }
 
-    function post(uint32 value) external returns(uint256)  {
-        uint id = setPostTx(msg.sender, value);
-        return id;
+    function post(uint32 value) external {
+        setPostTx(msg.sender, value);
     }
 
     function buy(uint256 txId) external onlyPositiveBalance(_userProfiles[msg.sender]._balance, txDatabase[txId]._value) hasNoBuyer(txId) {
