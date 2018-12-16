@@ -18,7 +18,7 @@ class HomePage extends Component {
     render() {
         var deck_1 = [];
         for(let i=0; i<this.props.items.length; ++i){
-            if(i<3){
+            if(true){
                 if(this.props.items[i].bought === false) {
                     var img;
                     if(this.props.items[i].productName === "iphonexs") {
@@ -28,7 +28,7 @@ class HomePage extends Component {
                         img = airpods
                     }
                     let itemCard = 
-                    <div class="card">
+                    <div key={this.props.items[i].index} class="card">
                             <Link to={'/shop/'+this.props.items[i].index}><img class="card-img-top maximage"  src={img}/></Link>
                         <div class="card-body">
                             <h5 class="card-title">{this.props.items[i].productName}</h5>

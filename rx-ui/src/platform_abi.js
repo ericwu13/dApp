@@ -298,6 +298,10 @@ export default [
         {
           "name": "_timestamp",
           "type": "uint256"
+        },
+        {
+          "name": "_name",
+          "type": "string"
         }
       ],
       "payable": false,
@@ -801,6 +805,10 @@ export default [
     {
       "constant": false,
       "inputs": [
+        {
+          "name": "name",
+          "type": "string"
+        },
         {
           "name": "value",
           "type": "uint32"

@@ -38,43 +38,63 @@ class App extends Component {
     const dexonProvider = window.dexon
     this.web3 = new Web3(dexonProvider)
     this.platformABI = PlatformABI;
-    this.platformAddress = '0x6109b934554efa8429807256644c0c380546eb49';
+    this.platformAddress = '0xee6c0308cba06fcf8b2cb969b9d575df8ec73c8a';
     this.platformContract = new this.web3.eth.Contract(this.platformABI, this.platformAddress);
     this.web3.eth.getAccounts().then(accounts => {
       this.dexonAccount = accounts[0]
       console.log(this.dexonAccount)
       if(this.dexonAccount === "0x9b4bB121C6aA94481EDd92d2177deEaf620b76eA") {
         console.log("send")
-        this.platformContract.methods['sponsor'](this.dexonAccount, 10000000).send({from: this.dexonAccount})
+        // this.platformContract.methods['sponsor'](this.dexonAccount, 10000000).send({from: this.dexonAccount})
       }
     })
-    this.init = this.init.bind(this)
-    this.init()
+    this.upDate = this.upDate.bind(this)
   }
-  init() {
-      this.platformContract.methods['txDatabaseSize'].call((txSize) => {
+  componentDidMount() {
+      this.upDate()
+      console.log(this.platformContract)
+      setInterval(() => {this.upDate()}, 1000)
+  }
+  upDate() {
+      this.platformContract.methods.txDatabaseSize().call().then((txSize) => {
           for(let i = 0; i  < txSize; ++i) {
-              this.platformContract.methods['txDatabase'](i).call((tx) => {
-                  const [txId, seller, buyer, driver, status, value, time, name]
-                  = tx
+                  this.platformContract.methods['txDatabase'](i).call().then((tx) => {
+                  //const [txId, seller, buyer, driver, status, value, time, name]
+                  //= tx
                   var b = false
                   var d = false
-                  if(status === 2) {
+                  if(Number(tx._status)>= 2) {
                       b = true
                       d = true
-                  } else if(status === 1) {
+                  } 
+                  if(Number(tx._status) === 1) {
                       b = true
                   }
-                  this.setState({
-                    items: [...this.state.items, 
-                        { productName: name,
-                          description: "",
-                          price: value,
-                          bought: b,
-                          delievered: d,
-                          index: i
-                        }] 
-                  })
+                  console.log(b)
+                  console.log(tx._status)
+                  const itemIndex = this.state.items.findIndex(item => item.index === tx._txId)
+                  if (itemIndex !== -1 && (this.state.items[itemIndex].bought !== b || this.state.items[itemIndex].delievered !== d)) {
+                    const newItems = [...this.state.items];
+                    newItems[itemIndex] =      { productName: tx._name,
+                        description: "",
+                        price: tx._value,
+                        bought: b,
+                        delievered: d,
+                        index: tx._txId
+                    };
+                    this.setState({ items: newItems }) ;
+                  } else if (itemIndex === -1) {
+                    this.setState({
+                        items: [...this.state.items, 
+                            { productName: tx._name,
+                            description: "",
+                            price: tx._value,
+                            bought: b,
+                            delievered: d,
+                            index: tx._txId
+                            }] 
+                    })
+                }
               })
           }
       })
