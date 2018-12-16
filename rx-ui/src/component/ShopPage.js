@@ -2,6 +2,8 @@ import React from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import request from 'superagent';
 import './Style.css';
+import iphonexs from './img/ixs.png';
+import airpods from './img/airpods.png'
 export default class App extends React.Component {
     constructor(props) {
         super(props);
@@ -16,10 +18,18 @@ export default class App extends React.Component {
             if(this.props.items[i].index === this.props.id) {
                 item = this.props.items[i]
             }
+            
+        }
+        var img;
+        if(item.productName === "iphonexs") {
+            img = iphonexs
+        }
+        if(item.productName === "airpods") {
+            img = airpods
         }
         let itemCard = 
                     <div class="card">
-                        <img class="card-img-top"  src={`https://www.dropbox.com/s/48xcbl9a1640k7w/ixs.png}?dl=1`} ></img>
+                        <img class="card-img-top"  src={img} ></img>
                         <div class="card-body">
                             <h5 class="card-title">{item.productName}</h5>
                         </div>

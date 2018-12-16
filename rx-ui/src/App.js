@@ -32,20 +32,52 @@ class App extends Component {
     this.handlePost = this.handlePost.bind(this);
     this.handleBuy = this.handleBuy.bind(this);
     this.handleItemAppend = this.handleItemAppend.bind(this);
+    this.handleTakeMission = this.handleTakeMission.bind(this);
+    this.handlePend = this.handlePend.bind(this);
     window.dexon.enable()
     const dexonProvider = window.dexon
     this.web3 = new Web3(dexonProvider)
     this.platformABI = PlatformABI;
-    this.platformAddress = '0x59d5ede0c7531e2c10eda083b15645ca64998dce';
+    this.platformAddress = '0x6109b934554efa8429807256644c0c380546eb49';
     this.platformContract = new this.web3.eth.Contract(this.platformABI, this.platformAddress);
     this.web3.eth.getAccounts().then(accounts => {
       this.dexonAccount = accounts[0]
       console.log(this.dexonAccount)
       if(this.dexonAccount === "0x9b4bB121C6aA94481EDd92d2177deEaf620b76eA") {
         console.log("send")
-        //this.platformContract.methods['sponsor'](this.dexonAccount, 10000000).send({from: this.dexonAccount})
+        this.platformContract.methods['sponsor'](this.dexonAccount, 10000000).send({from: this.dexonAccount})
       }
     })
+    this.init = this.init.bind(this)
+    this.init()
+  }
+  init() {
+      this.platformContract.methods['txDatabaseSize'].call((txSize) => {
+          for(let i = 0; i  < txSize; ++i) {
+              this.platformContract.methods['txDatabase'](i).call((tx) => {
+                  const [txId, seller, buyer, driver, status, value, time, name]
+                  = tx
+                  var b = false
+                  var d = false
+                  if(status === 2) {
+                      b = true
+                      d = true
+                  } else if(status === 1) {
+                      b = true
+                  }
+                  this.setState({
+                    items: [...this.state.items, 
+                        { productName: name,
+                          description: "",
+                          price: value,
+                          bought: b,
+                          delievered: d,
+                          index: i
+                        }] 
+                  })
+              })
+          }
+      })
   }
   handleLogin(e){
     this.setState({
@@ -59,7 +91,7 @@ class App extends Component {
   }
 
   handleItemAppend(productName, description, price) {
-    this.handlePost(price)
+    this.handlePost(productName, price)
     this.platformContract.methods['txDatabaseSize']().call()
     .then( (id) => {
     const idx = id
@@ -109,8 +141,8 @@ class App extends Component {
     })
   }
   
-  handlePost(value) {
-    var post = this.platformContract.methods['post'](value)
+  handlePost(productName, value) {
+    var post = this.platformContract.methods['post'](productName, value)
     console.log("Post")
     post.send({from: this.dexonAccount}).then((response) => {
       console.log(response)
@@ -137,7 +169,20 @@ class App extends Component {
     var buy = this.platformContract.methods['buy'](txId)
     buy.send({from: this.dexonAccount})
   }
-
+  handleTakeMission(txId) {
+    this.handlePend(txId)
+    const items = this.state.items.map((i) => {
+      if (i.index!== txId) {
+        return i
+      } else {
+        i.delievered = true
+        return i
+      }
+    });
+    this.setState({
+      items:  items
+    })
+  }
   handlePend(txId) {
     var pend = this.platformContract.methods['pend'](txId)
     pend.send({from: this.dexonAccount})
@@ -189,7 +234,7 @@ class App extends Component {
     const MyDelieverPage = (props)=>{
       return (
           <div>
-              <DelieverPage login={this.state.login} items={this.state.items} />
+              <DelieverPage login={this.state.login} items={this.state.items} handleTakeMission={this.handleTakeMission}/>
           </div>
       )
     }

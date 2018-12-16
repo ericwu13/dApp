@@ -29,7 +29,7 @@ class HomePage extends Component {
                     }
                     let itemCard = 
                     <div class="card">
-                            <Link to={'/shop/'+i}><img class="card-img-top maximage"  src={img}/></Link>
+                            <Link to={'/shop/'+this.props.items[i].index}><img class="card-img-top maximage"  src={img}/></Link>
                         <div class="card-body">
                             <h5 class="card-title">{this.props.items[i].productName}</h5>
                         </div>
