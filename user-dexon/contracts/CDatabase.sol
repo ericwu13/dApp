@@ -48,7 +48,7 @@ contract CDatabase is CUserProfiles, CStatus, CTransaction {
         
     function setDeliverTx(uint256 _txId) internal{
         require(txDatabase[_txId]._status == Status.PENDING);
-        _held(txDatabase[_txId]._driver, txDatabase[_txId]._value * depositRatio);
+        _held(txDatabase[_txId]._driver, txDatabase[_txId]._value / depositRatio);
         txDatabase[_txId]._status = Status.DELIVERING;
         txDatabase[_txId]._timestamp = now;
     }
