@@ -12,6 +12,7 @@ export default class App extends React.Component {
     super(props);
 
     this.state = {
+      login:this.props.login,
       fileName: '',
       uploadedFileCloudinaryUrl: '',
       productName: '',
@@ -56,6 +57,9 @@ export default class App extends React.Component {
     //console.log(this.state.productName)
   }
   render() {
+    if(this.props.login===false){
+      return <Redirect push to = '/login'/>;
+    }
     return (
       <div className='row'>
                 <div className='col-4'></div>
@@ -75,13 +79,14 @@ export default class App extends React.Component {
           <input type="text" class="form-control" id="price" name="price" value={this.state.price} onChange={this.handleItem}/>
       </div>
       <br/>   
-        <div className="FileUpload center dropzone">
+        <div className="FileUpload dropzone">
           <Dropzone
             onDrop={this.onImageDrop.bind(this)}
             multiple={false}
             accept="image/*">
             <div>Drop an image or click to select a file to upload.</div>
           </Dropzone>
+          <br/>   
         </div>
         <Link to='/' ><button type="submit" class="btn btn-outline-secondary btn-block" onClick={this.handleSubmit}>SELL</button></Link>
 
