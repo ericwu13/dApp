@@ -19,4 +19,9 @@ contract Restricted is Ownable, CDatabase {
         require(msg.sender == txDatabase[txId]._buyer, "Not permitted!!!");
         _;
     }
+    modifier hasNoBuyer(uint256 txId){
+        require(txDatabase[txId]._buyer == address(0), "Has Buyer!!!");
+        _;
+    }
+    
 }
