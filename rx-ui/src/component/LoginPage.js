@@ -24,6 +24,7 @@ class LoginPage extends Component {
         this.props.handleLogin({ login: true });
         this.setState({ redirect: true });
     }
+    
 
     render() {
         if (this.state.redirect){
@@ -41,6 +42,26 @@ class LoginPage extends Component {
                 <div><br/></div>
             );
         }
+        let pop_up =
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Warning!</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+            <h6>You are going to connect to Dexon now.</h6>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter" onClick={this.handleSubmit}>Launch</button>
+            </div>
+            </div>
+        </div>
+        </div>
         return (
             <div className='row'>
                 <div className='col-4'></div>
@@ -51,11 +72,13 @@ class LoginPage extends Component {
                         <div class="form-group">
                         </div>
                         <div>{errBar}</div>
-                        <button type="submit" class="btn btn-outline-secondary btn-block" onClick={this.handleSubmit}>GO!</button>
+                        <button type="button" class="btn btn-outline-secondary btn-block" data-toggle="modal" data-target="#exampleModalCenter">GO!</button>
+                        {pop_up}
                         <br/>
                     </form>
                 </div>
                 <div className='col-4'></div>
+                
 				
             </div>
         );

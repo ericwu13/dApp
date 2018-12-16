@@ -6,6 +6,8 @@ import './Style.css';
 import slide1 from './img/1.png';
 import slide2 from './img/2.png';
 import slide3 from './img/3.jpg';
+import iphonexs from './img/ixs.png';
+import airpods from './img/airpods.png'
 
 class HomePage extends Component {
     constructor(props) {
@@ -18,9 +20,16 @@ class HomePage extends Component {
         for(let i=0; i<this.props.items.length; ++i){
             if(i<3){
                 if(this.props.items[i].bought === false) {
+                    var img;
+                    if(this.props.items[i].productName === "iphonexs") {
+                        img = iphonexs
+                    }
+                    if(this.props.items[i].productName === "airpods") {
+                        img = airpods
+                    }
                     let itemCard = 
                     <div class="card">
-                        <Link to={'/shop/'+this.props.items[i].index}><img class="card-img-top maximage"  src={`https://www.dropbox.com/s/48xcbl9a1640k7w/ixs.png}?dl=1`}/></Link>
+                            <Link to={'/shop/'+i}><img class="card-img-top maximage"  src={img}/></Link>
                         <div class="card-body">
                             <h5 class="card-title">{this.props.items[i].productName}</h5>
                         </div>
@@ -33,25 +42,7 @@ class HomePage extends Component {
             }
         }
 
-        var deck_2 = [];
-        for(let i=3; i<this.props.items.length; ++i){
-            if(i<6){
-                if(this.props.items[i].bought === false) {
-                    let itemCard = 
-                    <div class="card">
-                        <Link to={'/shop/'+i}><img class="card-img-top maximage"  src={`https://www.dropbox.com/s/48xcbl9a1640k7w/ixs.png}?dl=1`}/></Link>
-                        <div class="card-body">
-                            <h5 class="card-title">{this.props.items[i].productName}</h5>
-                        </div>
-                        <div class="card-footer">
-                            <small class="text-muted">Price: {this.props.items[i].price}</small>
-                        </div>
-                    </div>;
-                    deck_2.push(itemCard);
-                }
-            }
-        
-        }
+    
         
 
         return (
@@ -80,9 +71,6 @@ class HomePage extends Component {
                 <div class='center'>
                     <div id="deck1" class="card-deck">
                         {deck_1}
-                    </div>
-                    <div id="deck1" class="card-deck">
-                        {deck_2}
                     </div>
                 </div>
 
