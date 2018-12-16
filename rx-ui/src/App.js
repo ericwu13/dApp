@@ -6,7 +6,7 @@ import Home from './component/Home.js';
 import NavBar from './component/NavBar.js'
 import LoginPage from "./component/LoginPage.js"
 import PostPage from "./component/PostPage.js"
-import BuyPage from "./component/BuyPage.js"
+import ShopPage from "./component/ShopPage.js"
 import AccountPage from "./component/AccountPage.js"
 import DeliverPage from "./component/DeliverPage.js"
 import PlatformABI from './platform_abi.js'
@@ -147,9 +147,9 @@ class App extends Component {
         <PostPage handleItemAppend={this.handleItemAppend}/>
       )
     }
-    const MyBuyPage = (props)=>{
+    const MyShopPage = (props)=>{
       return(
-        <BuyPage handleItemAppend={this.handleItemAppend}/>
+        <ShopPage shop={props.match.params.shop}/>
       )
     }
     const MyAccountPage = (props)=>{
@@ -169,9 +169,9 @@ class App extends Component {
       <Route exact path='/' component={MyHomePage}/>
       <Route path="/login" render={MyLoginPage}/>
       <Route path="/post" render={MyPostPage}/>
-      <Route path="/buy" render={MyBuyPage}/>
-      <Route path="/account" render={MyAccountPage}/>
-      <Route path="/deliver" render={MyAccountPage}/>
+      <Route path="/shop/:shop" render={MyShopPage}/>
+      <Route exact path="/account" render={MyAccountPage}/>
+      <Route path="/deliver" render={MyDeliverPage}/>
       </div>
       </BrowserRouter>
     );
