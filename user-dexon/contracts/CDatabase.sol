@@ -10,7 +10,7 @@ contract CDatabase is CUserProfiles, CStatus, CTransaction {
 
     //constant
     uint32 deliverFee;
-    uint32 depositRatio;
+    uint32 depositRatio = 5;
 
 
     //function for tx
@@ -57,7 +57,7 @@ contract CDatabase is CUserProfiles, CStatus, CTransaction {
         require(txDatabase[_txId]._status == Status.DELIVERING);
         _unheld(txDatabase[_txId]._buyer, txDatabase[_txId]._value);
         _transfer(txDatabase[_txId]._buyer, txDatabase[_txId]._seller, txDatabase[_txId]._value);
-        _unheld(txDatabase[_txId]._driver, txDatabase[_txId]._value * depositRatio);
+        _unheld(txDatabase[_txId]._driver, txDatabase[_txId]._value / depositRatio);
         _transfer(txDatabase[_txId]._buyer, txDatabase[_txId]._driver, deliverFee);
         txDatabase[_txId]._status = Status.SUCCESS;
         txDatabase[_txId]._timestamp = now - txDatabase[_txId]._timestamp;
