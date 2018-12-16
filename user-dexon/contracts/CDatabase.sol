@@ -6,7 +6,7 @@ contract CDatabase is CUserProfiles, CStatus, CTransaction {
     
     //mapping
     mapping(uint256 => Transaction) public txDatabase;
-    uint txDatabaseSize = 0;
+    uint public txDatabaseSize = 0;
 
     //constant
     uint32 deliverFee;
