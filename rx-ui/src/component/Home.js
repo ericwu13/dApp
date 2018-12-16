@@ -4,53 +4,54 @@ import axios from 'axios';
 import './Style.css';
 
 //slides
-import slide1 from '../img/slide1.png';
-import slide2 from '../img/slide1.png';
-import slide3 from '../img/slide1.png';
+import slide1 from '../img/mac1.png';
+import slide2 from '../img/xbox.png';
+import slide3 from '../img/ps4.png';
 
 class HomePage extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            items: this.props.items,
-            productName:this.props.productName
-        };
     }
     
     
     render() {
-        console.log(this.props.productName)
         var deck_1 = [];
-        for(let i=0; i<this.state.items.length; ++i){
+        for(let i=0; i<this.props.items.length; ++i){
             if(i<3){
-                let itemCard = 
-                <div class="card">
-                    <Link to={'/shop/'+this.state.items[i][0]}><img class="card-img-top"  src={this.state.items[i].img}/></Link>
-                    <div class="card-body">
-                        <h5 class="card-title">{this.state.items[i][0]}</h5>
-                    </div>
-                    <div class="card-footer">
-                        <small class="text-muted">Price: {this.state.items[i][2]}</small>
-                    </div>
-                
-                </div>;
-                deck_1.push(itemCard);}}
+                if(this.props.items[i].bought === false) {
+                    let itemCard = 
+                    <div class="card">
+                        <Link to={'/shop/'+this.props.items[i].productName}><img class="card-img-top"  src={`https://www.dropbox.com/s/48xcbl9a1640k7w/${this.props.items[i].fileName}?dl=1`} height="100" width="100"/></Link>
+                        <div class="card-body">
+                            <h5 class="card-title">{this.props.items[i].productName}</h5>
+                        </div>
+                        <div class="card-footer">
+                            <small class="text-muted">Price: {this.props.items[i].price}</small>
+                        </div>
+                    </div>;
+                    deck_1.push(itemCard);
+                }
+            }
+        }
 
         var deck_2 = [];
-        for(let i=3; i<this.state.items.length; ++i){
+        for(let i=3; i<this.props.items.length; ++i){
             if(i<6){
-                let itemCard = 
-                <div class="card">
-                    <Link to={'/shop/'+this.state.items[i][0]}><img class="card-img-top"  src={this.state.items[i]}/></Link>
-                    <div class="card-body">
-                        <h5 class="card-title">{this.state.items[i][0]}</h5>
-                    </div>
-                    <div class="card-footer">
-                        <small class="text-muted">Price: {this.state.items[i][1]}</small>
-                    </div>
-                
-                </div>;
-                deck_2.push(itemCard);}}
+                if(this.props.items[i].bought === false) {
+                    let itemCard = 
+                    <div class="card">
+                        <Link to={'/shop/'+this.props.items[i].productName}><img class="card-img-top"  src={`https://www.dropbox.com/s/48xcbl9a1640k7w/${this.props.items[i].fileName}?dl=1`} height="100" width="100"/></Link>
+                        <div class="card-body">
+                            <h5 class="card-title">{this.props.items[i].productName}</h5>
+                        </div>
+                        <div class="card-footer">
+                            <small class="text-muted">Price: {this.props.items[i].price}</small>
+                        </div>
+                    </div>;
+                    deck_2.push(itemCard);
+                }
+            }
+        }
         
 
         return (

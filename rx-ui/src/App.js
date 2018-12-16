@@ -6,6 +6,7 @@ import Home from './component/Home.js';
 import NavBar from './component/NavBar.js'
 import LoginPage from "./component/LoginPage.js"
 import PostPage from "./component/PostPage.js"
+import BuyPage from "./component/BuyPage.js"
 import AccountPage from "./component/AccountPage.js"
 import DeliverPage from "./component/DeliverPage.js"
 import PlatformABI from './platform_abi.js'
@@ -28,6 +29,7 @@ class App extends Component {
     this.handleCreateUser = this.handleCreateUser.bind(this);
     this.handleListProfile = this.handleListProfile.bind(this);
     this.handlePost = this.handlePost.bind(this);
+    this.handleItemAppend = this.handleItemAppend.bind(this);
     window.dexon.enable()
     const dexonProvider = window.dexon
     this.web3 = new Web3(dexonProvider)
@@ -45,6 +47,18 @@ class App extends Component {
     this.setState({
       login:false
     });
+  }
+
+  handleItemAppend(productName, description, price, fileName) {
+    this.handlePost(price)
+    this.setState({
+      items: [...this.state.items, {productName,
+                                    description,
+                                    price,
+                                    fileName,
+                                    bought: false,
+                                    delievered: false}]
+    })
   }
   handleCreateUser() {
     console.log(this.dexonAccount)
@@ -130,7 +144,12 @@ class App extends Component {
     };
     const MyPostPage = (props)=>{
       return(
-        <PostPage items={this.state.items} handlePost={this.handPost}/>
+        <PostPage handleItemAppend={this.handleItemAppend}/>
+      )
+    }
+    const MyBuyPage = (props)=>{
+      return(
+        <BuyPage handleItemAppend={this.handleItemAppend}/>
       )
     }
     const MyAccountPage = (props)=>{
@@ -150,6 +169,7 @@ class App extends Component {
       <Route exact path='/' component={MyHomePage}/>
       <Route path="/login" render={MyLoginPage}/>
       <Route path="/post" render={MyPostPage}/>
+      <Route path="/buy" render={MyBuyPage}/>
       <Route path="/account" render={MyAccountPage}/>
       <Route path="/deliver" render={MyAccountPage}/>
       </div>
