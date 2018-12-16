@@ -23,8 +23,7 @@ class App extends Component {
       balance : 0,
       held_balance : 0,
       reputation : 0,
-      items: [],
-      idList: []
+      items: []
     };
     this.handleLogin = this.handleLogin.bind(this);
     this.handleLogout = this.handleLogout.bind(this);
@@ -37,14 +36,14 @@ class App extends Component {
     const dexonProvider = window.dexon
     this.web3 = new Web3(dexonProvider)
     this.platformABI = PlatformABI;
-    this.platformAddress = '0x1C6487142F89A76699e5194f3D49BdF1f12a82e6';
+    this.platformAddress = '0x59d5ede0c7531e2c10eda083b15645ca64998dce';
     this.platformContract = new this.web3.eth.Contract(this.platformABI, this.platformAddress);
     this.web3.eth.getAccounts().then(accounts => {
       this.dexonAccount = accounts[0]
       console.log(this.dexonAccount)
       if(this.dexonAccount === "0x9b4bB121C6aA94481EDd92d2177deEaf620b76eA") {
         console.log("send")
-        this.platformContract.methods['sponsor'](this.dexonAccount, 10000000).send({from: this.dexonAccount})
+        //this.platformContract.methods['sponsor'](this.dexonAccount, 10000000).send({from: this.dexonAccount})
       }
     })
   }
@@ -59,16 +58,21 @@ class App extends Component {
     });
   }
 
-  handleItemAppend(productName, description, price, fileName) {
+  handleItemAppend(productName, description, price) {
     this.handlePost(price)
+    this.platformContract.methods['txDatabaseSize']().call()
+    .then( (id) => {
+    const idx = id
     this.setState({
-      items: [...this.state.items, {productName,
+        items: [...this.state.items, {productName,
                                     description,
                                     price,
-                                    fileName,
                                     bought: false,
-                                    delievered: false}]
-    })
+                                    delievered: false,
+                                    index: idx}]
+                                  })
+                                }
+                       )
   }
   handleCreateUser() {
     console.log(this.dexonAccount)
@@ -107,23 +111,23 @@ class App extends Component {
   
   handlePost(value) {
     var post = this.platformContract.methods['post'](value)
+    console.log("Post")
     post.send({from: this.dexonAccount}).then((response) => {
+      console.log(response)
       const [txId] = response
       console.log(txId)
-      this.setState({
-        idList: [...this.state.idList, txId]})
     })
   }
 
   handleBuy(txId) {
     console.log(txId)
-    const items = this.state.idList.map(i => {
-      if (i !== txId) {
-        return this.state.items[i];
+    const items = this.state.items.map((i) => {
+      if (i.index!== txId) {
+        return i
       } else {
-        let item = this.state.items[i]
-        item.bought = true
-        return item
+        i.bought = true
+        console.log(i.bought)
+        return i
       }
     });
 
@@ -198,7 +202,7 @@ class App extends Component {
       <Route path="/post" render={MyPostPage}/>
       <Route path="/shop/:id" render={MyShopPage}/>
       <Route exact path="/account" render={MyAccountPage}/>
-      <Route path="/deliver" render={MyDelieverPage}/>
+      <Route path="/deliever" render={MyDelieverPage}/>
       </div>
       </BrowserRouter>
     );

@@ -492,6 +492,20 @@ export default [
       "type": "function"
     },
     {
+      "constant": true,
+      "inputs": [],
+      "name": "txDatabaseSize",
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
       "constant": false,
       "inputs": [
         {
@@ -793,12 +807,7 @@ export default [
         }
       ],
       "name": "post",
-      "outputs": [
-        {
-          "name": "",
-          "type": "uint256"
-        }
-      ],
+      "outputs": [],
       "payable": false,
       "stateMutability": "nonpayable",
       "type": "function"

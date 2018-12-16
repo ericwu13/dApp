@@ -51,8 +51,7 @@ export default class App extends React.Component {
     this.setState({ [ev.target.name]:ev.target.value })
   }
   handleSubmit(ev) {
-    //ev.preventDefault();
-    this.props.handleItemAppend(this.state.productName, this.state.description, this.state.price, this.state.fileName)
+    this.props.handleItemAppend(this.state.productName, this.state.description, this.state.price)
     //console.log(this.state.productName)
   }
   render() {

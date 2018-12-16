@@ -11,15 +11,20 @@ export default class App extends React.Component {
         this.props.handleBuy(this.props.id)
     }
     render() {
-        const id = this.props.id
+        var item;
+        for(let i=0; i<this.props.items.length; ++i){
+            if(this.props.items[i].index === this.props.id) {
+                item = this.props.items[i]
+            }
+        }
         let itemCard = 
                     <div class="card">
-                        <img class="card-img-top"  src={`https://www.dropbox.com/s/48xcbl9a1640k7w/${this.props.items[id].fileName}?dl=1`} ></img>
+                        <img class="card-img-top"  src={`https://www.dropbox.com/s/48xcbl9a1640k7w/ixs.png}?dl=1`} ></img>
                         <div class="card-body">
-                            <h5 class="card-title">{this.props.items[id].productName}</h5>
+                            <h5 class="card-title">{item.productName}</h5>
                         </div>
                         <div class="card-footer">
-                            <small class="text-muted">Price: {this.props.items[id].price}</small>
+                            <small class="text-muted">Price: {item.price}</small>
                         </div>
                     </div>;
         return (
