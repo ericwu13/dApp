@@ -8,9 +8,10 @@ contract CTransaction is CStatus{
         address _seller;
         address _buyer;
         address _driver;
-        Status _status;
-        uint32 _value;
-        uint _timestamp;
+        Status  _status;
+        uint32  _value;
+        uint    _timestamp;
+        string  _name;
     }
 
 }
