@@ -11,3 +11,4 @@ tags*
 */*/*/build
 */secret.js
 */.cache-loader
+*/.vscode
