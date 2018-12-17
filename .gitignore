@@ -11,4 +11,5 @@ tags*
 */*/*/build
 */secret.js
 */.cache-loader
+*/.DS_Store
 */.vscode
