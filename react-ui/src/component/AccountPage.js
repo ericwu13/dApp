@@ -19,9 +19,10 @@ class AccountPage extends PureComponent {
     }
     handleName(ev) {
         this.setState({ [ev.target.name]:ev.target.value })
-      }
+    }
     handleSave(ev) {
-      }
+        this.props.handleEditName(this.state.name)
+    }
 
     render() {
         let user_info =
@@ -32,46 +33,44 @@ class AccountPage extends PureComponent {
             </div>;  
 
         let pop_up =
-        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLongTitle">You still don't have a name!</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
+            <div class="modal fade" id="nameBox" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLongTitle">Please Type Your Name</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label >Name</label>
+                                <input type="text" class="form-control" name="name" value={this.state.name} onChange={this.handleName}/>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary" data-dismiss="modal" onClick={this.handleSave}>Save</button>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="modal-body">
-            <div class="form-group">
-                <label >Name</label>
-                <input type="text" class="form-control" name="name" value={this.state.name} onChange={this.handleName}/>
-            </div>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary" onClick={this.handleSave}>Save</button>
-            </div>
-            </div>
-        </div>
-        </div>
             
         
         return (
-            <div class="row">
-                <div class="col col-lg-7 margin-left margin-top">
-                    <ul class='list-group list-group-flush'>
-                        {user_info}
-                    </ul>
-                    <button type="button" class="btn btn-outline-secondary btn-block" data-toggle="modal" data-target="#exampleModalCenter">Edit Name</button>
-                    <ul class='list-group list-group-flush margin-top'>
-                    </ul>
-                    {pop_up}
+            <div classs="row>">
+                <div class="row">
+                    <div class="col-lg-4 margin-left margin-top">
+                        <ul class='list-group list-group-flush'>
+                            {user_info}
+                        </ul>
+                    </div>
                 </div>
-                <div class="col-lg-4">
-                    <br/>
-                    <br/>
-                    <br/>
-                    
+                <div class="row">
+                    <div class="col-lg-1 margin-left">
+                        <button type="button" class="btn btn-outline-secondary btn-block" data-toggle="modal" data-target="#nameBox">Edit Name</button>
+                        {pop_up}
+                    </div>
                 </div>
             </div>
         );

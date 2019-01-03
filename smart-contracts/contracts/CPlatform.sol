@@ -25,9 +25,16 @@ contract CPlatform is CDatabase, Restricted{
 
     function createUser() external payable {
         require(msg.value >= guaranteedDeposit, "Insufficient deposit");
-        // require(bytes(_userProfiles[msg.sender]._name).length == 0, "The address has been created");
+        //require(bytes(_userProfiles[msg.sender]._name).length == 0, "The address has been created");
 
         _newUser(msg.sender);
+    }
+    function checkUser() external view returns(bool) {
+        if(keccak256(_userProfiles[msg.sender]._name) != keccak256("")) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     function editUserName(string name) external {

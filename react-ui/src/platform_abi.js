@@ -754,6 +754,20 @@ export default [
       "type": "function"
     },
     {
+      "constant": true,
+      "inputs": [],
+      "name": "checkUser",
+      "outputs": [
+        {
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
       "constant": false,
       "inputs": [
         {

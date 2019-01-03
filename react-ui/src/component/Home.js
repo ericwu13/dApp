@@ -42,9 +42,6 @@ class HomePage extends Component {
             }
         }
 
-    
-        
-
         return (
             <div>
                 <div id="slideControls" class="carousel slide container" data-ride="carousel">

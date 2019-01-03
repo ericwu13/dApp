@@ -17,16 +17,10 @@ class NavBar extends Component {
     render() {
         this.handle
         let navBar_left;
-        if ( this.props.manage ) {
+        if ( this.props.login ) {
             navBar_left = 
                 <div class='navbar-nav ml-auto'>
-                    <Link to={'/manage'}><a class="nav-item nav-link" >Manage</a></Link>                            
-                    <Link to='/'><a class="nav-item nav-link" onClick={this.props.handleLogout} >Logout</a></Link>
-                </div>;
-        }
-        else if ( this.props.login ) {
-            navBar_left = 
-                <div class='navbar-nav ml-auto'>
+                    <Link to={'/setting'}><a class="nav-item nav-link" >Setting</a></Link> 
                     <Link to={'/account'}><a class="nav-item nav-link" >Account</a></Link> 
                     <Link to={'/deliever'}><a class="nav-item nav-link" >Deliever</a></Link> 
                     <Link to={'/post'}><a class="nav-item nav-link" >Post</a></Link>                             
@@ -50,7 +44,8 @@ class NavBar extends Component {
                 <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                     <div class="navbar-nav mr-auto">
                         <Link to='/about'><a class="nav-item nav-link brandStyle" >About</a></Link>
-                    </div>
+                        <Link to='/developer'><a class="nav-item nav-link brandStyle" >Developer</a></Link>
+                    </div> 
                     {navBar_left}
                 </div>
             </nav>
