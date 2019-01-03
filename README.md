@@ -1,4 +1,4 @@
-# The Best Shopping Platform
+# The Best Shopping Platform!
 ### Get Started
 #### Install Dexon Extension
 1. go to google extension and search for DeKuSan
