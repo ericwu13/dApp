@@ -29,13 +29,15 @@ contract CPlatform is CDatabase, Restricted{
 
         _newUser(msg.sender, phoneNum);
     }
+    /*
     function checkUser() external view returns(bool) {
-        if(keccak256(_userProfiles[msg.sender]._name) != keccak256("")) {
-            return true;
-        } else {
+        if(keccak256(_userProfiles[msg.sender]._name) == keccak256("")) {
             return false;
+        } else {
+            return true;
         }
     }
+   */
 
     function editUserName(string name) external {
         _editName(msg.sender, name);
@@ -50,7 +52,7 @@ contract CPlatform is CDatabase, Restricted{
     }
 
     function buy(uint256 txId, string pKey, string Hash) external onlyPositiveBalance(_userProfiles[msg.sender]._balance, txDatabase[txId]._value) hasNoBuyer(txId) {
-        addBuyerInfo(txId, pKey, sHash);
+        addBuyerInfo(txId, pKey, Hash);
         setBuyTx(txId, msg.sender);
         // emit buying(msg.sender, txId);
     }
