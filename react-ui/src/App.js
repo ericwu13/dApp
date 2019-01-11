@@ -129,12 +129,14 @@ class App extends Component {
                         this.setState({
                             items: [...this.state.items, 
                                 { 
+                                    index: tx._txId,
                                     productName: tx._name,
                                     description: "",
+                                    city:"",
+                                    country:"",
                                     price: tx._value,
                                     bought: b,
                                     delivered: d,
-                                    index: tx._txId
                                 }
                             ] 
                         })
@@ -157,24 +159,21 @@ class App extends Component {
         });
     }
 
-    handleCreateUser() {
-        var createUser = this.state.platformContract.methods['createUser']()
-        this.state.platformContract.methods['_userProfiles'](this.dexonAccount).call().then((user) => {
-            // console.log("CreateUser")
-            // console.log(this.dexonAccount)
-            // console.log(user[0])
-            if(user[0] === "") {
-                this.state.platformContract.methods['guaranteedDeposit']().call()
-                .then((value) => {
-                    createUser.send({from: this.dexonAccount, value: value})
-                    .on('confirmation', function(confirmationNumber, receipt){
-                        this.handleLogin({ login: true });
-                    })
+    handleCreateUser(phone, name, created) {
+        if(created) {
+            this.handleLogin({ login: true });
+        } else {
+            var createUser = this.state.platformContract.methods['createUser']()
+            this.state.platformContract.methods['guaranteedDeposit']().call()
+            .then((value) => {
+                createUser.send({from: this.dexonAccount, value: value})
+                .on('confirmation', function(confirmationNumber, receipt){
+                    console.log("login Success")
+                    this.handleLogin({ login: true });
                 })
-            } else {
-                this.handleLogin({ login: true });
-            }
-        })
+            })
+        }
+            
     }
 
     handleEditName(name) {
@@ -221,6 +220,7 @@ class App extends Component {
                         held_balance: response[2],
                     }) 
                 })
+                // console.log(this.state.name)
             }
         )
     }
@@ -319,7 +319,7 @@ class App extends Component {
         };
         const MyLoginPage = (props)=>{
             return(
-                <LoginPage handleCreateUser={this.handleCreateUser}/>
+                <LoginPage handleCreateUser={this.handleCreateUser} userName={this.state.name}/>
             )
         };
         const MyPostPage = (props)=>{

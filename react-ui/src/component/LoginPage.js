@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import axios from 'axios';
+import { Grid, Typography, DialogActions, DialogContent, DialogContentText, Button, TextField, DialogTitle, Dialog } from '@material-ui/core'
 
 let errBar = <div><br/></div>;
 
@@ -10,19 +11,29 @@ class LoginPage extends Component {
         this.state = {
             redirect: false,
             error: false,
-        };
-
-        this.handleAccountChange = this.handleAccountChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
+            created: false,
+            phone: '',
+            name:''
+        }
     }
-    handleAccountChange(ev) {
-        this.setState({ account: ev.target.value });
-    }
+    handleChange = prop  => event => {
+        this.setState({ [prop]: event.target.value });
+    };
 
-    handleSubmit(ev) {
+
+    handleSubmit = () => {
         //window.dexon.enable();
-        this.props.handleCreateUser();
+        if(this.props.userName === "") {
+           this.props.handleCreateUser(this.state.phone, this.state.name, false);
+        } else {
+            this.props.handleCreateUser(this.state.phone, this.state.name, true);
+        }
         this.setState({ redirect: true });
+    }
+    componentDidMount() {
+        if(this.props.userName !== "") {
+            this.setState({created: true})
+        }
     }
     
 
@@ -30,34 +41,66 @@ class LoginPage extends Component {
         if (this.state.redirect){
             return <Redirect push to='/'/>;
         }
-        if (this.state.error){
-            errBar = (
-                <div class="alert alert-danger" role="alert">
-					Account or Password error!
-                </div>
-            );
-        }
-        else {
-            errBar = (
-                <div><br/></div>
-            );
-        }
-        let pop_up =
+        let created =
             <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLongTitle">Warning!</h5>
+                            <h5 class="modal-title" id="exampleModalLongTitle">Let's Shopping Right Now!!</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
+                        {/* <div class="modal-body">
+                            <h6>You are going to login to BShop</h6>
+                        </div> */}
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter" onClick={this.handleSubmit}>Continue</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        let noCreated =
+            <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLongTitle">You Have no Account in BShop</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
                         <div class="modal-body">
-                            <h6>You are going to connect to Dexon now.</h6>
+                            <Grid container direction='column' spacing={24} justify='space-around'>
+                                <Grid item>
+                                    Create Your Personal Shopping Experience!
+                                </Grid>
+                                <Grid item>
+                                    <TextField
+                                    id="outlined-adornment-productName"
+                                    variant="outlined"
+                                    label="Your Name"
+                                    value={this.state.name}
+                                    onChange={this.handleChange('phone')}
+                                    fullWidth
+                                    />
+                                </Grid>
+                                <Grid item>
+                                    <TextField
+                                    id="outlined-adornment-productName"
+                                    variant="outlined"
+                                    label="Your Phone Number"
+                                    value={this.state.phone}
+                                    onChange={this.handleChange('phone')}
+                                    fullWidth
+                                    />
+                                </Grid>
+                            </Grid>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter" onClick={this.handleSubmit}>Launch</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter" onClick={this.handleSubmit}>Continue</button>
                         </div>
                     </div>
                 </div>
@@ -69,14 +112,23 @@ class LoginPage extends Component {
                 <div className='col-4'>
                     <br/>
                     <br/>
-                    <form>
-                        <div class="form-group">
-                        </div>
-                        <div>{errBar}</div>
-                        <button type="button" class="btn btn-outline-secondary btn-block" data-toggle="modal" data-target="#exampleModalCenter">Connect with Dexon Wallet</button>
-                        {pop_up}
-                        <br/>
-                    </form>
+                    {this.props.userName !== "" ? <form>
+                                            <div class="form-group">
+                                            </div>
+                                            <div>{errBar}</div>
+                                            <button type="button" class="btn btn-outline-secondary btn-block" data-toggle="modal" data-target="#exampleModalCenter">Login</button>
+                                            {created}
+                                            <br/>
+                            </form>: <div>
+                                           <div class="form-group">
+                                            </div>
+                                            <div>{errBar}</div>
+                                            <button type="button" class="btn btn-outline-secondary btn-block" data-toggle="modal" data-target="#exampleModalCenter">Login</button>
+                                            {noCreated}
+                                            <br/>
+
+                                    </div>
+                    }
                 </div>
                 <div className='col-4'></div>
             </div>

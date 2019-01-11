@@ -47,7 +47,7 @@ class AccountPage extends PureComponent {
                     
                         <Paper style={{padding:20, marginTop:'2%', marginLeft:'15%', marginRight:'15%', marginBottom:'1%'}} elevation='0'>
                             <Typography variant='h4' style={{textAlign: 'center', fontFamily:"Arial Rounded MT Bold"}} justify="center" alignItems="center">
-                                User Acoount Information
+                                User Account Information
                             </Typography>
                         </Paper>
                         <Paper style={{padding:20, marginLeft:'15%', marginRight:'15%'}} elevation='1'>
@@ -57,7 +57,7 @@ class AccountPage extends PureComponent {
                             <Grid container justify="space-between">
                                 <Grid item>
 
-                                    <Typography variant='subtitle1'>
+                                    <Typography variant='subtitle1' style={{color:'#757575'}}>
                                         {this.props.name}
                                     </Typography>
                                 </Grid>
@@ -67,16 +67,21 @@ class AccountPage extends PureComponent {
                                     </Button>
                                 </Grid>
                                 
-                            </Grid>
-                            
-                            
-                            
+                            </Grid>                                        
+                        </Paper>
+                        <Paper style={{padding:20, marginLeft:'15%', marginRight:'15%'}} elevation='1'>
+                            <Typography variant='h5'>
+                                Phone Number
+                            </Typography> 
+                            <Typography variant='subtitle1' style={{color:'#757575'}}>
+                                09092941238
+                            </Typography>                                            
                         </Paper>
                         <Paper style={{padding:20, marginLeft:'15%', marginRight:'15%'}} elevation='1'>
                             <Typography variant='h5'>
                                 Balance
                             </Typography> 
-                            <Typography variant='subtitle1'>
+                            <Typography variant='subtitle1' style={{color:'#757575'}}>
                                 {this.props.balance}
                             </Typography>                                            
                         </Paper>
@@ -84,7 +89,7 @@ class AccountPage extends PureComponent {
                             <Typography variant='h5'>
                                 Cash Held
                             </Typography>
-                            <Typography variant='subtitle1'>
+                            <Typography variant='subtitle1' style={{color:'#757575'}}>
                                 {this.props.held_balance}
                             </Typography>
                         </Paper>
