@@ -86,15 +86,15 @@ contract CDatabase is CUserProfiles, CStatus, CTransaction {
         txDatabase[_txId]._status = Status.AFTERRATING;
     }
     function getHashDescription(uint256 _txId) external returns (string) {
-        return txDatabase[txId]._hashDescription;
+        return txDatabase[_txId]._hashDescription;
     }
     function getSellerInfo(uint256 _txId) external returns (string) {
-        require(msg.sender == txDatabase[txId]._seller || msg.sender == txDatabase[txId]._driver);
-        return _userProfiles[msg.sneder]._phoneNum;
+        require(msg.sender == txDatabase[_txId]._seller || msg.sender == txDatabase[_txId]._driver);
+        return _userProfiles[msg.sender]._phoneNum;
     }
     function getBuyerInfo(uint256 _txId) external returns (string, string) {
-        require(msg.sender == txDatabase[txId]._buyer || msg.sender == txDatabase[txId]._driver);
-        return (txDatabase[txId]._hashBuyerInfo, txDatabase[txId]._buyerPKey);
+        require(msg.sender == txDatabase[_txId]._buyer || msg.sender == txDatabase[_txId]._driver);
+        return (txDatabase[_txId]._hashBuyerInfo, txDatabase[_txId]._buyerPKey);
     }
 
     
