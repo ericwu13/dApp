@@ -24,8 +24,9 @@ contract CDatabase is CUserProfiles, CStatus, CTransaction {
                                                 0,                 // timestamp
                                                 _name,
                                                 _hashDescription,
-                                                0,
-                                                0);            // name
+                                                "",
+                                                ""
+                                                );            // name
                                                 // Hash1 image
                                                 // Hash2  seller phone
                                                 // Hash3 buyer location
