@@ -75,8 +75,8 @@ contract CUserProfiles is Ownable, IERC20{
         return true;
     }
 
-    function _newUser(address seller, string _phoneNum) internal {
-        _userProfiles[seller] = User("[empty name]", 0 ,0, 10, 1, 10, 1, _phoneNum);
+    function _newUser(address seller, string _phoneNum, string name) internal {
+        _userProfiles[seller] = User(name, 0 ,0, 10, 1, 10, 1, _phoneNum);
     }
     function _editName(address target, string name) internal {
         _userProfiles[target]._name = name;               

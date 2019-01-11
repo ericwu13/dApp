@@ -23,13 +23,13 @@ contract CPlatform is CDatabase, Restricted{
         _mint(account, value);
     }
 
-    function createUser(string phoneNum) external payable {
+    function createUser(string phoneNum, string name) external payable {
         require(msg.value >= guaranteedDeposit, "Insufficient deposit");
         //require(bytes(_userProfiles[msg.sender]._name).length == 0, "The address has been created");
 
-        _newUser(msg.sender, phoneNum);
+        _newUser(msg.sender, phoneNum, name);
     }
-    /*
+    
     function checkUser() external view returns(bool) {
         if(keccak256(_userProfiles[msg.sender]._name) == keccak256("")) {
             return false;
@@ -37,7 +37,7 @@ contract CPlatform is CDatabase, Restricted{
             return true;
         }
     }
-   */
+   
 
     function editUserName(string name) external {
         _editName(msg.sender, name);
