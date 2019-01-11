@@ -20,6 +20,7 @@ contract CUserProfiles is Ownable, IERC20{
         uint32       _driverNumber;
         // address _address;
         mapping (address => uint256) _allowed;
+        string _phoneNum;
     }
 
     // data
@@ -73,8 +74,8 @@ contract CUserProfiles is Ownable, IERC20{
         return true;
     }
 
-    function _newUser(address seller) internal {
-        _userProfiles[seller] = User("[empty name]", 0 ,0, 10, 1, 10, 1);
+    function _newUser(address seller, string _phoneNum) internal {
+        _userProfiles[seller] = User("[empty name]", 0 ,0, 10, 1, 10, 1,, _phoneNum);
     }
     function _editName(address target, string name) internal {
         _userProfiles[target]._name = name;               

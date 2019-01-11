@@ -23,11 +23,11 @@ contract CPlatform is CDatabase, Restricted{
         _mint(account, value);
     }
 
-    function createUser() external payable {
+    function createUser(string phoneNum) external payable {
         require(msg.value >= guaranteedDeposit, "Insufficient deposit");
         //require(bytes(_userProfiles[msg.sender]._name).length == 0, "The address has been created");
 
-        _newUser(msg.sender);
+        _newUser(msg.sender, phoneNum);
     }
     function checkUser() external view returns(bool) {
         if(keccak256(_userProfiles[msg.sender]._name) != keccak256("")) {
@@ -45,11 +45,12 @@ contract CPlatform is CDatabase, Restricted{
         return _listUser(account);
     }
 
-    function post(string name, uint32 value) external {
-        setPostTx(msg.sender, name, value);
+    function post(string name, uint32 value, string hashDescription) external {
+        setPostTx(msg.sender, name, value, hashDescription);
     }
 
-    function buy(uint256 txId) external onlyPositiveBalance(_userProfiles[msg.sender]._balance, txDatabase[txId]._value) hasNoBuyer(txId) {
+    function buy(uint256 txId, string pKey, string Hash) external onlyPositiveBalance(_userProfiles[msg.sender]._balance, txDatabase[txId]._value) hasNoBuyer(txId) {
+        addBuyerInfo(txId, pKey, sHash);
         setBuyTx(txId, msg.sender);
         // emit buying(msg.sender, txId);
     }
