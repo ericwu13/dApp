@@ -28,21 +28,26 @@ export default class App extends React.Component {
             img = airpods
         }
         let itemCard = 
-                    <div class="card">
-                        <img class="card-img-top"  src={img} ></img>
-                        <div class="card-body">
-                            <h5 class="card-title">{item.productName}</h5>
-                        </div>
-                        <div class="card-footer">
-                            <small class="text-muted">Price: {item.price}</small>
-                        </div>
+                    <div class='center'>
+                        <label>
+                            <img class="card-img-top maximage"  src={img} ></img>
+                            <div class="card-body">
+                                <h5 class="card-title App">{item.productName}</h5>
+                                <h5 class="card-title App">Item ID: {this.props.id}</h5>
+                            </div>
+                            <div class="card-footer App">
+                                <div class="text-muted App">Price: {item.price}</div>
+                            </div>
+                            <Link to='/' ><button type="submit" class="btn btn-outline-secondary btn-block" onClick={this.handleSubmit}>BUY</button></Link>
+                        </label>
                     </div>;
         return (
             <div class='left'>
                 <div id="deck1" class="card-deck">
                     {itemCard}
                 </div>
-                <Link to='/' ><button type="submit" class="btn btn-outline-secondary btn-block" onClick={this.handleSubmit}>BUY</button></Link>
+                <div class="center ">
+                </div>
             </div>
         )
     }

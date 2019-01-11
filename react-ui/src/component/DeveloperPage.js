@@ -1,6 +1,6 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 
-class DeveloperPage extends PureComponent {
+class DeveloperPage extends Component {
     constructor(props) {
         super(props);
 
@@ -17,6 +17,8 @@ class DeveloperPage extends PureComponent {
         //this.props.handleListProfile();
     }
     handleForm(ev) {
+        console.log(ev.target.name)
+        console.log(ev.target.value)
         this.setState({ [ev.target.name]:ev.target.value })
     }
     handleContract() {
@@ -32,7 +34,7 @@ class DeveloperPage extends PureComponent {
                 <br/>
                 <div className='col-4'>
                     <div class="form-group">
-                        <label >Contract Address</label>
+                        <label >Current Contract Address: {this.props.currentAddress}</label>
                         <input type="text" class="form-control" id="contractAddress" name="contractAddress" value={this.state.contractAddress} onChange={this.handleForm}/>
                     </div>
                     <div>

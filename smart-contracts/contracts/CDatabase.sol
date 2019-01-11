@@ -23,6 +23,12 @@ contract CDatabase is CUserProfiles, CStatus, CTransaction {
                                                 _value,            // value
                                                 0,                 // timestamp
                                                 _name);            // name
+                                                // Hash1 image
+                                                // Hash2  seller phone
+                                                // Hash3 buyer location
+                                                // key2 require deliver
+                                                // key3 require deliver
+                                                // Seller location
                                                  
                                                           
         txDatabaseSize++;

@@ -1,8 +1,16 @@
 import React, { Component } from 'react';
 import { Link} from 'react-router-dom';
-
+import { Button, Typography, AppBar, Toolbar, IconButton } from '@material-ui/core';
+import red from '@material-ui/core/colors/red';
+import grey from '@material-ui/core/colors/grey';
+import AccountCircle from '@material-ui/icons/AccountCircle';
+import { faSignInAlt, faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
+import LocalShippingIcon from '@material-ui/icons/LocalShipping';
+import Store from '@material-ui/icons/Store';
 //import images
-import logo from '../logo.svg';
+import logo_1 from '../logo.png';
 
 const brandStyle = {color: '#fff', cursor: 'default'};
 
@@ -18,38 +26,83 @@ class NavBar extends Component {
         this.handle
         let navBar_left;
         if ( this.props.login ) {
-            navBar_left = 
-                <div class='navbar-nav ml-auto'>
-                    <Link to={'/setting'}><a class="nav-item nav-link" >Setting</a></Link> 
-                    <Link to={'/account'}><a class="nav-item nav-link" >Account</a></Link> 
-                    <Link to={'/deliever'}><a class="nav-item nav-link" >Deliever</a></Link> 
-                    <Link to={'/post'}><a class="nav-item nav-link" >Post</a></Link>                             
-                    <Link to='/'><a class="nav-item nav-link" onClick={this.props.handleLogout} >Logout</a></Link>
-                </div>;
+            navBar_left = <div>
+                            <Link to={'/cart'}>
+                                <Button style={{margin:5, color: "#f5f5f5"}}>
+                                    <ShoppingCartIcon style={{ fontSize: 40 }}/>
+                                </Button>
+                            </Link> 
+                            <Link to={'/account'}>
+                                <Button style={{margin:5, color: "#f5f5f5"}}>
+                                    <AccountCircle style={{ fontSize: 40 }}/>
+                                </Button>
+                            </Link> 
+                            <Link to={'/deliver'}>
+                                <Button style={{margin:5, color: "#f5f5f5"}}>
+                                    <LocalShippingIcon style={{ fontSize: 40 }}/>
+                                </Button>                        
+                            </Link> 
+                            <Link to={'/post'}>
+                                <Button style={{margin:5, color: "#f5f5f5"}}>
+                                    <Store style={{ fontSize: 40 }}/>
+                                </Button>                        
+                            </Link> 
+                            <Link to={'/'}>
+                                <Button style={{margin:5, color: "#f5f5f5"}} onClick={this.props.handleLogout}>
+                                    <FontAwesomeIcon icon={faSignOutAlt} size="3x"/>
+                                </Button>
+                            </Link> 
+                        </div>
         } else {
-            navBar_left = 
-                <div class='navbar-nav ml-auto'>
-                    <Link to='/login'><a class="nav-item nav-link" >Login</a></Link>
-                </div>;
+            navBar_left = <div>
+                            <Link to='/login'>
+                                <Button style={{margin:5, color: "#f5f5f5"}}>
+                                    <FontAwesomeIcon icon={faSignInAlt} size="3x"/>
+                                </Button>
+                            </Link>
+                        </div>
         }
-
-        return (
-            <nav class="navbar navbar-expand-sm navbar-dark bg-dark navbar-static-top" >
-                <a class="navbar-brand" >
-                    <Link to='/'><img src={logo} width="30"  alt=""/></Link>
-                </a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                    <div class="navbar-nav mr-auto">
-                        <Link to='/about'><a class="nav-item nav-link brandStyle" >About</a></Link>
-                        <Link to='/developer'><a class="nav-item nav-link brandStyle" >Developer</a></Link>
-                    </div> 
-                    {navBar_left}
-                </div>
-            </nav>
-        );
+        return <AppBar position="static" style={{ background: '#2F2F2F' }}>
+                    <Toolbar>
+                        <a class="navbar-brand" >
+                           <Link to='/'><img src={logo_1} width="60"  alt=""/></Link>
+                         </a>
+                        
+                        <Link to='/about'>
+                            <Button style={{margin:5, color: "#f5f5f5"}}>
+                                <Typography variant="h6" color="inherit" noWrap style={{fontFamily: "Andale Mono"}}>
+                                    About
+                                </Typography>    
+                            </Button>
+                        </Link>
+                        <Link to='/developer'>
+                            <Button style={{margin:5, color: "#f5f5f5"}}>
+                                <Typography variant="h6" color="inherit" noWrap style={{fontFamily: "Andale Mono"}}>
+                                    Developer
+                                </Typography>
+                            </Button>
+                        </Link>
+                        <div/>
+                        <div style={{flexGrow: 1}} />
+                        
+                                {navBar_left}
+                        
+                    </Toolbar>
+                </AppBar>
+        // return <nav class="navbar navbar-expand-sm navbar-dark navbar-my navbar-static-top" >
+        //             <a class="navbar-brand" >
+        
+        //             </a>
+        //             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        //                 <span class="navbar-toggler-icon"></span>
+        //             </button>
+        //             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        //                 <div class="navbar-nav mr-auto">
+        
+        //                 </div> 
+        //                 {navBar_left}
+        //             </div>
+        //         </nav>
     }
 }
 

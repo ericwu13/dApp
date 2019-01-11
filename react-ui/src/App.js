@@ -8,6 +8,7 @@ import LoginPage from "./component/LoginPage.js"
 import PostPage from "./component/PostPage.js"
 import ShopPage from "./component/ShopPage.js"
 import DeveloperPage from "./component/DeveloperPage.js"
+import CartPage from "./component/CartPage.js"
 
 import AccountPage from "./component/AccountPage.js"
 import DelieverPage from "./component/DelieverPage.js"
@@ -33,8 +34,8 @@ class App extends Component {
         this.sponsor= this.sponsor.bind(this)
 
         // init null dexon but not conntected
-        //window.dexon.enable()
-        console.log("Constructor")
+        window.dexon.enable()
+        // console.log("Constructor")
         const dexonProvider = window.dexon
         this.web3 = new Web3(dexonProvider)
         this.platformABI = PlatformABI;
@@ -46,8 +47,9 @@ class App extends Component {
             held_balance : 0,
             reputation : 0,
             items: [],
-            platformAddress : '0x496cd0e7ca68d44afe71fcc2112e1c66c04da4ff',
-            platformContract : new this.web3.eth.Contract(this.platformABI, '0x496cd0e7ca68d44afe71fcc2112e1c66c04da4ff')
+            platformAddress : '0xe061ccdefaa6d1ad4acaabffd57820e173f6eac1',
+            platformContract : new this.web3.eth.Contract(this.platformABI, '0xe061ccdefaa6d1ad4acaabffd57820e173f6eac1'),
+            base64:''
         };
         this.getAccount()
         this.handleCheckUser()
@@ -68,17 +70,17 @@ class App extends Component {
                 platformContract : new this.web3.eth.Contract(this.platformABI, address)
             });
         } else {
-            console.log("You are not root")
+            // console.log("You are not root")
         }
     }
     getAccount() {
         var promise = new Promise( (resolve, reject) => {
-            console.log("getAccount")
+            // console.log("getAccount")
                 if(this.dexonAccount === undefined) {
                     this.web3.eth.getAccounts().then(accounts => {
                         this.dexonAccount = accounts[0]
                         if(this.dexonAccount === "0x9b4bB121C6aA94481EDd92d2177deEaf620b76eA") {
-                            console.log("root mode")
+                            // console.log("root mode")
                         }
                         resolve(this.dexonAccount)
                     })
@@ -111,14 +113,14 @@ class App extends Component {
                     //console.log(b)
                     //console.log(tx._status)
                     const itemIndex = this.state.items.findIndex(item => item.index === tx._txId)
-                    if (itemIndex !== -1 && (this.state.items[itemIndex].bought !== b || this.state.items[itemIndex].delievered !== d)) {
+                    if (itemIndex !== -1 && (this.state.items[itemIndex].bought !== b || this.state.items[itemIndex].delivered !== d)) {
                         const newItems = [...this.state.items];
                         newItems[itemIndex] = {  
                             productName: tx._name,
                             description: "",
                             price: tx._value,
                             bought: b,
-                            delievered: d,
+                            delivered: d,
                             index: tx._txId
                         };
                         this.setState({ items: newItems }) ;
@@ -130,7 +132,7 @@ class App extends Component {
                                     description: "",
                                     price: tx._value,
                                     bought: b,
-                                    delievered: d,
+                                    delivered: d,
                                     index: tx._txId
                                 }
                             ] 
@@ -139,6 +141,7 @@ class App extends Component {
                 }) 
             }
         })
+        this.handleListProfile();
     }
 
     handleLogin(e){
@@ -156,9 +159,9 @@ class App extends Component {
     handleCreateUser() {
         var createUser = this.state.platformContract.methods['createUser']()
         this.state.platformContract.methods['_userProfiles'](this.dexonAccount).call().then((user) => {
-            console.log("CreateUser")
-            console.log(this.dexonAccount)
-            console.log(user[0])
+            // console.log("CreateUser")
+            // console.log(this.dexonAccount)
+            // console.log(user[0])
             if(user[0] === "") {
                 this.state.platformContract.methods['guaranteedDeposit']().call()
                 .then((value) => {
@@ -183,34 +186,34 @@ class App extends Component {
         })
     }
     handleCheckUser() {
-        console.log(this.dexonAccount)
+        // console.log(this.dexonAccount)
         const httpWeb3 = new Web3(new Web3.providers.HttpProvider('http://testnet.dexon.org:8545'));
         const localContract = new httpWeb3.eth.Contract(this.platformABI, this.state.platformAddress); 
         var checkUser = localContract.methods['checkUser']()
         checkUser.call()
         .then((response) => {
-            console.log("CheckUser")
-            console.log(response)
+            // console.log("CheckUser")
+            // console.log(response)
             this.setState ({
                 created: response,
                 login: response
             }) 
-            console.log(this.state.login)
+            // console.log(this.state.login)
         })
     }
 
     handleListProfile() {
         this.getAccount()
         .then( (result) => {
-                console.log("listProfile")
-                console.log(result)
+                // console.log("listProfile")
+                // console.log(result)
                 const httpWeb3 = new Web3(new Web3.providers.HttpProvider('http://testnet.dexon.org:8545'));
                 const localContract = new httpWeb3.eth.Contract(this.platformABI, this.state.platformAddress); 
                 var listProfile = localContract.methods['listProfile'](this.dexonAccount)
                 listProfile.call()
                 .then((response) => {
-                    console.log("ListUser response")
-                    console.log(response)
+                    // console.log("ListUser response")
+                    // console.log(response)
                     this.setState ({
                         name: response[0],
                         balance: response[1],
@@ -221,7 +224,7 @@ class App extends Component {
         )
     }
   
-    handlePost(productName, description, price) {
+    handlePost(productName, description, price, base64) {
         var post = this.state.platformContract.methods['post'](productName, price)
         post.send({from: this.dexonAccount})
         .on('confirmation', function(confirmationNumber, receipt){
@@ -235,7 +238,7 @@ class App extends Component {
                             description,
                             price,
                             bought: false,
-                            delievered: false,
+                            delivered: false,
                             index: idx
                         }
                     ]
@@ -245,16 +248,16 @@ class App extends Component {
     }
 
     handleBuy(txId) {
-        console.log(txId)
+        // console.log(txId)
         const items = this.state.items.map((i) => {
-        if (i.index!== txId) {
-            return i
-        } else {
-            i.bought = true
-            console.log(i.bought)
-            return i
-        }
-        });
+                if (i.index!== txId) {
+                    return i
+                } else {
+                    i.bought = true
+                    // console.log(i.bought)
+                    return i
+                }
+            });
 
         this.setState({
             items:  items
@@ -269,7 +272,7 @@ class App extends Component {
             if (i.index!== txId) {
                 return i
             } else {
-                i.delievered = true
+                i.delivered = true
                 return i
             }
         });
@@ -299,13 +302,13 @@ class App extends Component {
         const MyHomePage = (props) => {
             return (
                 <div>
-                    <Home login={this.state.login} items={this.state.items} />
+                    <Home login={this.state.login} items={this.state.items} handleBuy={this.handleBuy}/>
                 </div>
             );
-        };
+        }
         const MyDeveloperPage = (props) => {
            return(
-              <DeveloperPage  account={this.dexonAccount} updateContract={this.updateContract} sponsor={this.sponsor}/>
+              <DeveloperPage  account={this.dexonAccount} updateContract={this.updateContract} sponsor={this.sponsor} currentAddress={this.state.platformAddress}/>
             )
         };
         const MyNavBar = (props)=>{
@@ -340,17 +343,26 @@ class App extends Component {
                 </div>
             )
         }
+
+        const MyCartPage = (props)=>{
+            return (
+                <div>
+                    <CartPage login={this.state.login} items={this.state.items} handleTakeMission={this.handleTakeMission}/>
+                </div>
+            )
+        }
         return (
             <BrowserRouter>
                 <div>
                     <Route path='/' render={MyNavBar}/>
-                    <Route exact path='/' component={MyHomePage}/>
-                    <Route exact path='/developer' component={MyDeveloperPage}/>
+                    <Route exact path='/' render={MyHomePage}/>
+                    <Route path='/developer' render={MyDeveloperPage}/>
                     <Route path="/login" render={MyLoginPage}/>
                     <Route path="/post" render={MyPostPage}/>
                     <Route path="/shop/:id" render={MyShopPage}/>
                     <Route exact path="/account" render={MyAccountPage}/>
-                    <Route path="/deliever" render={MyDelieverPage}/>
+                    <Route path="/deliver" render={MyDelieverPage}/>
+                    <Route path="/cart" render={MyCartPage}/>
                 </div>
             </BrowserRouter>
         );

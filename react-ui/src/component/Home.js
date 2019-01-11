@@ -1,4 +1,7 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
+import { Paper, Grid } from '@material-ui/core';
+import { CardStyles } from './Style'
+import ItemList from './ItemList'
 import { Link } from 'react-router-dom';
 import './Style.css';
 
@@ -9,6 +12,18 @@ import slide3 from './img/3.jpg';
 import iphonexs from './img/ixs.png';
 import airpods from './img/airpods.png'
 
+const styles = {
+    Paper: {
+        padding: 20,
+        marginTop: 32,
+        marginBottom: 20,
+        marginLeft: 80,
+        marginRight: 40,
+        height: 1000,
+        overflow: 'auto'
+    },
+}
+
 class HomePage extends Component {
     constructor(props) {
         super(props);
@@ -16,35 +31,10 @@ class HomePage extends Component {
     
     
     render() {
-        var deck_1 = [];
-        for(let i=0; i<this.props.items.length; ++i){
-            if(true){
-                if(this.props.items[i].bought === false) {
-                    var img;
-                    if(this.props.items[i].productName === "iphonexs") {
-                        img = iphonexs
-                    }
-                    if(this.props.items[i].productName === "airpods") {
-                        img = airpods
-                    }
-                    let itemCard = 
-                    <div key={this.props.items[i].index} class="card">
-                            <Link to={'/shop/'+this.props.items[i].index}><img class="card-img-top maximage"  src={img}/></Link>
-                        <div class="card-body">
-                            <h5 class="card-title">{this.props.items[i].productName}</h5>
-                        </div>
-                        <div class="card-footer">
-                            <small class="text-muted">Price: {this.props.items[i].price}</small>
-                        </div>
-                    </div>;
-                    deck_1.push(itemCard);
-                }
-            }
-        }
 
         return (
-            <div>
-                <div id="slideControls" class="carousel slide container" data-ride="carousel">
+            <Fragment>
+                <div id="slideControls" class="carousel slide " data-ride="carousel">
                     <div class="carousel-inner center">
                         <div class="carousel-item active">
                             <img src={slide1} class="img-responsive center banner" alt="Responsive image"/>
@@ -65,13 +55,13 @@ class HomePage extends Component {
                         <span class="sr-only">Next</span>
                     </a>
                 </div>
-                <div class='center'>
-                    <div id="deck1" class="card-deck">
-                        {deck_1}
-                    </div>
-                </div>
-
-            </div>
+                <Grid container>
+                    <ItemList   items={this.props.items} 
+                                style={CardStyles} 
+                                onClickItem={this.props.handleBuy} 
+                                type='homePage'/>
+                </Grid>
+            </Fragment>
         );
     }
 }
