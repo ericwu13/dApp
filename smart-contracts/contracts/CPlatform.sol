@@ -88,6 +88,9 @@ contract CPlatform is CDatabase, Restricted{
         require(msg.sender == txDatabase[_txId]._buyer || msg.sender == txDatabase[_txId]._driver);
         return (txDatabase[_txId]._hashBuyerInfo, txDatabase[_txId]._buyerPKey);
     }
+    function getUserName(address account) external returns(string) {
+        return _userProfiles[account]._name;
+    }
 
 
 }
