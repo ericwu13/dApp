@@ -84,6 +84,17 @@ contract CDatabase is CUserProfiles, CStatus, CTransaction {
         _scoreDriver(txDatabase[_txId]._driver, driver_score);
         txDatabase[_txId]._status = Status.AFTERRATING;
     }
+    function getHashDescription(uint256 _txId) external returns (string) {
+        return txDatabase[txId]._hashDescription;
+    }
+    function getSellerInfo(uint256 _txId) external returns (string) {
+        require(msg.sender == txDatabase[txId]._seller || msg.sender == txDatabase[txId]._driver);
+        return _userProfiles[msg.sneder]._phoneNum;
+    }
+    function getBuyerInfo(uint256 _txId) external returns (string, string) {
+        require(msg.sender == txDatabase[txId]._buyer || msg.sender == txDatabase[txId]._driver);
+        return (txDatabase[txId]._hashBuyerInfo, txDatabase[txId]._buyerPKey);
+    }
 
     
 
