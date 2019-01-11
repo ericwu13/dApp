@@ -46,13 +46,13 @@ class App extends Component {
             balance : 0,
             held_balance : 0,
             reputation : 0,
-            items: [],
             platformAddress : '0xe061ccdefaa6d1ad4acaabffd57820e173f6eac1',
             platformContract : new this.web3.eth.Contract(this.platformABI, '0xe061ccdefaa6d1ad4acaabffd57820e173f6eac1'),
-            base64:''
+            items: [],
         };
         this.getAccount()
         this.handleCheckUser()
+
         // update pages for every 1000ms
         // declare constant
         this.updateTime = 1000
@@ -60,6 +60,7 @@ class App extends Component {
     checkRoot() {
         return this.dexonAccount === '0x9b4bB121C6aA94481EDd92d2177deEaf620b76eA' 
     }
+
     updateContract(address) {
         // connect with dexon wallet
         if(this.checkRoot) {
@@ -360,7 +361,7 @@ class App extends Component {
                     <Route path="/login" render={MyLoginPage}/>
                     <Route path="/post" render={MyPostPage}/>
                     <Route path="/shop/:id" render={MyShopPage}/>
-                    <Route exact path="/account" render={MyAccountPage}/>
+                    <Route path="/account" render={MyAccountPage}/>
                     <Route path="/deliver" render={MyDelieverPage}/>
                     <Route path="/cart" render={MyCartPage}/>
                 </div>

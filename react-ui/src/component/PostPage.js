@@ -17,6 +17,7 @@ export default class App extends React.Component {
 
         this.state = {
             login:this.props.login,
+
             productName: '',
             description: "",
             city: "",
@@ -24,16 +25,16 @@ export default class App extends React.Component {
             price      :  "",
             status: "",
             file: [],
+
             ipfsHash: '',
             buffer:'',
-            base64:''
         }        
     }
     convertToBuffer = async(reader) => {
         //file is converted to a buffer to prepare for uploading to IPFS
-          const buffer = await Buffer.from(reader);
+        const buffer = await Buffer.from(reader);
         //set this buffer -using es6 syntax
-          this.setState({buffer});
+        this.setState({buffer});
     };
   
 
@@ -50,13 +51,14 @@ export default class App extends React.Component {
 
     handleSubmit = () => {
         this.onSubmitandGet()
-        // this.props.handlePost(this.state.productName, this.state.description, this.state.price, this.state.file[0].base64)
+        this.props.handlePost(this.state.productName, this.state.description, this.state.price, this.state.file[0].base64)
         //console.log(this.state.productName)
     }
     onSubmitandGet = async (event) => {
         console.log("Submit to IPFS")
         await ipfs.add(this.state.buffer, (err, ipfsHash) => {
           console.log(err,ipfsHash);
+
           //setState by setting ipfsHash to ipfsHash[0].hash 
           this.setState({ ipfsHash:ipfsHash[0].hash });
           ipfs.get(this.state.ipfsHash, (err, files) => {
