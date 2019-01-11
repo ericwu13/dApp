@@ -12,6 +12,9 @@ contract CTransaction is CStatus{
         uint32  _value;
         uint    _timestamp;
         string  _name;
+        string _hashDescription;
+        string _hashBuyerInfo;
+        string _buyerPKey;
     }
 
 }

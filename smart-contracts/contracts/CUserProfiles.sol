@@ -18,8 +18,10 @@ contract CUserProfiles is Ownable, IERC20{
         uint32       _sellerNumber;
         uint32       _driverReputation;
         uint32       _driverNumber;
+        string _phoneNum;
         // address _address;
         mapping (address => uint256) _allowed;
+        
     }
 
     // data
@@ -73,8 +75,8 @@ contract CUserProfiles is Ownable, IERC20{
         return true;
     }
 
-    function _newUser(address seller) internal {
-        _userProfiles[seller] = User("[empty name]", 0 ,0, 10, 1, 10, 1);
+    function _newUser(address seller, string _phoneNum, string name) internal {
+        _userProfiles[seller] = User(name, 0 ,0, 10, 1, 10, 1, _phoneNum);
     }
     function _editName(address target, string name) internal {
         _userProfiles[target]._name = name;               
@@ -131,11 +133,12 @@ contract CUserProfiles is Ownable, IERC20{
         _burn(account, value);
         emit Approval(account, msg.sender, _userProfiles[account]._allowed[msg.sender]);
     }
-    function _listUser(address account) internal view returns(string, uint256, uint32, uint32, uint32) {
+    function _listUser(address account) internal view returns(string, uint256, uint32, uint32, uint32, string) {
         return( _userProfiles[account]._name,
                 _userProfiles[account]._balance,
                 _userProfiles[account]._held_balance,
                 _sellerReputation(account),
-                _driverReputation(account));
+                _driverReputation(account),
+                _userProfiles[account]._phoneNum);
     }
 }

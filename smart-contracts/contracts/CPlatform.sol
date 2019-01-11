@@ -23,33 +23,36 @@ contract CPlatform is CDatabase, Restricted{
         _mint(account, value);
     }
 
-    function createUser() external payable {
+    function createUser(string phoneNum, string name) external payable {
         require(msg.value >= guaranteedDeposit, "Insufficient deposit");
         //require(bytes(_userProfiles[msg.sender]._name).length == 0, "The address has been created");
 
-        _newUser(msg.sender);
+        _newUser(msg.sender, phoneNum, name);
     }
+    
     function checkUser() external view returns(bool) {
-        if(keccak256(_userProfiles[msg.sender]._name) != keccak256("")) {
-            return true;
-        } else {
+        if(keccak256(_userProfiles[msg.sender]._name) == keccak256("")) {
             return false;
+        } else {
+            return true;
         }
     }
+   
 
     function editUserName(string name) external {
         _editName(msg.sender, name);
     }
 
-    function listProfile(address account) external view returns(string, uint256, uint32, uint32, uint32) {
+    function listProfile(address account) external view returns(string, uint256, uint32, uint32, uint32, string) {
         return _listUser(account);
     }
 
-    function post(string name, uint32 value) external {
-        setPostTx(msg.sender, name, value);
+    function post(string name, uint32 value, string hashDescription) external {
+        setPostTx(msg.sender, name, value, hashDescription);
     }
 
-    function buy(uint256 txId) external onlyPositiveBalance(_userProfiles[msg.sender]._balance, txDatabase[txId]._value) hasNoBuyer(txId) {
+    function buy(uint256 txId, string pKey, string Hash) external onlyPositiveBalance(_userProfiles[msg.sender]._balance, txDatabase[txId]._value) hasNoBuyer(txId) {
+        addBuyerInfo(txId, pKey, Hash);
         setBuyTx(txId, msg.sender);
         // emit buying(msg.sender, txId);
     }
@@ -71,6 +74,22 @@ contract CPlatform is CDatabase, Restricted{
     }
     function ratingTx(uint256 txId, uint32 seller_score, uint32 driver_score) external onlyBuyer(txId){
         setRatingTx(txId, seller_score, driver_score);
+    }
+    
+    
+    function getHashDescription(uint256 _txId) external returns (string) {
+        return txDatabase[_txId]._hashDescription;
+    }
+    function getSellerInfo(uint256 _txId) external returns (string) {
+        require(msg.sender == txDatabase[_txId]._seller || msg.sender == txDatabase[_txId]._driver);
+        return _userProfiles[msg.sender]._phoneNum;
+    }
+    function getBuyerInfo(uint256 _txId) external returns (string, string) {
+        require(msg.sender == txDatabase[_txId]._buyer || msg.sender == txDatabase[_txId]._driver);
+        return (txDatabase[_txId]._hashBuyerInfo, txDatabase[_txId]._buyerPKey);
+    }
+    function getUserName(address account) external returns(string) {
+        return _userProfiles[account]._name;
     }
 
 

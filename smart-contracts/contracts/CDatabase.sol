@@ -14,7 +14,7 @@ contract CDatabase is CUserProfiles, CStatus, CTransaction {
 
 
     //function for tx
-    function setPostTx(address _seller, string _name, uint32 _value) internal {
+    function setPostTx(address _seller, string _name, uint32 _value, string _hashDescription) internal {
         txDatabase[txDatabaseSize] = Transaction(txDatabaseSize,   //txId
                                                 _seller,           // seller address
                                                 address(0),        // buyer address
@@ -22,7 +22,11 @@ contract CDatabase is CUserProfiles, CStatus, CTransaction {
                                                 Status.POSTING,    // status
                                                 _value,            // value
                                                 0,                 // timestamp
-                                                _name);            // name
+                                                _name,
+                                                _hashDescription,
+                                                "",
+                                                ""
+                                                );            // name
                                                 // Hash1 image
                                                 // Hash2  seller phone
                                                 // Hash3 buyer location
@@ -34,10 +38,17 @@ contract CDatabase is CUserProfiles, CStatus, CTransaction {
         txDatabaseSize++;
     }
 
+    
+
     function setTxName(uint256 _txId, string _name) internal {
         txDatabase[_txId]._name = _name;
     }
         
+    function addBuyerInfo(uint256 _txId, string pKey, string Hash) internal{
+        require(txDatabase[_txId]._status == Status.POSTING);
+        txDatabase[_txId]._hashBuyerInfo = Hash;
+        txDatabase[_txId]._buyerPKey = pKey;
+    }
     function setBuyTx(uint256 _txId, address _buyer) internal{
         require(txDatabase[_txId]._status == Status.POSTING);
         txDatabase[_txId]._buyer = _buyer;
@@ -73,6 +84,17 @@ contract CDatabase is CUserProfiles, CStatus, CTransaction {
         _scoreSeller(txDatabase[_txId]._seller, seller_score);
         _scoreDriver(txDatabase[_txId]._driver, driver_score);
         txDatabase[_txId]._status = Status.AFTERRATING;
+    }
+    function getHashDescription(uint256 _txId) external returns (string) {
+        return txDatabase[_txId]._hashDescription;
+    }
+    function getSellerInfo(uint256 _txId) external returns (string) {
+        require(msg.sender == txDatabase[_txId]._seller || msg.sender == txDatabase[_txId]._driver);
+        return _userProfiles[msg.sender]._phoneNum;
+    }
+    function getBuyerInfo(uint256 _txId) external returns (string, string) {
+        require(msg.sender == txDatabase[_txId]._buyer || msg.sender == txDatabase[_txId]._driver);
+        return (txDatabase[_txId]._hashBuyerInfo, txDatabase[_txId]._buyerPKey);
     }
 
     
