@@ -82,7 +82,7 @@ class LoginPage extends Component {
                                     variant="outlined"
                                     label="Your Name"
                                     value={this.state.name}
-                                    onChange={this.handleChange('phone')}
+                                    onChange={this.handleChange('name')}
                                     fullWidth
                                     />
                                 </Grid>
@@ -116,14 +116,14 @@ class LoginPage extends Component {
                                             <div class="form-group">
                                             </div>
                                             <div>{errBar}</div>
-                                            <button type="button" class="btn btn-outline-secondary btn-block" data-toggle="modal" data-target="#exampleModalCenter">Login</button>
+                                            <button type="button" class="btn btn-outlined-secondary btn-block" data-toggle="modal" data-target="#exampleModalCenter">Login</button>
                                             {created}
                                             <br/>
                             </form>: <div>
                                            <div class="form-group">
                                             </div>
                                             <div>{errBar}</div>
-                                            <button type="button" class="btn btn-outline-secondary btn-block" data-toggle="modal" data-target="#exampleModalCenter">Login</button>
+                                            <button type="button" class="btn btn-block" data-toggle="modal" data-target="#exampleModalCenter">Login</button>
                                             {noCreated}
                                             <br/>
 

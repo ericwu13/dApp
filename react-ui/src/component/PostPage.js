@@ -10,7 +10,6 @@ const ipfs = new IPFS({host: 'ipfs.infura.io', port: 5001, protocol:'https'})
 
 
 
-const image2base64 = require('image-to-base64');
 export default class App extends React.Component {
     constructor(props) {
         super(props);
@@ -41,7 +40,8 @@ export default class App extends React.Component {
         console.log(files)
         this.setState({ file: files })
         console.log("Submit to IPFS")
-        let data = this.state.file[0].base64 + "\\" + this.state.city + "\\" + this.state.country + "\\" + this.state.description
+        var start = new Date().getTime(); 
+        let data = this.state.file[0].base64 + "\\" + this.state.city + "\\" + this.state.country + "\\" + this.state.description+ "\\"+ start.toString()
         // console.log(data.split("\\"))
         this.convertToBuffer(data)
     }
@@ -49,16 +49,15 @@ export default class App extends React.Component {
     handleChange = prop  => event => {
         this.setState({ [prop]: event.target.value });
     };
+    
 
-
-    handleSubmit = () => {       
+    handleSubmit = () => {
         this.onSubmitandGet()
-        this.props.handlePost(this.state.productName, this.state.description, this.state.price, this.state.file[0].base64)
     }
     onSubmitandGet = async (event) => {
         await ipfs.add(this.state.buffer, (err, ipfsHash) => {
           console.log(err,ipfsHash);
-
+        
           //setState by setting ipfsHash to ipfsHash[0].hash 
           this.setState({ ipfsHash:ipfsHash[0].hash });
           ipfs.get(this.state.ipfsHash, (err, files) => {
@@ -69,6 +68,7 @@ export default class App extends React.Component {
                 this.setState({redirect:true})
             })
           })
+          this.props.handlePost(this.state.productName, this.state.price, this.state.ipfsHash)
         }) //await ipfs.add 
     }; //onSubmit 
 

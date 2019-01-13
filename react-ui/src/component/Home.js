@@ -3,7 +3,7 @@ import { Paper, Grid } from '@material-ui/core';
 import { CardStyles } from './Style'
 import ItemList from './ItemList'
 import { Link } from 'react-router-dom';
-import './Style.css';
+import './Style.css'
 
 //slides
 import slide1 from './img/1.png';
@@ -27,11 +27,18 @@ const styles = {
 class HomePage extends Component {
     constructor(props) {
         super(props);
+        this.state = {
+            items: this.props.items
+        }
+    }
+    componentWillReceiveProps(nextProps){
+        console.log(nextProps)
+        // this.forceUpdate();
+        this.setState({items: nextProps.items});
     }
     
-    
     render() {
-
+        // console.log("Home render")
         return (
             <Fragment>
                 <div id="slideControls" class="carousel slide " data-ride="carousel">
@@ -56,7 +63,16 @@ class HomePage extends Component {
                     </a>
                 </div>
                 <Grid container>
-                    <ItemList   items={this.props.items} 
+                    <ItemList   items={this.state.items.reduce((itemList, item) => {
+                                        // console.log("Home iteming")
+                                        if(item.status !== 0) {
+                                            return itemList
+                                        } else {
+                                            itemList.push(item)
+                                            return itemList
+                                        }
+                                    }, [])}
+                                handleGetName={this.props.handleGetName}
                                 style={CardStyles} 
                                 onClickItem={this.props.handleBuy} 
                                 type='homePage'/>

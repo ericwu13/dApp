@@ -8,14 +8,19 @@ class AccountPage extends PureComponent {
         super(props);
     
         this.state = {
-          account:this.props.account,
-          name:'',
-          open: false,
+            userInfo: this.props.userInfo,
+            name:'',
+            open: false,
           };
     }
     componentDidMount() {
         this.props.handleListProfile()
 
+    }
+    componentWillReceiveProps(nextProps){
+        console.log(nextProps)
+        // this.forceUpdate();
+        this.setState({userInfo: nextProps.userInfo});
     }
 
     handleSave = () => {
@@ -58,7 +63,7 @@ class AccountPage extends PureComponent {
                                 <Grid item>
 
                                     <Typography variant='subtitle1' style={{color:'#757575'}}>
-                                        {this.props.name}
+                                        {this.state.userInfo.name}
                                     </Typography>
                                 </Grid>
                                 <Grid item>
@@ -74,7 +79,7 @@ class AccountPage extends PureComponent {
                                 Phone Number
                             </Typography> 
                             <Typography variant='subtitle1' style={{color:'#757575'}}>
-                                09092941238
+                                {this.state.userInfo.phone}
                             </Typography>                                            
                         </Paper>
                         <Paper style={{padding:20, marginLeft:'15%', marginRight:'15%'}} elevation='1'>
@@ -82,7 +87,7 @@ class AccountPage extends PureComponent {
                                 Balance
                             </Typography> 
                             <Typography variant='subtitle1' style={{color:'#757575'}}>
-                                {this.props.balance}
+                                {this.state.userInfo.balance}
                             </Typography>                                            
                         </Paper>
                         <Paper style={{padding:20, marginBottom:'2%', marginLeft:'15%', marginRight:'15%'}} elevation='1'>
@@ -90,7 +95,7 @@ class AccountPage extends PureComponent {
                                 Cash Held
                             </Typography>
                             <Typography variant='subtitle1' style={{color:'#757575'}}>
-                                {this.props.held_balance}
+                                {this.state.userInfo.held_balance}
                             </Typography>
                         </Paper>
                         {/* <Typography>
