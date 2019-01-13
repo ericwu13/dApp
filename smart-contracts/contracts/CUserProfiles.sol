@@ -12,7 +12,7 @@ contract CUserProfiles is Ownable, IERC20{
         string      _name;
         uint256     _balance;
         // deposit
-        uint32      _held_balance;
+        uint256      _held_balance;
         // reputation
         uint32       _sellerReputation;
         uint32       _sellerNumber;
@@ -81,11 +81,11 @@ contract CUserProfiles is Ownable, IERC20{
     function _editName(address target, string name) internal {
         _userProfiles[target]._name = name;               
     } 
-    function _held(address target, uint32 value) internal {
+    function _held(address target, uint256 value) internal {
         _userProfiles[target]._balance -= value;               
         _userProfiles[target]._held_balance += value;               
     } 
-    function _unheld(address target, uint32 value) internal {
+    function _unheld(address target, uint256 value) internal {
         _userProfiles[target]._held_balance -= value;
         _userProfiles[target]._balance += value;
     }
@@ -133,7 +133,7 @@ contract CUserProfiles is Ownable, IERC20{
         _burn(account, value);
         emit Approval(account, msg.sender, _userProfiles[account]._allowed[msg.sender]);
     }
-    function _listUser(address account) internal view returns(string, uint256, uint32, uint32, uint32, string) {
+    function _listUser(address account) internal view returns(string, uint256, uint256, uint32, uint32, string) {
         return( _userProfiles[account]._name,
                 _userProfiles[account]._balance,
                 _userProfiles[account]._held_balance,

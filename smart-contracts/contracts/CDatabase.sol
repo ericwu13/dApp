@@ -58,7 +58,7 @@ contract CDatabase is CUserProfiles, CStatus, CTransaction {
         
     function setPendTx(uint256 _txId, address _driver) internal{
         require(txDatabase[_txId]._status == Status.BUYING);
-        _held(txDatabase[_txId]._driver, txDatabase[_txId]._value / depositRatio);
+        _held(txDatabase[_txId]._driver, uint256(txDatabase[_txId]._value / depositRatio));
         txDatabase[_txId]._driver = _driver;
         txDatabase[_txId]._status = Status.PENDING;
     }
@@ -73,7 +73,7 @@ contract CDatabase is CUserProfiles, CStatus, CTransaction {
         require(txDatabase[_txId]._status == Status.DELIVERING);
         _unheld(txDatabase[_txId]._buyer, txDatabase[_txId]._value);
         _transfer(txDatabase[_txId]._buyer, txDatabase[_txId]._seller, txDatabase[_txId]._value);
-        _unheld(txDatabase[_txId]._driver, txDatabase[_txId]._value / depositRatio);
+        _unheld(txDatabase[_txId]._driver, uint256(txDatabase[_txId]._value / depositRatio));
         _transfer(txDatabase[_txId]._buyer, txDatabase[_txId]._driver, deliverFee);
         txDatabase[_txId]._status = Status.SUCCESS;
         txDatabase[_txId]._timestamp = now - txDatabase[_txId]._timestamp;
