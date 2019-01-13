@@ -58,14 +58,13 @@ contract CDatabase is CUserProfiles, CStatus, CTransaction {
         
     function setPendTx(uint256 _txId, address _driver) internal{
         require(txDatabase[_txId]._status == Status.BUYING);
+        _held(txDatabase[_txId]._driver, txDatabase[_txId]._value / depositRatio);
         txDatabase[_txId]._driver = _driver;
         txDatabase[_txId]._status = Status.PENDING;
-        
     }
         
     function setDeliverTx(uint256 _txId) internal{
         require(txDatabase[_txId]._status == Status.PENDING);
-        _held(txDatabase[_txId]._driver, txDatabase[_txId]._value / depositRatio);
         txDatabase[_txId]._status = Status.DELIVERING;
         txDatabase[_txId]._timestamp = now;
     }
@@ -84,17 +83,6 @@ contract CDatabase is CUserProfiles, CStatus, CTransaction {
         _scoreSeller(txDatabase[_txId]._seller, seller_score);
         _scoreDriver(txDatabase[_txId]._driver, driver_score);
         txDatabase[_txId]._status = Status.AFTERRATING;
-    }
-    function getHashDescription(uint256 _txId) external returns (string) {
-        return txDatabase[_txId]._hashDescription;
-    }
-    function getSellerInfo(uint256 _txId) external returns (string) {
-        require(msg.sender == txDatabase[_txId]._seller || msg.sender == txDatabase[_txId]._driver);
-        return _userProfiles[msg.sender]._phoneNum;
-    }
-    function getBuyerInfo(uint256 _txId) external returns (string, string) {
-        require(msg.sender == txDatabase[_txId]._buyer || msg.sender == txDatabase[_txId]._driver);
-        return (txDatabase[_txId]._hashBuyerInfo, txDatabase[_txId]._buyerPKey);
     }
 
     
