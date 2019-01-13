@@ -5,7 +5,7 @@ import "./CDatabase.sol";
 contract Restricted is Ownable, CDatabase {
 
     event insufficientBalanceError();
-    modifier onlyPositiveBalance(uint256 currentBalance, uint32 value) {
+    modifier onlyPositiveBalance(uint256 currentBalance, uint256 value) {
          require(currentBalance >= value, "Insufficient Balance!!!");
          emit insufficientBalanceError();
         _;

@@ -9,12 +9,12 @@ contract CDatabase is CUserProfiles, CStatus, CTransaction {
     uint256 public txDatabaseSize = 0;
 
     //constant
-    uint32 deliverFee;
-    uint32 depositRatio = 5;
+    uint256 deliverFee = 100;
+    uint256 depositRatio = 5;
 
 
     //function for tx
-    function setPostTx(address _seller, string _name, uint32 _value, string _hashDescription) internal {
+    function setPostTx(address _seller, string _name, uint256 _value, string _hashDescription) internal {
         txDatabase[txDatabaseSize] = Transaction(txDatabaseSize,   //txId
                                                 _seller,           // seller address
                                                 address(0),        // buyer address

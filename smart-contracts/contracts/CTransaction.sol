@@ -9,7 +9,7 @@ contract CTransaction is CStatus{
         address _buyer;
         address _driver;
         Status  _status;
-        uint32  _value;
+        uint256  _value;
         uint    _timestamp;
         string  _name;
         string _hashDescription;

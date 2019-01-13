@@ -10,7 +10,7 @@ contract CPlatform is CDatabase, Restricted{
     event eEditUserName(string _name);
     event eListProfile(string _name,
                    uint256 _balance,
-                   uint32 _held_balance, // deposit
+                   uint256 _held_balance, // deposit
                    int32 _reputation);
     event ePost(uint txId);
     event eBuy(uint txId);
@@ -48,7 +48,7 @@ contract CPlatform is CDatabase, Restricted{
         return _listUser(account);
     }
 
-    function post(string name, uint32 value, string hashDescription) external {
+    function post(string name, uint256 value, string hashDescription) external {
         setPostTx(msg.sender, name, value, hashDescription);
         emit ePost(txDatabaseSize-1);
     }
@@ -59,7 +59,7 @@ contract CPlatform is CDatabase, Restricted{
         emit eBuy(txId);
     }
 
-    function pend(uint256 txId) external onlyPositiveBalance(_userProfiles[msg.sender]._balance, txDatabase[txId]._value * depositRatio) {
+    function pend(uint256 txId) external onlyPositiveBalance(_userProfiles[msg.sender]._balance, txDatabase[txId]._value / depositRatio) {
         setPendTx(txId, msg.sender);
         emit ePend(txId);
     }
