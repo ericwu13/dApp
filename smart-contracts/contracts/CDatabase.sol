@@ -51,16 +51,16 @@ contract CDatabase is CUserProfiles, CStatus, CTransaction {
     }
     function setBuyTx(uint256 _txId, address _buyer) internal{
         require(txDatabase[_txId]._status == Status.POSTING);
-        txDatabase[_txId]._buyer = _buyer;
-        _held(_buyer, txDatabase[_txId]._value);
+        txDatabase[_txId]._buyer = _buyer;        
         txDatabase[_txId]._status = Status.BUYING;
+        _held(_buyer, txDatabase[_txId]._value);
     }
         
     function setPendTx(uint256 _txId, address _driver) internal{
         require(txDatabase[_txId]._status == Status.BUYING);
-        _held(txDatabase[_txId]._driver, uint256(txDatabase[_txId]._value / depositRatio));
         txDatabase[_txId]._driver = _driver;
         txDatabase[_txId]._status = Status.PENDING;
+        _held(txDatabase[_txId]._driver, uint256(txDatabase[_txId]._value / depositRatio));
     }
         
     function setDeliverTx(uint256 _txId) internal{

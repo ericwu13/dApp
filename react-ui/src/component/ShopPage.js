@@ -165,7 +165,7 @@ export default class App extends React.Component {
             <Fragment>
                         <Grid container alighItems='center'>
                             
-                            <Paper style={{marginLeft: "auto", marginRight:"auto", padding: 30,height: "100vh", width: "70%"}} elevation="1">
+                            <Paper style={{marginLeft: "auto", marginRight:"auto", padding: 30,height: "150vh", width: "70%"}} elevation="1">
                                 <Paper style={{marginLeft: "auto", marginRight:"auto", padding: 20, width: "80%"}} elevation="0">
                                     <Typography variant='h2' style={{textAlign: 'center', fontFamily:"Arial Rounded MT Bold"}} justify="center" alignItems="center">
                                         Fill Your Infomation
@@ -173,7 +173,7 @@ export default class App extends React.Component {
                                 </Paper>
                                 <Grid container direction='row' alighItems='center' style={{marginTop:20}} spacing={24}>
                                     
-                                    <Grid sm item style={{marginLeft:"5vw"}}>
+                                    <Grid sm item style={{marginLeft:0}}>
                                         {itemCard}
                                     </Grid>
                                     <Grid item sm>

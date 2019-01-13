@@ -135,7 +135,7 @@ export default [
         },
         {
           "name": "_held_balance",
-          "type": "uint32"
+          "type": "uint256"
         },
         {
           "name": "_sellerReputation",
@@ -297,7 +297,7 @@ export default [
         },
         {
           "name": "_value",
-          "type": "uint32"
+          "type": "uint256"
         },
         {
           "name": "_timestamp",
@@ -579,7 +579,7 @@ export default [
         {
           "indexed": false,
           "name": "_held_balance",
-          "type": "uint32"
+          "type": "uint256"
         },
         {
           "indexed": false,
@@ -787,7 +787,7 @@ export default [
         },
         {
           "name": "",
-          "type": "uint32"
+          "type": "uint256"
         },
         {
           "name": "",
@@ -815,7 +815,7 @@ export default [
         },
         {
           "name": "value",
-          "type": "uint32"
+          "type": "uint256"
         },
         {
           "name": "hashDescription",
