@@ -20,6 +20,30 @@
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
     <title>BShop - The Best Shopping Platform</title>
+    <style type="text/css">
+        
+        body {
+            width: 100vw;
+            height: 150vh;
+            /* display: block; */
+            position: relative;
+            margin: 0 auto;
+            z-index: 0;
+        }
+
+        body::after {
+            background: url("./BG123.jpg");
+            content: "";
+            opacity: 0.3;
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            right: 0;
+            left: 0;
+            z-index:-1;   
+        }
+        
+            </style>
   </head>
   <body>
     <noscript>

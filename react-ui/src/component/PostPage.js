@@ -10,14 +10,13 @@ const ipfs = new IPFS({host: 'ipfs.infura.io', port: 5001, protocol:'https'})
 
 
 
-const image2base64 = require('image-to-base64');
 export default class App extends React.Component {
     constructor(props) {
         super(props);
 
         this.state = {
             login:this.props.login,
-
+            redirect: false,
             productName: '',
             description: "",
             city: "",
@@ -33,7 +32,6 @@ export default class App extends React.Component {
     convertToBuffer = async(reader) => {
         //file is converted to a buffer to prepare for uploading to IPFS
         const buffer = await Buffer.from(reader);
-        //set this buffer -using es6 syntax
         this.setState({buffer});
     };
   
@@ -41,24 +39,25 @@ export default class App extends React.Component {
     getFiles = (files) => {
         console.log(files)
         this.setState({ file: files })
-        this.convertToBuffer(this.state.file[0].base64)
+        console.log("Submit to IPFS")
+        var start = new Date().getTime(); 
+        let data = this.state.file[0].base64 + "\\" + this.state.city + "\\" + this.state.country + "\\" + this.state.description+ "\\"+ start.toString()
+        // console.log(data.split("\\"))
+        this.convertToBuffer(data)
     }
     
     handleChange = prop  => event => {
         this.setState({ [prop]: event.target.value });
     };
-
+    
 
     handleSubmit = () => {
         this.onSubmitandGet()
-        this.props.handlePost(this.state.productName, this.state.description, this.state.price, this.state.file[0].base64)
-        //console.log(this.state.productName)
     }
     onSubmitandGet = async (event) => {
-        console.log("Submit to IPFS")
         await ipfs.add(this.state.buffer, (err, ipfsHash) => {
           console.log(err,ipfsHash);
-
+        
           //setState by setting ipfsHash to ipfsHash[0].hash 
           this.setState({ ipfsHash:ipfsHash[0].hash });
           ipfs.get(this.state.ipfsHash, (err, files) => {
@@ -66,14 +65,16 @@ export default class App extends React.Component {
                 this.setState({
                     base64:file.content.toString('utf8')
                 })
+                this.setState({redirect:true})
             })
           })
+          this.props.handlePost(this.state.productName, this.state.price, this.state.ipfsHash)
         }) //await ipfs.add 
     }; //onSubmit 
 
     render() {
-        if(this.props.login === false){
-            return <Redirect push to = '/login'/>;
+        if (this.state.redirect){
+            return <Redirect push to='/'/>;
         } else {
             return  <Fragment>
                         <Grid container alighItems='center'>
@@ -207,51 +208,6 @@ export default class App extends React.Component {
                             </Paper>
                         </Grid>
                     </Fragment>
-                // <div className='row'>
-                //     <div className='col-4'></div>
-                //     <div className='col-4'>
-                //         <br/>
-                //         <form>
-                //             <div class="form-group">
-                //                 <label >Product Name</label>
-                //                 <input type="text" class="form-control" id="productName" name="productName" value={this.state.productName} onChange={this.handleForm}/>
-                //             </div>
-                //             <div class="form-group">
-                //                 <label >Description</label>
-                //                 <input type="text" class="form-control" id="description" name="description" value={this.state.description} onChange={this.handleForm}/>
-                //             </div>
-                //             <div class="form-group">
-                //                 <label >Price</label>
-                //                 <input type="text" class="form-control" id="price" name="price" value={this.state.price} onChange={this.handleForm}/>
-                //             </div>
-                //             <br/>   
-                //             <div className="FileUpload dropzone">
-                //                 <Dropzone
-                //                     onDrop={this.onImageDrop.bind(this)}
-                //                     multiple={false}
-                //                     accept="image/*">
-                //                     <div>Drop an image or click to select a file to upload.</div>
-                //                 </Dropzone>
-                //                 <br/>   
-                //             </div>
-                //             <Link to='/' ><button type="submit" class="btn btn-outline-secondary btn-block" onClick={this.handleSubmit}>SELL</button></Link>
-        
-                //             <div>
-                //                 <br/>   
-                //                 {this.state.uploadedFileCloudinaryUrl === '' ? null :
-                //                 <div>
-                //                     <p>{this.state.fileName}</p>
-                //                     <img src={this.state.uploadedFileCloudinaryUrl} />
-                //                 </div>
-                //                 }
-                //             </div>
-                //         </form>
-                //         <br/>   
-                //         <br/>   
-                //     </div>
-                //     <div className='col-4'></div>
-                // </div>
-            
         }
         
     }

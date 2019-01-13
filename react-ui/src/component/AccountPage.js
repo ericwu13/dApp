@@ -8,14 +8,19 @@ class AccountPage extends PureComponent {
         super(props);
     
         this.state = {
-          account:this.props.account,
-          name:'',
-          open: false,
+            userInfo: this.props.userInfo,
+            name:'',
+            open: false,
           };
     }
     componentDidMount() {
         this.props.handleListProfile()
 
+    }
+    componentWillReceiveProps(nextProps){
+        console.log(nextProps)
+        // this.forceUpdate();
+        this.setState({userInfo: nextProps.userInfo});
     }
 
     handleSave = () => {
@@ -47,7 +52,7 @@ class AccountPage extends PureComponent {
                     
                         <Paper style={{padding:20, marginTop:'2%', marginLeft:'15%', marginRight:'15%', marginBottom:'1%'}} elevation='0'>
                             <Typography variant='h4' style={{textAlign: 'center', fontFamily:"Arial Rounded MT Bold"}} justify="center" alignItems="center">
-                                User Acoount Information
+                                User Account Information
                             </Typography>
                         </Paper>
                         <Paper style={{padding:20, marginLeft:'15%', marginRight:'15%'}} elevation='1'>
@@ -57,8 +62,8 @@ class AccountPage extends PureComponent {
                             <Grid container justify="space-between">
                                 <Grid item>
 
-                                    <Typography variant='subtitle1'>
-                                        {this.props.name}
+                                    <Typography variant='subtitle1' style={{color:'#757575'}}>
+                                        {this.state.userInfo.name}
                                     </Typography>
                                 </Grid>
                                 <Grid item>
@@ -67,25 +72,30 @@ class AccountPage extends PureComponent {
                                     </Button>
                                 </Grid>
                                 
-                            </Grid>
-                            
-                            
-                            
+                            </Grid>                                        
+                        </Paper>
+                        <Paper style={{padding:20, marginLeft:'15%', marginRight:'15%'}} elevation='1'>
+                            <Typography variant='h5'>
+                                Phone Number
+                            </Typography> 
+                            <Typography variant='subtitle1' style={{color:'#757575'}}>
+                                {this.state.userInfo.phone}
+                            </Typography>                                            
                         </Paper>
                         <Paper style={{padding:20, marginLeft:'15%', marginRight:'15%'}} elevation='1'>
                             <Typography variant='h5'>
                                 Balance
                             </Typography> 
-                            <Typography variant='subtitle1'>
-                                {this.props.balance}
+                            <Typography variant='subtitle1' style={{color:'#757575'}}>
+                                {this.state.userInfo.balance}
                             </Typography>                                            
                         </Paper>
                         <Paper style={{padding:20, marginBottom:'2%', marginLeft:'15%', marginRight:'15%'}} elevation='1'>
                             <Typography variant='h5'>
                                 Cash Held
                             </Typography>
-                            <Typography variant='subtitle1'>
-                                {this.props.held_balance}
+                            <Typography variant='subtitle1' style={{color:'#757575'}}>
+                                {this.state.userInfo.held_balance}
                             </Typography>
                         </Paper>
                         {/* <Typography>

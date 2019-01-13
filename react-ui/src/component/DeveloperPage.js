@@ -25,7 +25,7 @@ class DeveloperPage extends Component {
         this.props.updateContract(this.state.contractAddress);
     }
     handleSponsor() {
-        this.props.sponsor(this.state.sponsorValue)
+        this.props.sponsor(this.state.contractAddress, this.state.sponsorValue)
     }
 
     render() {
@@ -34,7 +34,7 @@ class DeveloperPage extends Component {
                 <br/>
                 <div className='col-4'>
                     <div class="form-group">
-                        <label >Current Contract Address: {this.props.currentAddress}</label>
+                        <label >Send Account Address</label>
                         <input type="text" class="form-control" id="contractAddress" name="contractAddress" value={this.state.contractAddress} onChange={this.handleForm}/>
                     </div>
                     <div>

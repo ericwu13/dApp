@@ -152,6 +152,10 @@ export default [
         {
           "name": "_driverNumber",
           "type": "uint32"
+        },
+        {
+          "name": "_phoneNum",
+          "type": "string"
         }
       ],
       "payable": false,
@@ -301,6 +305,18 @@ export default [
         },
         {
           "name": "_name",
+          "type": "string"
+        },
+        {
+          "name": "_hashDescription",
+          "type": "string"
+        },
+        {
+          "name": "_hashBuyerInfo",
+          "type": "string"
+        },
+        {
+          "name": "_buyerPKey",
           "type": "string"
         }
       ],
@@ -540,11 +556,6 @@ export default [
       "inputs": [
         {
           "indexed": false,
-          "name": "_userAddress",
-          "type": "address"
-        },
-        {
-          "indexed": false,
           "name": "_name",
           "type": "string"
         }
@@ -584,17 +595,7 @@ export default [
       "inputs": [
         {
           "indexed": false,
-          "name": "_userAddress",
-          "type": "address"
-        },
-        {
-          "indexed": false,
-          "name": "_value",
-          "type": "uint32"
-        },
-        {
-          "indexed": false,
-          "name": "_txId",
+          "name": "txId",
           "type": "uint256"
         }
       ],
@@ -606,12 +607,7 @@ export default [
       "inputs": [
         {
           "indexed": false,
-          "name": "_userAddress",
-          "type": "address"
-        },
-        {
-          "indexed": false,
-          "name": "_txId",
+          "name": "txId",
           "type": "uint256"
         }
       ],
@@ -623,12 +619,7 @@ export default [
       "inputs": [
         {
           "indexed": false,
-          "name": "_userAddress",
-          "type": "address"
-        },
-        {
-          "indexed": false,
-          "name": "_txId",
+          "name": "txId",
           "type": "uint256"
         }
       ],
@@ -640,7 +631,7 @@ export default [
       "inputs": [
         {
           "indexed": false,
-          "name": "_txId",
+          "name": "txId",
           "type": "uint256"
         }
       ],
@@ -652,7 +643,7 @@ export default [
       "inputs": [
         {
           "indexed": false,
-          "name": "_txId",
+          "name": "txId",
           "type": "uint256"
         }
       ],
@@ -746,25 +737,20 @@ export default [
     },
     {
       "constant": false,
-      "inputs": [],
+      "inputs": [
+        {
+          "name": "phoneNum",
+          "type": "string"
+        },
+        {
+          "name": "name",
+          "type": "string"
+        }
+      ],
       "name": "createUser",
       "outputs": [],
       "payable": true,
       "stateMutability": "payable",
-      "type": "function"
-    },
-    {
-      "constant": true,
-      "inputs": [],
-      "name": "checkUser",
-      "outputs": [
-        {
-          "name": "",
-          "type": "bool"
-        }
-      ],
-      "payable": false,
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -810,6 +796,10 @@ export default [
         {
           "name": "",
           "type": "uint32"
+        },
+        {
+          "name": "",
+          "type": "string"
         }
       ],
       "payable": false,
@@ -826,6 +816,10 @@ export default [
         {
           "name": "value",
           "type": "uint32"
+        },
+        {
+          "name": "hashDescription",
+          "type": "string"
         }
       ],
       "name": "post",
@@ -840,6 +834,14 @@ export default [
         {
           "name": "txId",
           "type": "uint256"
+        },
+        {
+          "name": "pKey",
+          "type": "string"
+        },
+        {
+          "name": "Hash",
+          "type": "string"
         }
       ],
       "name": "buy",
@@ -910,6 +912,102 @@ export default [
       "outputs": [],
       "payable": false,
       "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "name": "_txId",
+          "type": "uint256"
+        }
+      ],
+      "name": "getHashDescription",
+      "outputs": [
+        {
+          "name": "",
+          "type": "string"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "name": "_txId",
+          "type": "uint256"
+        }
+      ],
+      "name": "getSellerInfo",
+      "outputs": [
+        {
+          "name": "",
+          "type": "string"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "name": "_txId",
+          "type": "uint256"
+        }
+      ],
+      "name": "getBuyerInfo",
+      "outputs": [
+        {
+          "name": "",
+          "type": "string"
+        },
+        {
+          "name": "",
+          "type": "string"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "name": "seller",
+          "type": "address"
+        },
+        {
+          "name": "buyer",
+          "type": "address"
+        },
+        {
+          "name": "driver",
+          "type": "address"
+        }
+      ],
+      "name": "getTxAllName",
+      "outputs": [
+        {
+          "name": "",
+          "type": "string"
+        },
+        {
+          "name": "",
+          "type": "string"
+        },
+        {
+          "name": "",
+          "type": "string"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
       "type": "function"
     }
   ]
