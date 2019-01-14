@@ -392,6 +392,29 @@ export default [
     },
     {
       "constant": true,
+      "inputs": [
+        {
+          "name": "account",
+          "type": "address"
+        }
+      ],
+      "name": "getReputation",
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint32"
+        },
+        {
+          "name": "",
+          "type": "uint32"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
       "inputs": [],
       "name": "guaranteedDeposit",
       "outputs": [
@@ -648,6 +671,18 @@ export default [
         }
       ],
       "name": "eConfirmTx",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "name": "txId",
+          "type": "uint256"
+        }
+      ],
+      "name": "eRatingTx",
       "type": "event"
     },
     {

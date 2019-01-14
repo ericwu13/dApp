@@ -116,6 +116,11 @@ contract CUserProfiles is Ownable, IERC20{
         require(account != address(0));
         return _userProfiles[account]._driverReputation / _userProfiles[account]._driverNumber;
     }
+    function getReputation(address account) public view returns(uint32, uint32) {
+        require(account != address(0));
+        return (_userProfiles[account]._sellerReputation / _userProfiles[account]._sellerNumber,
+                _userProfiles[account]._driverReputation / _userProfiles[account]._driverNumber);
+    }
     function _mint(address account, uint256 value) internal  {
         require(account != address(0));
         _totalSupply = _totalSupply.add(value);

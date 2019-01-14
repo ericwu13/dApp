@@ -90,12 +90,28 @@ class AccountPage extends PureComponent {
                                 {this.state.userInfo.balance}
                             </Typography>                                            
                         </Paper>
-                        <Paper style={{padding:20, marginBottom:'2%', marginLeft:'15%', marginRight:'15%'}} elevation='1'>
+                        <Paper style={{padding:20, marginLeft:'15%', marginRight:'15%'}} elevation='1'>
                             <Typography variant='h5'>
                                 Cash Held
                             </Typography>
                             <Typography variant='subtitle1' style={{color:'#757575'}}>
                                 {this.state.userInfo.held_balance}
+                            </Typography>
+                        </Paper>
+                        <Paper style={{padding:20, marginLeft:'15%', marginRight:'15%'}} elevation='1'>
+                            <Typography variant='h5'>
+                                Your Sales Reputation
+                            </Typography>
+                            <Typography variant='subtitle1' style={{color:'#757575'}}>
+                                {this.state.userInfo.salesReputation}
+                            </Typography>
+                        </Paper>
+                        <Paper style={{padding:20, marginBottom:'2%', marginLeft:'15%', marginRight:'15%'}} elevation='1'>
+                            <Typography variant='h5'>
+                            Your Delivery Reputation
+                            </Typography>
+                            <Typography variant='subtitle1' style={{color:'#757575'}}>
+                                {this.state.userInfo.deliveryReputation}
                             </Typography>
                         </Paper>
                         {/* <Typography>

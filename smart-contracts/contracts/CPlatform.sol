@@ -17,6 +17,7 @@ contract CPlatform is CDatabase, Restricted{
     event ePend(uint txId);
     event eConfirmDeliver(uint txId);
     event eConfirmTx(uint256 txId);
+    event eRatingTx(uint256 txId);
     uint public guaranteedDeposit = 1000000000000000000;
     uint public deadline = 3 days;
     //function
@@ -76,6 +77,7 @@ contract CPlatform is CDatabase, Restricted{
     }
     function ratingTx(uint256 txId, uint32 seller_score, uint32 driver_score) external onlyBuyer(txId){
         setRatingTx(txId, seller_score, driver_score);
+        emit eRatingTx(txId);
     }
     
     
@@ -93,6 +95,6 @@ contract CPlatform is CDatabase, Restricted{
     function getTxAllName(address seller, address buyer, address driver ) external view returns(string, string, string) {
         return (_userProfiles[seller]._name, _userProfiles[buyer]._name, _userProfiles[driver]._name);
     }
-
+    
 
 }

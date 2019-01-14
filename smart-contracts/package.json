@@ -12,7 +12,7 @@
   "scripts": {
     "postinstall": "touch secret.js",
     "compile": "dexon-truffle compile",
-    "test": "dexon-truffle test --network development",
+    "test": "dexon-truffle migrate --network=development --reset",
     "migrate": "dexon-truffle migrate --network=testnet --reset"
   },
   "dependencies": {

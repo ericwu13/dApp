@@ -159,7 +159,7 @@ export default class extends Component {
                     <Grid item sm>
                         <Paper style={{marginLeft: "auto", marginRight:"auto", padding: 20, width: "70%", height:'15vh'}} elevation="1">
                             <Typography variant='h3' style={{fontFamily:"Arial Rounded MT Bold"}}>
-                                Your Delivery List
+                                Your Sell List
                             </Typography>
                             <Typography variant='subtitle1' style={{marginTop:10, fontFamily:"Calibri", color:'#757575'}}>
                                 Thanks for your delivery! Go to check out the buyer information to ship item to them.

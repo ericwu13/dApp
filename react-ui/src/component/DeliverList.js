@@ -28,7 +28,6 @@ export default class extends Component {
         this.state = {
             locations:[],
             images:[],
-            deliverList: this.props.deliverList,
             loading: false,
             open: this.props.items.reduce((openList, item) => {
                 openList.push(false)
@@ -59,10 +58,10 @@ export default class extends Component {
         this.setState({ open: open});
     };
     componentWillReceiveProps(nextProps){
-        console.log(nextProps)
-        // this.forceUpdate();
-        this.setState({deliverList: nextProps.deliverList});
-        console.log(this.state.deliverList)
+        // console.log(nextProps)
+        // // this.forceUpdate();
+        // this.setState({deliverList: nextProps.deliverList});
+        // console.log(this.state.deliverList)
     }
     timeConverter = (UNIX_timestamp) => {
         var a = new Date(UNIX_timestamp);
@@ -119,7 +118,6 @@ export default class extends Component {
         for(let i = 0; i < items.length; ++i) {
             let item = items[i]
             const time = this.calTimePassed(Number(item.postTime))
-            const deliverIndex = this.state.deliverList.findIndex((list) => list.txId === item.index)
             let itemCard = 
                 <Grid key={item.index} item>
                     <Card style={style.card}>
@@ -189,16 +187,16 @@ export default class extends Component {
                                 <ListItemText primary="Seller Name" secondary={item.sellerNickName} />
                             </ListItem>
                             <ListItem >
-                                <ListItemText primary="Seller Phone" secondary={this.state.deliverList[deliverIndex].sellerPhone}/>
+                                <ListItemText primary="Seller Phone" secondary={item.sellerPhone}/>
                             </ListItem>
                             <ListItem >
                                 <ListItemText primary="Buyer Name" secondary={item.sellerNickName} />
                             </ListItem>
                             <ListItem >
-                                <ListItemText primary="Buyer Address" secondary={item.buyerCity + ", " + item.buyerCountry + ", " + this.state.deliverList[deliverIndex].buyerAddress} />
+                                <ListItemText primary="Buyer Address" secondary={item.buyerCity + ", " + item.buyerCountry + ", " + item.buyerAddress} />
                             </ListItem>
                             <ListItem >
-                                <ListItemText primary="Buyer Phone" secondary={this.state.deliverList[deliverIndex].buyerPhone} />
+                                <ListItemText primary="Buyer Phone" secondary={item.buyerPhone} />
                             </ListItem>
                         </List>
                     </Dialog>

@@ -16,6 +16,9 @@ class DelieverPage extends Component {
     handleSubmit (ev){
         this.props.handleTakeMission(ev.target.value)
     }
+    shouldComponentUpdate(nextProps, nextState) {
+        return this.props.items !== nextProps.items;
+    }
     render() {
         
         return (

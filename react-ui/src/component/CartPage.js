@@ -26,21 +26,51 @@ class CartPage extends Component {
         super(props);
         this.state = {
                 value: 0,
-                deliverList: this.props.deliverList
+                //deliverList: this.props.deliverList
+                deliverItems: [],
         };
     }
+    // shouldComponentUpdate(nextProps, nextState) {
+    //     return this.props.items !== nextProps.items;
+    // }
+    componentDidMount () {
+        console.log("CartPage Mounted")
+        const promises = this.props.items.reduce((deliverItemList, item) => {
+            if(item.deliverName === this.props.dexonAccount) {
+                console.log("CartPage mounted new promise")
+                var promise = new Promise((resolve, reject) => {
+                    this.props.getUserInfo(item.index)
+                    .then((results) => {
+                        const response = results.split("//")
+                        resolve({...item, buyerAddress: response[0], buyerPhone: response[1], sellerPhone: response[2]})
+                    })
+                })
+                deliverItemList.push(promise)
+                return deliverItemList
+            } else {
+                return deliverItemList
+            }
+        }, [])
+        console.log("cart mount Start Promises All")
+        Promise.all(promises)
+        .then((newItems) => {
+            this.setState({deliverItems: newItems})
+            console.log("cart deliver item  Get")
+            console.log(this.state.deliverItems)
+        })
+
+    }
+
     handleChange = (event, value) => {
         this.setState({ value });
     };
-    componentWillReceiveProps(nextProps){
-        console.log(nextProps)
-        // this.forceUpdate();
-        this.setState({deliverList: nextProps.deliverList});
-        console.log(this.state.deliverList)
-    }
     render() {
+        console.log("Cart render")
         const { value } = this.state;
+        console.log("cart Items")
         console.log(this.props.items)
+        console.log("cart deliverItems")
+        console.log(this.props.deliverItems)
         return <div>
                     <AppBar position="static" color="default">
                         <Tabs
@@ -67,7 +97,7 @@ class CartPage extends Component {
                                             return itemList
                                         }
                                     }, [])}
-                                handleGetName={this.props.handleGetName}
+                                handleRatingTx={this.props.handleRatingTx}
                                 style={CardStyles} 
                                 onClickItem={this.props.handleConfirmTx} 
                                 type='buy'/>
@@ -89,17 +119,7 @@ class CartPage extends Component {
                     </TabContainer>}
                     {value === 2 && <TabContainer>
                         <Grid container>
-                            <DeliverList   items={this.props.items.reduce((itemList, item) => {
-                                            console.log(item.deliverName)
-                                            if(item.deliverName === this.props.dexonAccount && item.status < 4) {
-                                                itemList.push(item)
-                                                return itemList
-                                            } else {
-                                                item.open = false
-                                                return itemList
-                                            }
-                                        }, [])}
-                                    deliverList={this.state.deliverList}
+                            <DeliverList   items={this.state.deliverItems}
                                     style={CardStyles} 
                                     type='deliver'/>
                         </Grid>

@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
-import { Grid, Card, Typography, CardActions, CardContent, CardMedia, CardHeader, Button, Fab, Paper} from '@material-ui/core';
+import { Grid, Card, Typography, CardActions, CardContent, CardMedia, CardHeader, Button, Fab, Paper, Dialog, DialogTitle, TextField} from '@material-ui/core';
 import Avatar from '@material-ui/core/Avatar'
 import IconButton from '@material-ui/core/IconButton';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import LocalShippingIcon from '@material-ui/icons/LocalShipping';
 import DoneIcon from '@material-ui/icons/Done';
+import StarRateIcon from '@material-ui/icons/StarRate';
 import { Link } from 'react-router-dom';
 
 import ix from './img/ixs.png'
@@ -19,13 +20,41 @@ export default class extends Component {
         super(props)
         this.state = {
             locations:[],
-            images:[]
+            images:[],
+            sellerPoint:'',
+            driverPoint:'',
+            open: this.props.items.reduce((openList, item) => {
+                openList.push(false)
+                return openList
+            }, []),
         }
     }
-    handleSubmit = index => {
+    handleChange = name => event => {
+        this.setState({
+          [name]: event.target.value,
+        });
+    };
+    handleConfirm = (index) => {
         console.log("Cart confirm " + index)
         this.props.onClickItem(index)
     }
+    handleClickOpen = (i) => {
+        console.log("Click")
+        const open = this.state.open
+        open[i] = true
+        this.setState({ open: open});
+    };
+    handleRate = (index, i) => {
+        console.log("Cart Rating " + index)
+        this.props.handleRatingTx(index, Number(this.state.sellerPoint), Number(this.state.driverPoint))
+        this.handleClose(i)
+    }
+    handleClose = (i) => {
+        console.log("Click")
+        const open = this.state.open
+        open[i] = false
+        this.setState({ open: open});
+    };
     timeConverter = (UNIX_timestamp) => {
         var a = new Date(UNIX_timestamp);
         var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
@@ -124,11 +153,18 @@ export default class extends Component {
                                 </CardContent>
                             {/* </CardActionArea> */}
                             <CardActions style={style.actions} disableActionSpacing>
-                                <IconButton onClick={() => {this.handleSubmit(item.index)}}>
+                                <IconButton onClick={() => {this.handleConfirm(item.index)}}>
                                 {
                                     (item.status >= 4)?
                                     <DoneIcon style={{color: "#4caf50", fontSize:"30"}}/>:
                                     <DoneIcon style={{color: "#757575", fontSize:"30"}}/>
+                                }
+                                </IconButton>
+                                <IconButton onClick={() => {this.handleClickOpen(i)}}>
+                                {
+                                    (item.status >= 6)?
+                                    <StarRateIcon style={{color: "#4caf50", fontSize:"30"}}/>:
+                                    <StarRateIcon style={{color: "#757575", fontSize:"30"}}/>
                                 }
                                 </IconButton>
                                 {
@@ -137,8 +173,34 @@ export default class extends Component {
                                     <LocalShippingIcon style={{color: "#4caf50",fontSize:"30"}}/>:
                                     <LocalShippingIcon style={{color: "#757575", fontSize:"30"}}/>
                                 }
+                                
                             </CardActions>
                         </Card>
+                        <Dialog open={this.state.open[i]} onClose={() => this.handleClose(i)}>
+                                <DialogTitle id="simple-dialog-title">Rate Your Experience!</DialogTitle>
+                                <div>
+                                <TextField
+                                    id="standard-name"
+                                    label={"Rate Seller \"" + item.sellerNickName + "\""}
+                                    style={{marginLeft:25, marginRight:25, marginBottom:50}}
+                                    value={this.state.sellerPoint}
+                                    onChange={this.handleChange('sellerPoint')}
+                                    margin="normal"
+                                    />
+                                <TextField
+                                    id="standard-name"
+                                    label={"Rate Driver \"" + item.driverNickName + "\""}
+                                    style={{marginLeft:25, marginRight:25, marginBottom:50}}
+                                    value={this.state.driverPoint}
+                                    onChange={this.handleChange('driverPoint')}
+                                    margin="normal"
+                                    />
+                                <Button variant="outlined" color="primary" onClick={() => this.handleRate(item.index, i)} style={{marginLeft:25, marginRight:25, marginBottom:50}}>
+                                    SEND
+                                </Button>
+
+                                </div>
+                            </Dialog>                        
                     </Grid>
             deck_1.push(itemCard);
             

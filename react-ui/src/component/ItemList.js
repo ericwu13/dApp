@@ -29,7 +29,11 @@ export default class extends Component {
             open: this.props.items.reduce((openList, item) => {
                 openList.push(false)
                 return openList
-            }, [])
+            }, []),
+            userOpen: this.props.items.reduce((openList, item) => {
+                openList.push(false)
+                return openList
+                }, []),
         }
     }
     handleClickOpen = (i) => {
@@ -45,6 +49,22 @@ export default class extends Component {
         open[i] = false
         this.setState({ open: open});
     };
+
+    handleUserInfoOpen = (i) => {
+        console.log("Click")
+        const open = this.state.userOpen
+        open[i] = true
+        this.setState({ userOpen: open});
+    };
+
+    handleUserInfoClose = (i) => {
+        console.log("Click")
+        const open = this.state.userOpen
+        open[i] = false
+        this.setState({ userOpen: open});
+    };
+    
+
     handleSubmit = index => {
         console.log(index)
         if(this.props.type === 'homePage') {
@@ -113,7 +133,8 @@ export default class extends Component {
                     <Grid key={item.index} item>
                         <Card style={style.card}>
                             {/* <CardActionArea>  */}
-                                <CardHeader
+                                {(type === "homePage")?<CardActionArea>
+                                    <CardHeader
                                     avatar={
                                         <Avatar aria-label="Recipe" style={style.avatar}>
                                             {type === 'homePage'?item.sellerNickName[0]:item.buyerNickName[0]}
@@ -122,7 +143,17 @@ export default class extends Component {
                                     title={type === 'homePage'?item.sellerNickName + ", " + item.city + ", " + item.country:
                                                                 item.buyerNickName + ", " + item.buyerCity + ", " + item.buyerCountry}
                                     subheader={time}
-                                    />
+                                    onClick={ () => this.handleUserInfoOpen(i)}
+                                    /></CardActionArea>:<CardHeader
+                                    avatar={
+                                        <Avatar aria-label="Recipe" style={style.avatar}>
+                                            {type === 'homePage'?item.sellerNickName[0]:item.buyerNickName[0]}
+                                        </Avatar>
+                                    }
+                                    title={type === 'homePage'?item.sellerNickName + ", " + item.city + ", " + item.country:
+                                                                item.buyerNickName + ", " + item.buyerCity + ", " + item.buyerCountry}
+                                    subheader={time}/>
+                                }
                                 {(type === "homePage")?
                                         <CardMedia
                                         component='img'
@@ -207,6 +238,35 @@ export default class extends Component {
                                 </ListItem>
                                 <ListItem >
                                     <ListItemText primary="Buyer Phone" secondary={item.phone} />
+                                </ListItem>
+                            </List>
+                        </Dialog>
+                        <Dialog
+                        fullScreen
+                        open={this.state.userOpen[i]}
+                        onClose={() => this.handleUserInfoClose(i)}
+                        TransitionComponent={this.Transition}
+                        >
+                            <AppBar style={{ background: '#2F2F2F',position: 'relative' }}>
+                                <Toolbar>
+                                <IconButton color="inherit" onClick={() => this.handleUserInfoClose(i)} aria-label="Close">
+                                    <CloseIcon />
+                                </IconButton>
+                                <Typography variant="h6" color="inherit">
+                                    {"Seller - Information"}
+                                </Typography>
+                                </Toolbar>
+                            </AppBar>
+                            <List>
+                                <ListItem >
+                                    <ListItemText primary="Seller Name " secondary={item.sellerNickName} />
+                                </ListItem>
+                                <Divider />
+                                <ListItem >
+                                    <ListItemText primary="Seller Sales Repuatation" secondary={item.sellerReputation} />
+                                </ListItem>
+                                <ListItem >
+                                    <ListItemText primary="Seller Deliver Reputation" secondary={item.deliveryReputation} />
                                 </ListItem>
                             </List>
                         </Dialog>
