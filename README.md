@@ -23,13 +23,13 @@ $ ganache-cli -m "your passphrases"
 ```
 
 2. go to `root/smart-contracts` directory
-3. cp `secret.js.example` to `secret.js` and change the `mnemonic` in it to DeKuSan wallet passphrases
+3. cp `secret.js.example` to `secret.js` and change the `mnemonic` to your **DeKuSan wallet passphrases**
 4. compile the contracts codes, and you'll get contract abi in `root/smart-contracts/build/contracts/CPlatform.json` file
 ```
 $ npm run compile
 ```
 
-5. migrate our contract on your ganache
+5. migrate our contract on your **ganache localhost:8545**
 ```
 $ npm run test
 ```
@@ -39,14 +39,22 @@ $ npm run test
 1. go to `root/react-ui/src` directory
 2. open `App.js`
 3. go to code `line 2` and change contract address to the address you remember in previous step
-4. open `root/smart-contracts/build/contracts/CPlatform.json` and copy its abi
-5. paste the abi into `root/react-ui/src/platform_abi.js`
+4. open `root/smart-contracts/build/contracts/CPlatform.json` and find abi section
+5. replace the line after `export default` with your abi code 
 
 now your react-ui can interact with your smart contracts
 
 ## Start Interacting with WebUI
 
 ### Single User Usage
+
+1. run your web server
+```
+npm start
+```
+2. Disable MetaMask to avoid unpredicted problem!!
+#### Create User
+click
 
 
 ## Extra Section
@@ -58,7 +66,6 @@ now your react-ui can interact with your smart contracts
 
 
 Go to https://testnet.dexscan.app and serach for your contract's address!!
-### React User Interface
 
 
 ### How To Test It
