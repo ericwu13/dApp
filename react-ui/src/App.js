@@ -18,7 +18,7 @@ import { SSL_OP_DONT_INSERT_EMPTY_FRAGMENTS } from 'constants';
 // const ganache = require('dexon-ganache-cli');
 const IPFS = require('ipfs-http-client')
 const ipfs = new IPFS({ host: 'ipfs.infura.io', port: 5001, protocol: 'https' })
-const contractAddress = '0xfbf21c73e02e60417f426929cb5d016098c8b407'
+const contractAddress = '0xe061ccdefaa6d1ad4acaabffd57820e173f6eac1'
 
 class App extends Component {
     constructor(props) {

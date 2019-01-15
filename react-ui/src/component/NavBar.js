@@ -29,27 +29,31 @@ class NavBar extends Component {
             navBar_left = <div>
                             <Link to={'/cart'}>
                                 <Button style={{margin:5, color: "#f5f5f5"}}>
-                                    <ShoppingCartIcon style={{ fontSize: 27 }}/>
+                                    <ShoppingCartIcon style={{ fontSize: 27, margin:5  }}/>
+                                    Cart
                                 </Button>
                             </Link> 
                             <Link to={'/account'}>
                                 <Button style={{margin:5, color: "#f5f5f5"}}>
-                                    <AccountCircle style={{ fontSize: 27 }}/>
+                                    <AccountCircle style={{ fontSize: 27, margin:5  }}/>
+                                    Account
                                 </Button>
                             </Link> 
                             <Link to={'/deliver'}>
                                 <Button style={{margin:5, color: "#f5f5f5"}}>
-                                    <LocalShippingIcon style={{ fontSize: 27 }}/>
+                                    <LocalShippingIcon style={{ fontSize: 27, margin:5  }}/>
+                                    Deliver
                                 </Button>                        
                             </Link> 
                             <Link to={'/post'}>
                                 <Button style={{margin:5, color: "#f5f5f5"}}>
-                                    <Store style={{ fontSize: 27 }}/>
+                                    <Store style={{ fontSize: 27, margin:5 }}/>
+                                    POST
                                 </Button>                        
                             </Link> 
                             <Link to={'/'}>
                                 <Button style={{margin:5, color: "#f5f5f5"}} onClick={this.props.handleLogout}>
-                                    <FontAwesomeIcon icon={faSignOutAlt} size="2x"/>
+                                    <FontAwesomeIcon icon={faSignOutAlt} size="2x" style={{margin:5}}/> Sign Out
                                 </Button>
                             </Link> 
                         </div>
@@ -57,7 +61,8 @@ class NavBar extends Component {
             navBar_left = <div>
                             <Link to='/login'>
                                 <Button style={{margin:5, color: "#f5f5f5"}}>
-                                    <FontAwesomeIcon icon={faSignInAlt} size="2x"/>
+                                    <FontAwesomeIcon icon={faSignInAlt} size="2x" style={{margin:5}}/>
+                                    Sing in
                                 </Button>
                             </Link>
                         </div>
