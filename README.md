@@ -55,16 +55,16 @@ npm start
 2. Disable MetaMask to avoid unpredicted problem!!
 
 #### 1. Create User
-* click `SIGN IN`
+* click `SIGN IN` on Appbar
 * click `LOGIN` and create your account
 
 #### 2. Check Account Information
-* click `ACCOUNT` to check your information
+* click `ACCOUNT` on Appbar to check your information
 #### 3. Post an Item
-* cleck `POST` to go to **post page**
+* cleck `POST` on Appbar to go to **post page**
 * fill the information first and **you must upload an image!!!**
 * wait for a minute until data uploaded to IPFS
-* click `POST`
+* click `POST` button
 * click `ABOUT` and click `b` icon to check your item posted
 * or refresh your website to check your item (remember to sign in after you refresh the website)
 
@@ -72,13 +72,26 @@ npm start
 * click `header` of the item card to check seller reputation
 #### 5. Buy an Item
 * click `market cart icon` on the card to go to buy page
-* fill the information and click `BUY`
+* fill the information and click `BUY` button
 #### 6. Deliver an Item
-#### 7. Check Deliver Item
-#### 8. Seller Confirm Deliver to Deliver an Item
-#### 9. Buyer Confirm to receive an Item
-#### 10. Set Reputations
+* click `DELIVER` on Appbar
+* click `image` on the card to check detail information, but your find **partial of buyer information encrypted**
+* click `truck icon` on the card to deliver an item
+#### 7. Check Your Deliver Item
+* click `CART` on Appbar
+* go to `Deliver List` tab and you'll see the item you want to deliver
+* click the `image` on the card to check detail informatio, and the **buyer information is all decrypted**
 
+#### 8. Seller Confirm Deliver to Deliver an Item
+* go to `Seller List` tab and you'll see the item you post
+* click `check icon` to confirm that the deliver has collected the item you post
+* message on the card will turn to **Delivering**
+#### 9. Buyer Confirm to receive an Item
+* go to `Cart List` tab and you'll see the item you buy and the message is `XXX is Delivering`
+* click `check icon` to confirm you has received the item
+* message on the card will turn to `Arrived`
+#### 10. Set Reputations
+* click `star icon` to set your shopping experience
 
 
 ## Extra Section
