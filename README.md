@@ -57,11 +57,12 @@ npm start
 #### 1. Create User
 * click the right most icon to login
 </br>
-![screen shot 2019-01-15 at 4 07 21 pm](https://user-images.githubusercontent.com/37173038/51166964-2f7d6a00-18e0-11e9-9dbf-168cae67a875.png)
+
+  ![screen shot 2019-01-15 at 4 07 21 pm](https://user-images.githubusercontent.com/37173038/51166964-2f7d6a00-18e0-11e9-9dbf-168cae67a875.png)
 </br>
 * and click login
 </br>
-![screen shot 2019-01-15 at 4 13 24 pm](https://user-images.githubusercontent.com/37173038/51167094-83884e80-18e0-11e9-95f7-497d8d66bbb2.png)
+  ![screen shot 2019-01-15 at 4 13 24 pm](https://user-images.githubusercontent.com/37173038/51167094-83884e80-18e0-11e9-95f7-497d8d66bbb2.png)
 </br>
 
 #### 2. Check Account Information
