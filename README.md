@@ -62,6 +62,7 @@ npm start
 </br>
 * and click login
 </br>
+  
   ![screen shot 2019-01-15 at 4 13 24 pm](https://user-images.githubusercontent.com/37173038/51167094-83884e80-18e0-11e9-95f7-497d8d66bbb2.png)
 </br>
 
