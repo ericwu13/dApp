@@ -24,7 +24,7 @@
 5. finally type `npm run migrate` to migrate our contract on your ganache
 6. remember your contract address
 
-### React Setup
+### React Contract Address
 1. go to `root/react-ui/src` directory
 2. open `App.js`
 3. go to code `line 2` and change contract address to the address you remember in previous step
