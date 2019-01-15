@@ -66,8 +66,11 @@ npm start
   ![screen shot 2019-01-15 at 4 13 24 pm](https://user-images.githubusercontent.com/37173038/51167094-83884e80-18e0-11e9-95f7-497d8d66bbb2.png)
 </br>
 
+![image](https://user-images.githubusercontent.com/37173038/51167499-b41cb800-18e1-11e9-82c9-41d40e8f8320.png)
 #### 2. Check Account Information
+* click fourth icon from the right
 #### 3. Post an Item
+* cleck second icon from the right
 #### 4. Check Poster Reputation
 #### 5. Buy an Item
 #### 6. Deliver an Item
