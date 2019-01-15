@@ -17,19 +17,34 @@
 ## Smart Contracts Setup
 
 ### Contracts Deployment
-1. initiate `ganache-cli -m "your passphrases"`
-1. go to `root/smart-contracts` directory
-2. cp `secret.js.example` to `secret.js` and change the `mnemonic` in it to DeKuSan wallet passphrases
-3. type `npm run test` to compile the contracts codes, and you'll get contract abi in `root/smart-contracts/build/contracts/CPlatform.json` file
-5. finally type `npm run migrate` to migrate our contract on your ganache
+1. initiate local host ganache
+```
+$ ganache-cli -m "your passphrases"
+```
+
+2. go to `root/smart-contracts` directory
+3. cp `secret.js.example` to `secret.js` and change the `mnemonic` to your **DeKuSan wallet passphrases**
+4. compile the contracts codes, and you'll get contract abi in `root/smart-contracts/build/contracts/CPlatform.json` file
+```
+$ npm run compile
+```
+
+5. migrate our contract on your **ganache localhost:8545**
+```
+$ npm run test
+```
+6. (optional) if you want to migrate to dexon testnet type, go to https://dexon.org/faucet and get DXN and
+```
+$ npm run migrate
+```
 6. remember your contract address
 
 ### React Contract Address
 1. go to `root/react-ui/src` directory
 2. open `App.js`
 3. go to code `line 2` and change contract address to the address you remember in previous step
-4. open `root/smart-contracts/build/contracts/CPlatform.json` and copy its abi
-5. paste the abi into `root/react-ui/src/platform_abi.js`
+4. open `root/smart-contracts/build/contracts/CPlatform.json` and find abi section
+5. replace the line after `export default` with your abi code 
 
 now your react-ui can interact with your smart contracts
 
@@ -37,40 +52,70 @@ now your react-ui can interact with your smart contracts
 
 ### Single User Usage
 
+1. run your web server
+```
+npm start
+```
+2. Disable MetaMask to avoid unpredicted problem!!
+3. set DeKuSan to connect to `localhost:8545` (or Dexon testnet if you're using testnet)
+
+#### 1. Create User
+* click `SIGN IN` on Appbar
+* click `LOGIN` and create your account
+
+#### 2. Check Account Information
+* click `ACCOUNT` on Appbar to check your information
+#### 3. Post an Item
+* cleck `POST` on Appbar to go to **post page**
+* fill the information first and **you must upload an image!!!**
+* wait for a minute until data uploaded to IPFS
+* click `POST` button
+* click `ABOUT` and click `b` icon to check your item posted
+* or refresh your website to check your item (remember to sign in after you refresh the website)
+
+#### 4. Check Seller Reputation
+* click `header` of the item card to check seller reputation
+#### 5. Buy an Item
+* click `market cart icon` on the card to go to buy page
+* fill the information and click `BUY` button
+#### 6. Deliver an Item
+* click `DELIVER` on Appbar
+* click `image` on the card to check detail information, but your find **partial of buyer information encrypted**
+* click `truck icon` on the card to deliver an item
+#### 7. Check Your Deliver Item
+* click `CART` on Appbar
+* go to `Deliver List` tab and you'll see the item you want to deliver
+* click the `image` on the card to check detail informatio, and the **buyer information is all decrypted**
+
+#### 8. Seller Confirm Deliver to Deliver an Item
+* go to `Seller List` tab and you'll see the item you post
+* click `check icon` to confirm that the deliver has collected the item you post
+* message on the card will turn to **Delivering**
+#### 9. Buyer Confirm to receive an Item
+* go to `Cart List` tab and you'll see the item you buy and the message is `XXX is Delivering`
+* click `check icon` to confirm you has received the item
+* message on the card will turn to `Arrived`
+#### 10. Set Reputations
+* click `star icon` to set your shopping experience
+
 
 ## Extra Section
-
-### Interacting with Dexon Testnet
-
 ### Multiple Users Interaction on ganache-cli
+If you try to share out your ganache network, follow the steps here
+1. install **ngrok**
+* for mac
+```
+$ brew cask install ngrok
+```
+* for ubuntu ???
+2. forward out your localhost:8545
+```
+$ ngrok http 8545
+```
+3. get the ip address provided by ngrok
+4. paste the ip address provided by ngrok into DeKuSan wallet to custmoize RPC
 
-
-
-Go to https://testnet.dexscan.app and serach for your contract's address!!
-### React User Interface
-
-
-### How To Test It
-* Create a user on our platform
-1. connect to your wallet first
-2. if this wallet hasn't connect to our platform, it'll help connect it
-3. click confirm
-
-* Sell an item
-1. Go to `Post` on the web
-2. fill the form and sell!
-
-go to home page, and you'll find your item 
-
-* Buy an item
-1. click on the image on the item
-2. and buy it
-
-the bought item on home page will disappear now
-
-* Deliver an item
-1. go to deliver page
-2. click `take mission` on the item you want to deliver
-
-now you are a driver, collect the package from the seller now!
-
+### Using Dexon Testnet
+1. go to https://testnet.dexscan.app and serach for your contract's address!!
+2. paste the abi code in the read or write section or transaction
+3. now you can interact with your contracts
