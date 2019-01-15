@@ -1,24 +1,53 @@
 # The Best Shopping Platform
-### Get Started
-#### Install Dexon Extension
-1. go to google extension and search for DeKuSan
-2. install it
-#### Deploy Smart Contracts
-1. cp `secret.js.example` to `secret.js` and change the `mnemonic` in it to your passphrases
-2. cd to `smart-contracts`, this is where the contracts codes locate
-3. type `npm run compile` to compile the contracts codes
-4. and you'll get contract abi in `build/contracts/CPlatform.json` file
-5. finally type `npm run migrate` to migrate our contract on Dexon
+## Get Started
 
-Now your contract has migrated on Dexon
+### Environment Setup
+
+#### Install Dexon Google Extension
+1. go to google extension and search for DeKuSan
+2. install it and create DeKuSan account just like MetaMask
+3. remember your passphrases for later contracts deployment
+
+#### Install npm Packages
+1. go to `root/smart-contracts` directory
+2. type `yarn install` to install required dependencies (dexon-truffle)
+3. go to `root/reactui` directory
+4. type `yarn install` to install required dependencies (web3, material UI, etc)
+
+### Smart Contracts Setup
+
+#### Contracts Deployment
+1. initiate `ganache-cli -m "your passphrases"`
+1. go to `root/smart-contracts` directory
+2. cp `secret.js.example` to `secret.js` and change the `mnemonic` in it to DeKuSan wallet passphrases
+3. type `npm run test` to compile the contracts codes, and you'll get contract abi in `root/smart-contracts/build/contracts/CPlatform.json` file
+5. finally type `npm run migrate` to migrate our contract on your ganache
+6. remember your contract address
+
+#### React Setup
+1. go to `root/react-ui/src` directory
+2. open `App.js`
+3. go to code `line 2` and change contract address to the address you remember in previous step
+4. open `root/smart-contracts/build/contracts/CPlatform.json` and copy its abi
+5. paste the abi into `root/react-ui/src/platform_abi.js`
+
+now your react-ui can interact with your smart contracts
+
+### Start Interacting with WebUI
+
+#### Single User Usage
+
+
+### Extra Section
+
+#### Interacting with Dexon Testnet
+
+#### Multiple Users Interaction on ganache-cli
+
+
 
 Go to https://testnet.dexscan.app and serach for your contract's address!!
 #### React User Interface
-1. cd to `react-ui`
-2. type `yarn` to install the node packages
-3. type `npm start`
-
-The web will automatically open on your localhost
 
 
 #### How To Test It
