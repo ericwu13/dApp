@@ -1,22 +1,22 @@
 # The Best Shopping Platform
-## Get Started
+<!-- ## Get Started -->
 
-### Environment Setup
+## Environment Setup
 
-#### Install Dexon Google Extension
+### Install Dexon Google Extension
 1. go to google extension and search for DeKuSan
 2. install it and create DeKuSan account just like MetaMask
 3. remember your passphrases for later contracts deployment
 
-#### Install npm Packages
+### Install npm Packages
 1. go to `root/smart-contracts` directory
 2. type `yarn install` to install required dependencies (dexon-truffle)
 3. go to `root/reactui` directory
 4. type `yarn install` to install required dependencies (web3, material UI, etc)
 
-### Smart Contracts Setup
+## Smart Contracts Setup
 
-#### Contracts Deployment
+### Contracts Deployment
 1. initiate `ganache-cli -m "your passphrases"`
 1. go to `root/smart-contracts` directory
 2. cp `secret.js.example` to `secret.js` and change the `mnemonic` in it to DeKuSan wallet passphrases
@@ -24,7 +24,7 @@
 5. finally type `npm run migrate` to migrate our contract on your ganache
 6. remember your contract address
 
-#### React Setup
+### React Setup
 1. go to `root/react-ui/src` directory
 2. open `App.js`
 3. go to code `line 2` and change contract address to the address you remember in previous step
@@ -33,24 +33,24 @@
 
 now your react-ui can interact with your smart contracts
 
-### Start Interacting with WebUI
+## Start Interacting with WebUI
 
-#### Single User Usage
+### Single User Usage
 
 
-### Extra Section
+## Extra Section
 
-#### Interacting with Dexon Testnet
+### Interacting with Dexon Testnet
 
-#### Multiple Users Interaction on ganache-cli
+### Multiple Users Interaction on ganache-cli
 
 
 
 Go to https://testnet.dexscan.app and serach for your contract's address!!
-#### React User Interface
+### React User Interface
 
 
-#### How To Test It
+### How To Test It
 * Create a user on our platform
 1. connect to your wallet first
 2. if this wallet hasn't connect to our platform, it'll help connect it
