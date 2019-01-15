@@ -33,6 +33,10 @@ $ npm run compile
 ```
 $ npm run test
 ```
+6. (optional) if you want to migrate to dexon testnet type, go to https://dexon.org/faucet and get DXN and
+```
+$ npm run migrate
+```
 6. remember your contract address
 
 ### React Setup
@@ -53,6 +57,7 @@ now your react-ui can interact with your smart contracts
 npm start
 ```
 2. Disable MetaMask to avoid unpredicted problem!!
+3. set DeKuSan to connect to `localhost:8545` (or Dexon testnet if you're using testnet)
 
 #### 1. Create User
 * click `SIGN IN` on Appbar
@@ -95,11 +100,22 @@ npm start
 
 
 ## Extra Section
-
-### Interacting with Dexon Testnet
-
 ### Multiple Users Interaction on ganache-cli
+If you try to share out your ganache network, follow the steps here
+1. install **ngrok**
+* for mac
+```
+$ brew cask install ngrok
+```
+* for ubuntu ???
+2. forward out your localhost:8545
+```
+$ ngrok http 8545
+```
+3. get the ip address provided by ngrok
+4. paste the ip address provided by ngrok into DeKuSan wallet to custmoize RPC
 
-
-
-Go to https://testnet.dexscan.app and serach for your contract's address!!
+### Using Dexon Testnet
+1. go to https://testnet.dexscan.app and serach for your contract's address!!
+2. paste the abi code in the read or write section or transaction
+3. now you can interact with your contracts
