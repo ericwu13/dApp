@@ -55,24 +55,24 @@ npm start
 2. Disable MetaMask to avoid unpredicted problem!!
 
 #### 1. Create User
-* click the right most icon to login
-</br>
+* click `SIGN IN`
+* click `LOGIN` and create your account
 
-  ![screen shot 2019-01-15 at 4 07 21 pm](https://user-images.githubusercontent.com/37173038/51166964-2f7d6a00-18e0-11e9-9dbf-168cae67a875.png)
-</br>
-* click login and create your account
-
-### Toolbar
-![image](https://user-images.githubusercontent.com/37173038/51167499-b41cb800-18e1-11e9-82c9-41d40e8f8320.png)
 #### 2. Check Account Information
-* click fourth icon from the right
+* click `ACCOUNT` to check your information
 #### 3. Post an Item
-* cleck second icon from the right
+* cleck `POST` to go to **post page**
 * fill the information first and **you must upload an image!!!**
 * wait for a minute until data uploaded to IPFS
-* click submit
-#### 4. Check Poster Reputation
+* click `POST`
+* click `ABOUT` and click `b` icon to check your item posted
+* or refresh your website to check your item (remember to sign in after you refresh the website)
+
+#### 4. Check Seller Reputation
+* click `header` of the item card to check seller reputation
 #### 5. Buy an Item
+* click `market cart icon` on the card to go to buy page
+* fill the information and click `BUY`
 #### 6. Deliver an Item
 #### 7. Check Deliver Item
 #### 8. Seller Confirm Deliver to Deliver an Item
