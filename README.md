@@ -17,11 +17,22 @@
 ## Smart Contracts Setup
 
 ### Contracts Deployment
-1. initiate `ganache-cli -m "your passphrases"`
-1. go to `root/smart-contracts` directory
-2. cp `secret.js.example` to `secret.js` and change the `mnemonic` in it to DeKuSan wallet passphrases
-3. type `npm run test` to compile the contracts codes, and you'll get contract abi in `root/smart-contracts/build/contracts/CPlatform.json` file
-5. finally type `npm run migrate` to migrate our contract on your ganache
+1. initiate local host ganache
+```
+$ ganache-cli -m "your passphrases"
+```
+
+2. go to `root/smart-contracts` directory
+3. cp `secret.js.example` to `secret.js` and change the `mnemonic` in it to DeKuSan wallet passphrases
+4. compile the contracts codes, and you'll get contract abi in `root/smart-contracts/build/contracts/CPlatform.json` file
+```
+$ npm run compile
+```
+
+5. migrate our contract on your ganache
+```
+$ npm run test
+```
 6. remember your contract address
 
 ### React Setup
