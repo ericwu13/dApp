@@ -53,8 +53,27 @@ now your react-ui can interact with your smart contracts
 npm start
 ```
 2. Disable MetaMask to avoid unpredicted problem!!
-#### Create User
-click
+
+#### 1. Create User
+* click the right most icon to login
+</br>
+![screen shot 2019-01-15 at 4 07 21 pm](https://user-images.githubusercontent.com/37173038/51166964-2f7d6a00-18e0-11e9-9dbf-168cae67a875.png)
+</br>
+* and click login
+</br>
+![screen shot 2019-01-15 at 4 13 24 pm](https://user-images.githubusercontent.com/37173038/51167094-83884e80-18e0-11e9-95f7-497d8d66bbb2.png)
+</br>
+
+#### 2. Check Account Information
+#### 3. Post an Item
+#### 4. Check Poster Reputation
+#### 5. Buy an Item
+#### 6. Deliver an Item
+#### 7. Check Deliver Item
+#### 8. Seller Confirm Deliver to Deliver an Item
+#### 9. Buyer Confirm to receive an Item
+#### 10. Set Reputations
+
 
 
 ## Extra Section
@@ -66,29 +85,3 @@ click
 
 
 Go to https://testnet.dexscan.app and serach for your contract's address!!
-
-
-### How To Test It
-* Create a user on our platform
-1. connect to your wallet first
-2. if this wallet hasn't connect to our platform, it'll help connect it
-3. click confirm
-
-* Sell an item
-1. Go to `Post` on the web
-2. fill the form and sell!
-
-go to home page, and you'll find your item 
-
-* Buy an item
-1. click on the image on the item
-2. and buy it
-
-the bought item on home page will disappear now
-
-* Deliver an item
-1. go to deliver page
-2. click `take mission` on the item you want to deliver
-
-now you are a driver, collect the package from the seller now!
-
