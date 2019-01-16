@@ -44,7 +44,7 @@ $ npm run migrate
 2. open `App.js`
 3. go to code `line 2` and change contract address to the address you remember in previous step
 4. open `root/smart-contracts/build/contracts/CPlatform.json` and find abi section
-5. go to `root/smart-contracts` and find `platform_abi.js`. Replace the line after `export default` with your abi code
+5. go to `root/smart-contracts/src` and find `platform_abi.js`. Replace the line after `export default` with your abi code
 
 now your react-ui can interact with your smart contracts
 
