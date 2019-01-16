@@ -11,7 +11,7 @@
 ### Install npm Packages
 1. go to `root/smart-contracts` directory
 2. type `yarn install` to install required dependencies (dexon-truffle)
-3. go to `root/reactui` directory
+3. go to `root/react-ui` directory
 4. type `yarn install` to install required dependencies (web3, material UI, etc)
 
 ## Smart Contracts Setup
@@ -44,7 +44,7 @@ $ npm run migrate
 2. open `App.js`
 3. go to code `line 2` and change contract address to the address you remember in previous step
 4. open `root/smart-contracts/build/contracts/CPlatform.json` and find abi section
-5. go to `root/smart-contracts/src` and find `platform_abi.js`. Replace the line after `export default` with your abi code
+5. go to `root/react-ui/src` and find `platform_abi.js`. Replace the line after `export default` with your abi code
 
 now your react-ui can interact with your smart contracts
 
