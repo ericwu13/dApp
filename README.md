@@ -121,5 +121,5 @@ $ ngrok http 8545
 
 ### Using Dexon Testnet
 1. go to https://testnet.dexscan.app and serach for your contract's address!!
-2. paste the abi code in the read or write section or transaction
+2. paste the abi code in the read or write section in your contract transaction
 3. now you can interact with your contracts
